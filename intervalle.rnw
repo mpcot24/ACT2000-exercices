@@ -1,0 +1,735 @@
+\chapter{Estimation par intervalle}
+\label{chap:intervalle}
+
+\Opensolutionfile{reponses}[reponses-intervalle]
+\Opensolutionfile{solutions}[solutions-intervalle]
+
+\begin{Filesave}{reponses}
+\bigskip
+\section*{Réponses}
+
+\end{Filesave}
+
+\begin{Filesave}{solutions}
+\section*{Chapitre \ref{chap:intervalle}}
+\addcontentsline{toc}{section}{Chapitre \protect\ref{chap:intervalle}}
+
+\end{Filesave}
+
+%%%
+%%% Début des exercices
+%%%
+
+\begin{exercice}
+Soit $X_1, \ldots, X_n$ un échantillon aléatoire de taille $n$ tiré d'une distribution Gamma avec paramètres $\alpha=2$ et $\beta$ inconnu.
+\begin{enumerate}
+\item Montrer que $T = 2(X_1 +\cdots+X_n)/\beta$ est un pivot et que sa distribution est khi-carrée avec $4n$ degrés de liberté. [Astuce: utiliser les fonctions génératrices des moments.]
+\item Utiliser le pivot $T$ pour construire un intervalle de confiance bilatéral de niveau 95~\% pour~$\beta$.
+\item Si la moyenne échantillonnale est de $\bar x = 5,6$ et que $n=5$, utiliser le résultat en b) pour donner un intervalle de confiance de niveau 95~\% pour $\beta$.
+\end{enumerate}
+
+\begin{sol}
+\begin{enumerate}
+\item La fonction génératrice des moments d'une distribution Gamma avec paramètres $\alpha = 2$ et $\beta > 0$ est donnée par 
+$$
+M_X(t) = (1-\beta t)^{-2}, \quad t < 1/\beta.
+$$
+La fonction génératrice des moments de $T = 2(X_1 + \cdots + X_n)/\beta$ est donc
+$$
+M_T(t) = \ex (e^{(2t/\beta) \sum_{i=1}^n X_i}) = \prod_{i=1}^n \ex \left\{ e^{(2t/\beta) X_i} \right\} = \{ M_X(2t/\beta)\}^n = (1-2t)^{-2n}
+$$
+à condition que $2t/\beta < 1/\beta$, i.e., si $t < 1/2$. Sachant que $(1-2t)^{-2n}$ est la fonction génératrice des moments d'une distribution khi-carrée avec $4n$ degrés de liberté, $T \sim \chi^2_{(4n)}$.
+
+Ainsi, $T$ est une fonction de l'échantillon aléatoire et du paramètre $\beta$, avec une distribution connue qui ne dépend d'aucun paramètre inconnu~: $T$ est donc un pivot.
+
+\item Pour construire l'intervalle de confiance bilatéral à partir de $T$, on note $\chi^2_{0,975, \, 4n}$ et $\chi^2_{0,025, \, 4n}$ les quantiles $2,5$\% et $97,5$\% d'une distribution $\chi^2$ avec $4n$ degrés de liberté. On a donc
+$$
+\Pr( \chi^2_{0,975, \, 4n} \le T \le \chi^2_{0,025, \, 4n}) = 0,95.
+$$
+On résout les inégalités
+$$
+ \chi^2_{0,975, \, 4n} \le T \le \chi^2_{0,025, \, 4n} 
+ $$
+ou encore 
+ $$
+ \chi^2_{0,975, \, 4n} \le \frac{2}{\beta} \sum_{i=1}^n X_i \le \chi^2_{0,025, \, 4n},
+$$
+ce qui donne un l'intervalle de confiance bilatéral de niveau $95$~\% pour $\beta$~:
+\begin{align*}
+\left[ \frac{2n \bar X_n}{ \chi^2_{0,025, \, 4n}} \, , \frac{2n \bar X_n}{ \chi^2_{0,975, \, 4n}}\right].
+\end{align*}
+
+\item Avec $n = 5$, les quantiles requis d'une distribution khi-carrée avec $4n = 20$ degrés de liberté sont
+$$
+ \chi^2_{0,975, \, 20} = \Sexpr{round(qchisq(0.025,df=20),2)}, \quad  \chi^2_{0,025, \, 20} = \Sexpr{round(qchisq(0.975,df=20),2)}.
+$$ 
+Sachant que $\bar x_n = 5,6$, l'intervalle de confiance de niveau $95$~\% pour $\beta$ est 
+\begin{align*}
+\left[ \frac{2\times 5\times 5,6}{ \Sexpr{round(qchisq(0.975,df=20),2)}} \, , \frac{2\times 5\times 5,6}{ \Sexpr{round(qchisq(0.025,df=20),2)}}\right] = [ \Sexpr{round(2*5*5.6/qchisq(0.975,df=20),2)}, \Sexpr{round(2*5*5.6/qchisq(0.025,df=20),2)}].
+\end{align*}
+\end{enumerate}
+	\end{sol}
+\end{exercice}
+
+\begin{exercice}
+  \label{ex:intervalle:moyenne}
+  La valeur observée de la moyenne empirique $\bar{X}$ d'un
+  échantillon aléatoire de taille $20$ tiré d'une $N(\mu, 80)$ est
+  $81,2$. Déterminer un estimateur par intervalle de niveau $95~\%$
+  pour $\mu$.
+  \begin{rep}
+    $(77,28, \, 85,12)$
+  \end{rep}
+  \begin{sol}
+    On cherche deux statistiques $L$ et $U$ tel que
+    \begin{equation*}
+      \prob{L \leq \mu \leq U} = 1 - \alpha.
+    \end{equation*}
+    On sait que si $X_1, \dots, X_n$ est un échantillon aléatoire tiré
+    d'une distribution $N(\mu, \sigma^2)$, alors $\bar{X} \sim N(\mu,
+    \sigma^2/n)$ ou, de manière équivalente, que
+    \begin{displaymath}
+      \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1).
+    \end{displaymath}
+    Par conséquent,
+    \begin{equation*}
+      \Prob{-z_{\alpha/2} \leq \frac{\bar{X} - \mu}{\alpha/\sqrt{n}} \leq
+        z_{\alpha/2}} = 1 - \alpha,
+    \end{equation*}
+    d'où
+    \begin{equation*}
+      \Prob{\bar{X} - \frac{\sigma}{\sqrt{n}}\, z_{\alpha/2} \leq \mu
+        \leq \bar{X} + \frac{\sigma}{\sqrt{n}}\, z_{\alpha/2}} = 1 - \alpha.
+    \end{equation*}
+    Les statistiques $L$ et $U$ sont dès lors connues: $L = \bar{X} -
+    \sigma z_{\alpha/2}/\sqrt{n}$ et $U = \bar{X} + \sigma
+    z_{\alpha/2}/\sqrt{n}$. Un estimateur par intervalle de $\mu$ est
+    donc
+    \begin{equation*}
+      (\bar{X} - \sigma z_{\alpha/2}/\sqrt{n}, \,
+      \bar{X} + \sigma z_{\alpha/2}/\sqrt{n}).
+    \end{equation*}
+    Avec $n = 20$, $\sigma^2 = 80$ et $\bar{x} = 81,2$, on obtient
+    l'intervalle $(77,28, \, 85,12)$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $\bar{X}$ la moyenne d'un échantillon aléatoire de taille $n$
+  d'une distribution normale de moyenne $\mu$ inconnue et de variance
+  $9$. Trouver la valeur $n$ tel que, approximativement,
+  $\prob{\bar{X} - 1 < \mu < \bar{X} + 1} = 0,90$.
+  \begin{rep}
+    $24$ ou $25$
+  \end{rep}
+  \begin{sol}
+    On a $X \sim N(\mu, 9)$. Tel que démontré à
+    l'exercice~\ref{chap:intervalle}.\ref{ex:intervalle:moyenne},
+    \begin{equation*}
+      \Prob{\bar{X} - \frac{\sigma}{\sqrt{n}}\, z_{0,05} \leq \mu
+        \leq \bar{X} + \frac{\sigma}{\sqrt{n}}\, z_{0,05}} = 0,90.
+    \end{equation*}
+    Pour satisfaire la relation $\prob{\bar{X} - 1 < \mu < \bar{X} +
+      1} = 0,90$, on doit donc choisir
+    \begin{equation*}
+      \frac{\sigma}{\sqrt{n}}\, z_{0,05} =
+      \frac{3 (1,645)}{\sqrt{n}} = 1.
+    \end{equation*}
+    On trouve que $n = 24,35$. On doit donc choisir une taille
+    d'échantillon de $24$ ou $25$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Un échantillon aléatoire comptant $17$ observations d'une
+  distribution normale de moyenne et de variance inconnues a donné
+  $\bar{x} = 4,7$ et $s^2 = 5,76$. Trouver des intervalles de
+  confiance à $90~\%$ pour $\mu$ et pour $\sigma^2$.
+  \begin{rep}
+    $\mu \in (3,7, \, 5,7)$ et $\sigma^2 \in (3,50, \, 11,58)$
+  \end{rep}
+  \begin{sol}
+    On sait que
+    \begin{align*}
+      \frac{\bar{X} - \mu}{S/\sqrt{n}} &\sim t(n-1) \\
+      \intertext{et que}
+      \frac{(n-1) S^2}{\sigma^2} &\sim \chi^2(n - 1).
+    \end{align*}
+    Ainsi, on peut établir que
+    \begin{equation*}
+      \Prob{\bar{X} - \frac{S}{\sqrt{n}}\, t_{\alpha/2} \leq \mu
+        \leq \bar{X} + \frac{S}{\sqrt{n}}\, t_{\alpha/2}} = 1 - \alpha.
+    \end{equation*}
+    et qu'un intervalle de confiance de niveau $1 - \alpha$ pour $\mu$
+    est
+    \begin{equation*}
+      (\bar{X} - S t_{\alpha/2}/\sqrt{n}, \,
+      \bar{X} + S t_{\alpha/2}/\sqrt{n}).
+    \end{equation*}
+    Avec $n = 17$, $\bar{x} = 4,7$, $s^2 = 5,76$ et $\alpha = 0,10$,
+    on trouve que $\mu \in (3,7, \, 5,7)$.
+
+    Pour la variance, on cherche des valeurs $a$ et $b$, $a \leq b$
+    tel que
+    \begin{equation*}
+      \Prob{a \leq \frac{(n-1)S^2}{\sigma^2} \leq b} =
+      \Prob{\frac{(n-1)S^2}{b} \leq \sigma^2 \leq \frac{(n-1)S^2}{a}} =
+      1 - \alpha.
+    \end{equation*}
+    Plusieurs valeurs de $a$ et $b$ satisfont cette relation. Le choix
+    le plus simple est $a = \chi_{1 - \alpha/2}^2(n - 1)$ et $b =
+    \chi_{\alpha/2}^2(n - 1)$. Ainsi, un intervalle de confiance de
+    niveau $1 - \alpha$ pour $\sigma^2$ est
+    \begin{equation*}
+      \left(
+        \frac{(n-1)S^2}{\chi_{\alpha/2}^2(n - 1)}, \,
+        \frac{(n-1)S^2}{\chi_{1 - \alpha/2}^2(n - 1)}
+      \right).
+    \end{equation*}
+    Dans une table de la loi khi carré, on trouve que
+    $\chi_{0,05}^2(16) = 7,96$ et que $\chi_{0,95}^2(16) = 26,30$,
+    d'où $\sigma^2 \in (3,50, \, 11,58)$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice} 
+  Lors d'une très sérieuse et importante analyse statistique de la
+  taille des étudiantes en sciences et génie à l'Université Laval, on
+  a mesuré un échantillon aléatoire d'étudiantes en actuariat et un
+  autre en génie civil. Les résultats obtenus se trouvent résumés dans
+  le tableau ci-dessous. On suppose que les deux échantillons
+  aléatoires sont indépendants et que la taille des étudiantes est
+  distribuée selon une loi normale.
+  \begin{center}
+    \begin{tabular}{lD{.}{,}{3.0}D{.}{,}{3.0}}
+      \toprule
+      Quantité &
+      \multicolumn{1}{c}{Actuariat} &
+      \multicolumn{1}{c}{Génie civil} \\
+      \midrule
+      Taille de l'échantillon     & 15 & 20 \\
+      Taille moyenne (en cm)      & 152 & 154 \\
+      Variance (en $\text{cm}^2$) & 101 & 112 \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \begin{enumerate}
+  \item Déterminer un intervalle de confiance à $90~\%$ pour la taille
+    moyenne des étudiantes de chacun des deux programmes en supposant
+    que l'écart type de la distribution normale est 9~cm.
+  \item Répéter la partie a) en utilisant plutôt les variances des
+    échantillons.
+  \item On suppose que les variances des deux populations sont égales. 
+    Y a-t-il une différence significative, avec un niveau de
+    confiance de 90~\%, entre la taille des étudiantes en actuariat et
+    celles en génie civil? 
+  \item Déterminer un intervalle de confiance à 90~\% pour la variance
+    de la taille des étudiantes en actuariat.
+  \item On suppose que les moyennes des deux populations sont égales.
+    La différence observée entre les variances dans la taille des
+    étudiantes des deux programmes est-elle significative? Utiliser un
+    niveau de confiance de 90~\%.
+  \end{enumerate}
+  \begin{rep}
+    \begin{enumerate}
+    \item $148,18 < \mu_1 < 155,82$ et $150,69 < \mu_2 < 157,31$
+    \item $147,43 < \mu_1 < 156,57$ et $149,91 < \mu_2 < 158,09$
+    \item $\mu_1 - \mu_2 \in -2 \pm 5,82$
+    \item $59,71 < \sigma_1^2 < 215,22$
+    \item $0,462 < \sigma_2^2/\sigma_1^2 < 2,502$
+    \end{enumerate}
+  \end{rep}
+  \begin{sol}
+    On représente la taille des étudiantes en actuariat par la
+    variable aléatoire $X$ et celle des étudiantes en génie civil par
+    $Y$. On a
+    \begin{align*}
+      \bar{X} &\sim N(\mu_1, \sigma_1^2/15), &
+      \bar{Y} &\sim N(\mu_2, \sigma_2^2/20), \\
+      \frac{14 S_1^2}{\sigma_1^2} &\sim \chi^2(14), &
+      \frac{19 S_2^2}{\sigma_2^2} &\sim \chi^2(19)
+    \end{align*}
+    et les valeurs des statistiques pour les deux échantillons sont
+    \begin{align*}
+      \bar{x} &= 152, & \bar{y} &= 154, \\
+      s_1^2   &= 101, &  s_2^2  &= 112.
+    \end{align*}
+    \begin{enumerate}
+    \item Si l'on suppose que $\sigma_1^2 = \sigma_2^2 = 81$, alors
+      $\bar{X} \sim N(\mu_1, 5,4)$ et $\bar{Y} \sim N(\mu_2, 4,05)$.
+      Par conséquent,
+      \begin{gather*}
+        \Prob{-1,645
+          < \frac{\bar{X} - \mu_1}{\sqrt{5,4}} <
+          1,645} = 0,90 \\
+        \intertext{et}
+        \Prob{-1,645
+          < \frac{\bar{Y} - \mu_2}{\sqrt{4,05}} <
+          1,645
+        } = 0,90
+      \end{gather*}
+      d'où
+      \begin{equation*}
+        152 - 1,645 \sqrt{5,4} < \mu_1 < 152 + 1,645 \sqrt{5,4},
+      \end{equation*}
+      soit $148,18 < \mu_1 < 155,82$ et
+      \begin{equation*}
+        154 - 1,645 \sqrt{4,05} < \mu_2 < 154 + 1,645 \sqrt{4,05},
+      \end{equation*}
+      soit $150,69 < \mu_2 < 157,31$.
+    \item Si la variance est inconnue, on a plutôt que
+      \begin{equation*}
+        \frac{\bar{X} - \mu_1}{S_1/\sqrt{15}} \sim t(14)
+        \quad \text{et} \quad
+        \frac{\bar{Y} - \mu_2}{S_2/\sqrt{20}} \sim t(19).
+      \end{equation*}
+      Or, $t_{0,05}(14) = 1,761$ et $t_{0,05}(19) =
+      1,729$, d'où
+      \begin{equation*}
+        152 - 1,761 \sqrt{\frac{101}{15}} < \mu_1 < 152 + 1,761
+        \sqrt{\frac{101}{15}},
+      \end{equation*}
+      soit $147,43 < \mu_1 < 156,57$ et
+      \begin{equation*}
+        154 - 1,729 \sqrt{\frac{112}{20}} < \mu_2 <
+        154 + 1,729 \sqrt{\frac{112}{20}},
+      \end{equation*}
+      soit $149,91 < \mu_2 < 158,09$.
+    \item On cherche un intervalle de confiance à $90~\%$ pour la
+      différence $\mu_1 - \mu_2$. Si $0$ appartient à l'intervalle, on
+      pourra dire que la différence entre les deux moyennes n'est pas
+      significative à $90~\%$. Pour les besoins de la cause, on va
+      supposer ici que $\sigma_1^2 = \sigma_2^2 = \sigma^2$. Or,
+      puisque
+      \begin{gather*}
+        \frac{(\bar{X} - \bar{Y}) - (\mu_1 - \mu_2)}{%
+          \sigma \sqrt{\frac{1}{15} + \frac{1}{20}}}
+        \sim N(0, 1) \\
+        \intertext{et que}
+        \frac{14 S_1^2}{\sigma^2} + \frac{19 S_2^2}{\sigma^2}
+        \sim \chi^2(33)
+      \end{gather*}
+      on établit que
+      \begin{displaymath}
+        \frac{(\bar{X} - \bar{Y}) - (\mu_1 - \mu_2)}{\sqrt{\frac{14
+              S_1^2 + 19 S_2^2}{33} \left( \frac{1}{15} + \frac{1}{20}
+            \right)}} \sim t(33).
+      \end{displaymath}
+      De plus, $t_{0,05}(33) \approx z_{0,05} = 1,645$, d'où
+      l'intervalle de confiance à 90~\% pour $\mu_1 - \mu_2$ est
+      \begin{displaymath}
+        \mu_1 - \mu_2 \in -2 \pm 5,82.
+      \end{displaymath}
+      La différence de taille moyenne entre les deux groupes
+      d'étudiantes n'est donc pas significative.
+    \item Tel que mentionné précédemment,
+      \begin{displaymath}
+        Y = \frac{14 S_1^2}{\sigma_1^2} \sim \chi^2(14).
+      \end{displaymath}
+      Or, on trouve dans une table de la loi khi carré (ou avec la
+      fonction \texttt{qchisq} dans \textsf{R}) que
+      \begin{displaymath}
+        \Prob{6,57 < Y < 23,68} = 0,90.
+      \end{displaymath}
+      Par conséquent,
+      \begin{gather*}
+        \Prob{
+          6,57 < \frac{14 S_1^2}{\sigma_1^2} < 23,68
+        } = 0,90 \\
+        \intertext{ou, de manière équivalente,}
+        \Prob{
+          \frac{14 S_1^2}{23,68} < \sigma_1^2 < \frac{14 S_1^2}{6,57}
+        } = 0,90.
+      \end{gather*}
+      Puisque $s_1^2 = 101$ dans cet exemple, un intervalle de
+      confiance à $90~\%$ pour $\sigma_1^2$ est $(59,71, \, 215,22)$.
+    \item Un peu comme en c), on détermine un intervalle de confiance
+      pour le ratio $\sigma_2^2/\sigma_1^2$ et on conclut que la
+      différence entre la variance des étudiantes en génie civil n'est
+      pas significativement plus grande que celle des étudiantes en
+      actuariat si cet intervalle contient la valeur $1$. À la suite
+      des conclusions en c), il est raisonnable de supposer que les
+      moyennes des deux populations sont identiques, soit $\mu_1 =
+      \mu_2 = \mu$. On a que
+      \begin{displaymath}
+        F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}
+        \sim F(14, 19).
+      \end{displaymath}
+      On trouve dans une table de la loi $F$ (ou avec la fonction
+      \texttt{qf} dans \textsf{R}) que
+      \begin{displaymath}
+        \Prob{0,417 < F < 2,256} = 0,90.
+      \end{displaymath}
+      Par conséquent,
+      \begin{displaymath}
+        \Prob{
+          \frac{0,417 S_2^2}{ S_1^2}
+          < \frac{\sigma_2^2}{\sigma_1^2} <
+          \frac{2,256 S_2^2}{ S_1^2}
+        } = 0,90
+      \end{displaymath}
+      et un intervalle de confiance à $90~\%$ pour
+      $\sigma_2^2/\sigma_1^2$ est $(0,462, \, 2,502)$. La variance
+      $\sigma_2^2$ n'est donc pas significativement plus grande que
+      $\sigma_1^2$.
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $X_1, \dots, X_n$ un échantillon aléatoire tiré d'une
+  population normale de moyenne et variance inconnues. Développer la
+  formule d'un estimateur par intervalle de niveau $1 - \alpha$ pour
+  $\sigma$, l'écart type de la distribution normale.
+  \begin{rep}
+    $(\sqrt{(n-1) S^2/b}, \sqrt{(n-1) S^2/a})$.
+  \end{rep}
+  \begin{sol}
+    On sait que
+    \begin{displaymath}
+      \frac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1).
+    \end{displaymath}
+    Ainsi, pour des constantes $a$ et $b$, $a \leq b$, on a
+    \begin{equation*}
+      \Prob{a \leq \frac{(n-1)S^2}{\sigma^2} \leq b} =
+      \Prob{\sqrt{\frac{(n-1)S^2}{b}} \leq \sigma \leq \sqrt{\frac{(n-1)S^2}{a}}} =
+      1 - \alpha.
+    \end{equation*}
+    Un estimateur par intervalle de $\sigma$ est donc $(\sqrt{(n-1)
+      S^2/b}, \sqrt{(n-1) S^2/a})$, où $a$ et $b$ satisfont la relation
+    $\prob{a \leq Y \leq b} = 1 - \alpha$, avec $Y \sim \chi^2(n - 1)$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $X_1, X_2, \dots, X_n$ un échantillon aléatoire d'une
+  distribution normale de moyenne $\mu$ et de variance $\sigma^2 =
+  25$. Déterminer la taille de l'échantillon nécessaire pour que la
+  longueur de l'intervalle de confiance de niveau $0,90$ pour la
+  moyenne ne dépasse pas $0,05$.
+  \begin{rep}
+    \nombre{108 241}
+  \end{rep}
+  \begin{sol}
+    On sait que
+    \begin{align*}
+      \mu &\in \bar{X} \pm z_{0,05} \frac{\sigma}{\sqrt{n}} \\
+      &\in \bar{X} \pm 1,645 \frac{5}{\sqrt{n}}.
+    \end{align*}
+    La longueur de l'intervalle de confiance est $2 (1,645) (5) /
+    \sqrt{n} = 16,45/\sqrt{n}$. Si l'on souhaite que $16,45/\sqrt{n}
+    \leq 0,05$, alors $n \geq \nombre{108 241}$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $S^2_n$ la variance échantillonnale d'un échantillon aléatoire de taille $n$ issu
+  d'une distribution $\mathcal{N}(\mu, \sigma^2)$ où $\mu$ et $\sigma^2$ sont
+  des paramètres inconnus. On sait que $Y = (n-1)S^2_n/\sigma^2 \sim
+  \chi^2(n - 1)$. Soit $g(y)$ la fonction de densité de $Y$ et $G(y)$
+  la fonction de répartition. Soit $a$ et $b$ des constantes telles
+  que $((n-1) s^2/b, (n-1) s^2/a)$ est un intervalle de confiance de niveau $1
+  - \alpha$ pour $\sigma^2$. La longueur de cet intervalle est donc $(n-1)
+  s^2 (b - a)/(ab)$. Démontrer que la longueur de l'intervalle de
+  confiance est minimale si $a$ et $b$ satisfont la condition $a^2
+  g(a) = b^2 g(b)$. (\emph{Astuce}: minimiser la longueur de
+  l'intervalle sous la contrainte que $G(b) - G(a) = 1 - \alpha$.)
+  \begin{sol}
+    On cherche à minimiser la longueur de l'intervalle de confiance
+    $h(a, b) = (n-1) s^2 (b - a)/(ab)$ sous la contrainte que la
+    probabilité dans cet intervalle est $1 - \alpha$, c'est-à-dire que
+    $G(b) - G(a) = 1 - \alpha$. En utilisant la méthode des
+    multiplicateurs de Lagrange, on pose
+    \begin{displaymath}
+      L(a, b, \lambda) = \frac{(n-1) s^2}{a} - \frac{(n-1) s^2}{b} +
+      \lambda(G(b) - G(a) - 1 + \alpha).
+    \end{displaymath}
+    Les dérivées de cette fonction par rapport à chacune de ses
+    variables sont:
+    \begin{align*}
+      \frac{\partial}{\partial a}\, L(a, b, \lambda)
+      &= - \frac{(n-1) s^2}{a^2} + \lambda g(a) \\
+      \frac{\partial}{\partial b}\, L(a, b, \lambda)
+      &= - \frac{-(n-1) s^2}{b^2} + \lambda g(b) \\
+      \frac{\partial}{\partial \lambda}\, L(a, b, \lambda)
+      &= G(b) - G(a) - 1 + \alpha.
+    \end{align*}
+    En posant ces dérivées égales à zéro et en résolvant, on trouve
+    que
+    \begin{equation*}
+      \frac{g(a)}{g(b)} = \frac{b^2}{a^2}
+    \end{equation*}
+    ou, de manière équivalente, que $b^2 g(b) = a^2 g(a)$.
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+Le \emph{Scholastic Assessment Test} (SAT) est un test d'aptitudes standardisé largement utilisé dans les admissions aux universités américaines. Les résultats au test, qui avaient lentement diminués au fil des ans depuis son implantation, ont commencé à remonter. Initialement, un résultat de 500 était considéré dans la moyenne. En 2005, les résultats moyens étaient approximativement de 508 pour le test de langue et 520 pour le test de mathématiques. Un échantillon aléatoire de résultats de 20 étudiants d'une école secondaire a produit les moyennes et écart-types listés ci-dessous. On suppose que les résultats aux tests sont normalement distribués.
+
+\begin{center}
+\begin{tabular}{lcc}
+& Langue & Mathématiques\\ \hline
+Moyenne échantillonnale & 505 & 495\\
+Écart-type échantillonnal & 55 & 70\\ \hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item Trouver un intervalle de confiance bilatéral à 90~\% pour la moyenne des résultats du test de langue des étudiants de l'école secondaire.
+\item Est-ce que l'intervalle trouvé en a) inclut la valeur 508, la moyenne exacte du test de langue en 2005? Que peut-on en conclure?
+\item Trouver un intervalle de confiance bilatéral à 90~\% pour la moyenne des résultats du test de mathématiques des étudiants de l'école secondaire. Est-ce que l'intervalle inclut la valeur 520, la moyenne du test de mathématiques en 2005? Que peut-on en conclure?
+\item Peut-on utiliser la méthode discutée en classe pour un construire un intervalle de confiance bilatéral pour la différence entre les moyennes des deux tests (langue et mathématiques), en supposant que leur variance est égale? Expliquer.
+\item Construire un intervalle de confiance bilatéral de niveau 90~\% pour la variance $\sigma^2$ des résultats au test de mathématiques. Comment peut-on construire un intervalle de confiance bilatéral à 90~\% pour $\sigma$? Expliquer.
+\end{enumerate}
+
+\begin{rep}
+\begin{enumerate}
+\item $(\Sexpr{round(505-qt(0.95,df=19)*55/sqrt(20),3)}, \, \Sexpr{round(505+qt(0.95,df=19)*55/sqrt(20),3)})$
+\item Oui
+\item $(\Sexpr{round(495-qt(0.95,df=19)*70/sqrt(20),3)}, \, \Sexpr{round(495+qt(0.95,df=19)*70/sqrt(20),3)})$
+\item Non
+\item $(\Sexpr{round(sqrt((19*4900)/qchisq(0.95,df=19)),3)}, \, \Sexpr{round(sqrt((19*4900)/qchisq(0.05,df=19)),3)})$
+\end{enumerate}
+\end{rep}
+
+\begin{sol}
+\begin{enumerate}
+\item
+L'intervalle de confiance bilatéral pour $\mu$ a la forme
+$$
+\left[ \bar X_n - t_{n-1,\alpha/2} \frac{S_n}{\sqrt{n}}, \bar X_n + t_{n-1,\alpha/2} \frac{S_n}{\sqrt{n}} \right].
+$$
+Sachant que $n=20$ et $\alpha =0,1$, le quantile approprié de la distribution de Student est
+$$
+t_{19, \, 0,05} = \Sexpr{round(qt(0.95,df=19),3)}.
+$$
+Avec $\bar x_n = 505$ et $S_n = 55$, l'intervalle devient
+\begin{align*}
+\left[ 505 -  \Sexpr{round(qt(0.95,df=19),3)} \, \frac{55}{\sqrt{20}} \, , 505 + \Sexpr{round(qt(0.95,df=19),3)} \, \frac{55}{\sqrt{20}} \right] = [ \Sexpr{round(505-qt(0.95,df=19)*55/sqrt(20),3)} ,\Sexpr{round(505+qt(0.95,df=19)*55/sqrt(20),3)}].
+\end{align*}
+
+\item Puisque l'intervalle inclut $508$, il n'y a pas de preuve à l'effet que la moyenne du test de langue a significativement changé depuis 2005, à un niveau de confiance $90$~\%.  
+
+\item
+L'intervalle a la même forme qu'en a) et le même quantile. Avec la moyenne échantillonnale et l'écart-type échantillonnal, l'intervalle peut être calculé comme suit
+\begin{align*}
+\left[ 495 -  \Sexpr{round(qt(0.95,df=19),3)} \, \frac{70}{\sqrt{20}}\, ,495 + \Sexpr{round(qt(0.95,df=19),3)} \, \frac{70}{\sqrt{20}} \right] = [ \Sexpr{round(495-qt(0.95,df=19)*70/sqrt(20),3)}, \,\Sexpr{round(495+qt(0.95,df=19)*70/sqrt(20),3)}].
+\end{align*}
+L'intervalle inclut $520$, il n'y a donc pas une différence significative dans la moyenne du test de mathématiques depuis 2005, à un niveau de confiance $90$~\%.
+
+\item
+Non, la méthode ne peut pas être utilisée car les échantillons ne sont pas indépendants, les tests ont été effectués par les 20 mêmes étudiants dans les deux cas.
+
+\item
+L'intervalle de confiance a la forme
+$$
+\left[\frac{n-1}{\chi^2_{n-1,\alpha/2}} \, S_n^2,\frac{n-1}{\chi^2_{n-1,1-\alpha/2}} \, S_n^2\right].
+$$
+Les quantiles appropriés d'une distribution khi-carrée avec $n-1=19$ degrés de liberté et $\alpha=0,1$ sont 
+$$
+\chi^2_{n-1,1-\alpha/2} = \Sexpr{round(qchisq(0.05,df=19),3)}, \quad \chi^2_{n-1,\alpha/2} = \Sexpr{round(qchisq(0.95,df=19),3)}.
+$$
+Avec la variance échantillonnale $S_n^2 = 70^2 = \Sexpr{70^2}$, on obtient
+\begin{align*}
+\left[\frac{19}{\Sexpr{round(qchisq(0.95,df=19),3)}}\times4900,\frac{19}{\Sexpr{round(qchisq(0.05,df=19),3)}}\times4900\right] = [\Sexpr{round((19*4900)/qchisq(0.95,df=19),3)},\Sexpr{round((19*4900)/qchisq(0.05,df=19),3)}].
+\end{align*}
+Une possibilité d'intervalle de confiance bilatéral à $100 \times (1-\alpha)$~\% pour $\sigma$ est
+$$
+\left[\sqrt{\frac{n-1}{\chi^2_{n-1,\alpha/2}}} \, S_n,\sqrt{\frac{n-1}{\chi^2_{n-1,1-\alpha/2}}} \, S_n\right]
+$$
+car
+\begin{multline*}
+\Pr\left(\sqrt{\frac{n-1}{\chi^2_{n-1,\alpha/2}}} \, S_n \le \sigma \le \sqrt{\frac{n-1}{\chi^2_{n-1,1-\alpha/2}}} \, S_n \right)\\ = \Pr\left(\frac{n-1}{\chi^2_{n-1,\alpha/2}} \, S_n^2 \le \sigma^2 \le \frac{n-1}{\chi^2_{n-1,1-\alpha/2}} \, S_n^2 \right) = 1-\alpha.
+\end{multline*}
+L'intervalle devient
+\begin{align*}
+[\sqrt{\Sexpr{round((19*4900)/qchisq(0.95,df=19),3)}},\sqrt{\Sexpr{round((19*4900)/qchisq(0.05,df=19),3)}}] = [\Sexpr{round(sqrt((19*4900)/qchisq(0.95,df=19)),3)},\Sexpr{round(sqrt((19*4900)/qchisq(0.05,df=19)),3)}].
+\end{align*}
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+Le cuivre solide produit par frittage (chauffage sans fusion) d'une poudre dans des conditions environnementales spécifiques est ensuite mesuré pour la porosité (la fraction volumique due aux vides) en laboratoire. Un échantillon de $n=4$ mesures de porosité indépendantes a une moyenne $\bar x_n = 0,22$ et une variance $s_n^2 = 0,001$. Un second laboratoire répète le même processus et obtient $m=5$ mesures de porosité indépendantes avec $\bar y_m = 0,17$ and $s_m^2 = 0,002$.
+\begin{enumerate}
+\item Énumérer les hypothèses nécessaires pour construire un intervalle de confiance bilatéral \emph{exact} pour la différence de moyennes entre les populations des deux laboratoires.
+\item Construire un intervalle de confiance bilatéral \emph{exact} à $95$~\% pour la différence des moyennes des populations des deux laboratoires.
+\item Est-ce que la différence entre les moyennes des deux laboratoires est significative?
+\end{enumerate}
+
+\begin{rep}
+b) $(\Sexpr{round(0.22-0.17-qt(0.975,df=7)*sqrt((3*0.001 + 4*0.002)/7)*sqrt(1/4+ 1/5),5)}, \,\Sexpr{round(0.22-0.17+qt(0.975,df=7)*sqrt((3*0.001 + 4*0.002)/7)*sqrt(1/4+ 1/5),5)})$
+\end{rep}
+
+\begin{sol}
+\begin{enumerate}
+\item Les échantillons doivent être indépendants, normalement distribués et avoir la même variance $\sigma^2$.
+
+\item L'estimation combinée de la variance est donnée par
+$$
+s^2 = \frac{(n-1) s_n^2 + (m-1)s_m^2}{n+m-2} = \frac{3\times 0,001 + 4 \times 0,002}{4+5-2} = \Sexpr{round((3*0.001 + 4*0.002)/7,5)}.
+$$
+Le quantile $97,5$\% de la loi de Student avec $n+m-2=7$ degrés de liberté est
+$$
+t_{0,025, \, 7} = \Sexpr{round(qt(0.975,df=7),3)}.
+$$
+L'intervalle de confiance à 95~\% est donc donné par
+\begin{multline*}
+\left[\bar x_n - \bar y_m - t_{0,025, \, 7} s \sqrt{\frac{1}{n} + \frac{1}{m}} \, , \bar x_n - \bar y_m + t_{0,025, \, 7} s \sqrt{\frac{1}{n} + \frac{1}{m}}\right] \\ = \left[0,22 - 0,17 - t_{0,025, \, 7} s \sqrt{\frac{1}{4} + \frac{1}{5}}, 0,22 - 0,17 + t_{0,025, \, 7} s \sqrt{\frac{1}{4} + \frac{1}{5}}\right] \\= [\Sexpr{round(0.22-0.17-qt(0.975,df=7)*sqrt((3*0.001 + 4*0.002)/7)*sqrt(1/4+ 1/5),5)} \, ,\Sexpr{round(0.22-0.17+qt(0.975,df=7)*sqrt((3*0.001 + 4*0.002)/7)*sqrt(1/4+ 1/5),5)}].
+\end{multline*}
+
+\item Puisque $0$ est inclus dans l'intervalle de confiance bilatéral calculé en b), les moyennes ne semblent pas différer à un seuil de 5~\%.
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+Dans une étude sur la relation entre l'ordre de naissance et la réussite scolaire, un chercheur a trouvé que $126$ étudiants gradués sur un échantillon de $180$ étaient enfants ainés. Dans un échantillon de $100$ personnes non graduées d'âge et de situation socio-économique comparable, le nombre d'ainés étaient de $54$.
+\begin{enumerate}
+\item Construire un intervalle de confiance bilatéral approximatif à $90$~\% pour la différence entre les proportions d'ainés pour les deux populations desquelles proviennent les échantillons.
+\item Basé sur l'intervalle en a), est-ce que la différence entre les proportions d'ainés des deux populations semble significative?
+\item Si les chercheurs souhaitent questionner un nombre égal $n$ d'étudiants gradués et de personnes non graduées, quelle est la valeur minimale de $n$ requise pour estimer la différence entre les proportions avec une erreur inférieure ou égale à $\pm 0.05$ avec un niveau de confiance de $90$~\% ?
+\end{enumerate}
+
+\begin{rep}
+\begin{enumerate}
+\item $(\Sexpr{round(0.16 -qnorm(0.95)*sqrt((0.7*0.3)/180 + (0.54*0.46)/100),5)}, \, \Sexpr{round(0.16 +qnorm(0.95)*sqrt((0.7*0.3)/180 + (0.54*0.46)/100),5)})$
+\item Non
+\item $n \geq 542$
+\end{enumerate}
+\end{rep}
+
+\begin{sol}
+\begin{enumerate}
+\item Les proportions échantillonnales sont 
+$$
+p_n = \frac{126}{180}=0,7, \quad q_m = \frac{54}{100}=0,54.
+$$
+Les tailles d'échantillons sont respectivement de $n=180$ et $m=100$. Puisque les deux sont assez grandes, une approximation d'un intervalle de confiance à $90$~\% peut être utilisée pour $p-q$. On trouve
+$$
+\left[ p_n - q_m - z_{0,05} \sqrt{\frac{p_n(1-p_n)}{n} + \frac{q_m(1-q_m)}{m}},  p_n - q_m + z_{0,05} \sqrt{\frac{p_n(1-p_n)}{n} + \frac{q_m(1-q_m)}{m}}\right].
+$$
+Le quantile $95$~\% d'une loi $\mathcal{N}(0,1)$ est
+$$
+z_{0,05} = \Sexpr{round(qnorm(0.95),3)}.
+$$
+L'intervalle de confiance devient
+\begin{multline*}
+\left [0.16 - \Sexpr{round(qnorm(0.95),3)}\sqrt{\frac{0.7 \times 0.3}{180} + \frac{0.54\times 0.46}{100}} \, , 0.16 + \Sexpr{round(qnorm(0.95),3)}\sqrt{\frac{0.7 \times 0.3}{180} + \frac{0.54\times 0.46}{100}}\right] \\ = [\Sexpr{round(0.16 -qnorm(0.95)*sqrt((0.7*0.3)/180 + (0.54*0.46)/100),5)},\Sexpr{round(0.16 +qnorm(0.95)*sqrt((0.7*0.3)/180 + (0.54*0.46)/100),5)}].
+\end{multline*}
+
+\item Puisque l'intervalle de confiance calculé en a) ne contient pas $0$, la proportion d'enfants ainés semble être significativement plus grande dans la population d'étudiants gradués au niveau de confiance $90$~\%.
+
+\item En supposant $n=m$, la taille d'échantillon de chaque groupe peut être calculée en résolvant l'équation
+$$
+\Sexpr{round(qnorm(0.95),3)}\sqrt{\frac{p(1-p)}{n} + \frac{q(1-q)}{n}} = 0,05.
+$$
+On trouve
+$$
+n = \left(\frac{\Sexpr{round(qnorm(0.95),3)}}{0.05}\right)^2 \{ p(1-p)+ q(1-q)\}.
+$$
+Sachant que pour tout $p\in(0,1)$, $p(1-p) \le 1/4$, une estimation conservatrice des tailles d'échantillon requises est
+$$
+n = m=  \left(\frac{\Sexpr{round(qnorm(0.95),3)}}{0.05}\right)^2 \times \left(\frac{1}{4} + \frac{1}{4} \right) \approx \Sexpr{0.5*round(qnorm(0.95),3)^2/0.05^2}.
+$$
+Ainsi, pour atteindre la précision requise, chaque groupe doit comprendre au moins $542$ personnes.
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+Soit $X_1,\ldots,X_n$ un échantillon aléatoire d'une distribution exponentielle avec densité
+$$
+f(x)=\lambda e^{-\lambda x}, \quad x>0.
+$$
+\begin{enumerate}
+\item Écrire la vraisemblance, la log-vraisemblance et l'EMV de $\lambda$.
+\item Calculer l'information de Fisher $I(\lambda)$.
+\item Si $m=100$ et $\bar x=105,2$, utiliser la distribution limite de l'EMV pour obtenir un intervalle de confiance approximatif à $95$\% pour $\lambda$.
+\item Basé sur l'intervalle trouvé en c), obtenir un intervalle de confiance approximatif de niveau $95$~\% pour la probabilité $\Pr[X>300]$, où $X$ est indépendant de $X_1,\ldots,X_n$ et a la même distribution.
+\end{enumerate}
+\begin{rep}
+c) $[\Sexpr{round(1/105.2-1.96*sqrt(1/100/105.2^2),5)},\Sexpr{round(1/105.2+1.96*sqrt(1/100/105.2^2),5)}]\quad$ 
+d) $[\Sexpr{round(exp(-300*(1/105.2+1.96*sqrt(1/100/105.2^2))),5)},\Sexpr{round(exp(-300*(1/105.2-1.96*sqrt(1/100/105.2^2))),5)}]$
+\end{rep}
+
+\begin{sol}
+\begin{enumerate}
+\item La vraisemblance est
+$$
+L(\lambda)=\prod_{i=1}^n \lambda e^{-\lambda x_i} = \lambda^n e^{-\lambda\sum_{i=1}^n x_i}
+$$
+et la log-vraisemblance est
+$$
+\ell(\lambda)=n\ln\lambda-\lambda\sum_{i=1}^n x_i.
+$$
+Si on dérive par rapport à $\lambda$, on trouve
+$$
+\ell'(\lambda)=\frac{n}{\lambda}-\sum_{i=1}^n x_i
+$$
+et $\ell''(\lambda)=-n/\lambda^2<0$, donc l'estimateur du maximum de vraisemblance est
+$$
+\frac{n}{\hat\lambda}-\sum_{i=1}^n x_i=0 \quad \Rightarrow \hat\lambda=\frac{1}{\bar x_n}.
+$$ 
+
+\item On a $\ln f(X;\lambda) = \ln\lambda-\lambda X$ donc l'information de Fisher est
+\begin{align*}
+I(\lambda)&=\ex\left[-\frac{\partial^2}{\partial\lambda^2} \ln f(X;\lambda) \right]=\ex\left[-\frac{\partial^2}{\partial\lambda^2} \left(\ln\lambda-\lambda X \right)\right]=\ex\left[\frac{1}{\lambda^2} \right] =\frac{1}{\lambda^2}.
+\end{align*}
+
+\item La distribution limite de l'EMV est
+$$
+\frac{\hat\lambda_n-\lambda}{\sqrt{1/\{nI(\lambda)\}}}
+$$
+est asymptotiquement $\mathcal{N}(0,1)$. On peut estimer $nI(\lambda)$ au dénominateur par $nI(\hat\lambda)=\frac{n}{\hat\lambda^2}$, pour obtenir, quand $n\to\infty$,
+$$
+\frac{\hat\lambda-\lambda}{\hat\lambda/\sqrt{n}}
+$$
+est asymptotiquement $\mathcal{N}(0,1)$. D'une autre façon, on peut estimer $nI(\lambda)$ par
+$$
+-\left.\frac{\partial^2}{\partial\lambda^2} \ell(\lambda)\right|_{\lambda=\hat\lambda}=\frac{n}{\hat\lambda^2},
+$$
+ce qui revient à la même réponse. Sachant que $z_{2,5\%}=\Sexpr{round(qnorm(0.975),3)}$ et $\hat\lambda=1/\bar x=1/105,2$, un intervalle de confiance approximatif de niveau 95~\% pour $\lambda$ est
+\begin{align*}
+\left[\hat\lambda-z_{\alpha/2}\sqrt{\frac{\hat\lambda^2}{n}},\hat\lambda+z_{\alpha/2}\sqrt{\frac{\hat\lambda^2}{n}}\right]&=\left[\frac{1}{\bar x_n}-z_{\alpha/2}\frac{1}{\sqrt{n}\bar x_n}, \frac{1}{\bar x_n}+z_{\alpha/2}\frac{1}{\sqrt{n}\bar x_n}\right]\\
+&=\left[\frac{1}{105.2}-\frac{1.96}{10\times105.2},\frac{1}{105.2}+\frac{1.96}{10\times105.2}\right]\\
+&=\left[\Sexpr{round(1/105.2-1.96*sqrt(1/100/105.2^2),5)},\Sexpr{round(1/105.2+1.96*sqrt(1/100/105.2^2),5)}\right].
+\end{align*}
+
+\item Le paramètre d'intérêt est $\theta=\Pr[X>300]=e^{-300\lambda}$. On a
+\begin{align*}
+\Pr\left[\frac{1}{\bar X_n}-z_{\alpha/2}\frac{1}{\sqrt{n}\bar X_n}\leq \lambda \leq \frac{1}{\bar X_n}+z_{\alpha/2}\frac{1}{\sqrt{n}\bar X_n}\right]\approx 0,95.
+\end{align*}
+Multiplier l'inégalité par $-300$ change le signe d'inégalité, alors que l'exponentielle est une fonction croissante, donc
+\begin{align*}
+\Pr\left[\exp\left\{-300\left(\frac{1}{\bar X_n}-z_{\alpha/2}\frac{1}{\sqrt{n}\bar X_n}\right)\right\}\geq e^{-300\lambda} \geq \exp\left\{-300\left(\frac{1}{\bar X_n}+z_{\alpha/2}\frac{1}{\sqrt{n}\bar X_n}\right)\right\}\right]\approx 0,95.
+\end{align*}
+Donc, un intervalle de confiance de niveau approximatif $95$~\% pour $\Pr[X>300]$ est
+$$
+\left[\Sexpr{round(exp(-300*(1/105.2+1.96*sqrt(1/100/105.2^2))),5)},\Sexpr{round(exp(-300*(1/105.2-1.96*sqrt(1/100/105.2^2))),5)}\right].
+$$
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+
+\Closesolutionfile{solutions}
+\Closesolutionfile{reponses}
+%
+%\section*{Exercices proposés dans \cite{Wackerly:mathstat:7e:2008}}
+%
+%\begin{trivlist}
+%\item 8.39, 8.41, 8.43, 8.47, 8.57, 8.59, 8.63, 8.70, 8.72, 8.75, 8.77
+%\end{trivlist}
+
+
+%%%
+%%% Insérer les réponses
+%%%
+\input{reponses-intervalle}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "exercices_analyse_statistique"
+%%% coding: utf-8-unix
+%%% End:

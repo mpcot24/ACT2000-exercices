@@ -1,0 +1,188 @@
+\documentclass[letterpaper,11pt]{memoir}
+
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{natbib,url}
+  \usepackage[english,francais]{babel}
+  \usepackage[autolanguage]{numprint}
+
+  \usepackage{vgmath,vgsets,amsmath,icomma}
+  \usepackage{lucidabr,pslatex}
+  \usepackage[sc]{mathpazo}
+  \usepackage{graphicx,color}
+  \usepackage[absolute]{textpos}
+  \usepackage{answers}
+  \usepackage[alwaysadjust,defblank]{paralist}
+
+  \usepackage{rotating,lscape} % table de loi F
+
+  %%% Hyperliens
+  \usepackage{hyperref}
+  \definecolor{link}{rgb}{0,0,0.3}
+  \hypersetup{
+    pdftex,
+    colorlinks,%
+    citecolor=link,%
+    filecolor=link,%
+    linkcolor=link,%
+    urlcolor=link}
+
+  %%% Page titre
+  \title{\HUGE
+    \fontseries{ub}\selectfont Analyse statistique des risques actuariels \\[0.5\baselineskip]
+    \huge\fontseries{m}\selectfont Exercices et solutions}
+  \author{\LARGE Marie-Pier C\^ot\'e \\[3mm]
+    \large École d'actuariat \\ Université Laval}
+  \date{Première édition préliminaire}
+  \newcommand{\ISBN}{}
+
+  %%% Sous-figures
+%  \newsubfloat{figure}
+
+%% MP: marges plus larges
+\setlrmarginsandblock{3.5cm}{3cm}{*}
+\setulmarginsandblock{3.5cm}{3cm}{*}
+\checkandfixthelayout
+
+
+  %%% Style des entêtes de chapitres
+  \chapterstyle{hangnum}
+
+  %%% Styles des entêtes et pieds de page 
+  \setlength{\marginparsep}{1mm}
+  \setlength{\marginparwidth}{1mm}
+  \setlength{\headwidth}{\textwidth}
+  \addtolength{\headwidth}{\marginparsep}
+  \addtolength{\headwidth}{\marginparwidth}
+
+  %%% Style de la bibliographie
+  %\bibliographystyle{francais}
+   \bibliographystyle{plain}
+
+  %%% Options de babel
+  \frenchbsetup{CompactItemize=false,%
+    ThinSpaceInFrenchNumbers=true}
+  \addto\captionsfrench{\def\tablename{{\scshape Tab.}}}
+  \addto\captionsfrench{\def\figurename{{\scshape Fig.}}}
+
+  %%% Associations entre les environnements et les fichiers
+  \Newassociation{sol}{solution}{solutions}
+  \Newassociation{rep}{reponse}{reponses}
+
+  %%% Environnement pour les exercices
+  \newcounter{exercice}[chapter]
+  \newenvironment{exercice}{%
+     \begin{list}{\bfseries \arabic{chapter}.\arabic{exercice}}{%
+         \refstepcounter{exercice}
+         \settowidth{\labelwidth}{\bfseries \arabic{chapter}.\arabic{exercice}}
+         \setlength{\leftmargin}{\labelwidth}
+         \addtolength{\leftmargin}{\labelsep}
+         \setdefaultenum{a)}{i)}{}{}}\item}
+     {\end{list}}
+
+  %%% Environnement pour les réponses
+  \renewenvironment{reponse}[1]{%
+    \begin{list}{\bfseries #1}{%
+        \settowidth{\labelwidth}{#1}
+        \setlength{\leftmargin}{\labelwidth}
+        \addtolength{\leftmargin}{\labelsep}
+        \setdefaultenum{a)}{i)}{}{}}\item}
+    {\end{list}}
+  \renewcommand{\reponseparams}{{\thechapter.\theexercice}}
+
+  %%% Environnement pour les solutions
+  \renewenvironment{solution}[1]{%
+    \begin{list}{\bfseries #1}{%
+        \settowidth{\labelwidth}{#1}
+        \setlength{\leftmargin}{\labelwidth}
+        \addtolength{\leftmargin}{\labelsep}
+        \setdefaultenum{a)}{i)}{}{}}\item}
+    {\end{list}}
+  \renewcommand{\solutionparams}{{\thechapter.\theexercice}}
+
+  %%% Nouvelles commandes
+  \newcommand{\cov}[1]{\mathrm{cov} ( #1 )}
+  \renewcommand{\Cov}[1]{\mathrm{cov}\! \left( #1 \right)}
+  \newcommand{\prob}[1]{\mathrm{Pr} [ #1 ]}
+  \newcommand{\Prob}[1]{\mathrm{Pr}\! \left[ #1 \right]}
+  \newcommand{\MSE}{\mathrm{MSE}}
+  
+  \DeclareMathOperator{\sign}{sign}
+  \DeclareMathOperator{\vr}{var}
+  \DeclareMathOperator{\sd}{sd}
+  \DeclareMathOperator{\ex}{E}
+  \renewcommand{\d}{\mbox{d}}
+
+
+  %%% Un petit peu d'aide pour la césure
+  \hyphenation{con-fiance}
+  \hyphenation{con-train-te}
+
+\begin{document}
+
+\frontmatter
+
+\pagestyle{empty}
+\include{pagetitre}
+
+
+\pagestyle{companion}
+
+\include{introduction}
+%\include{notation}
+
+\cleardoublepage
+\tableofcontents*
+
+\mainmatter
+
+
+%\include{rappels}
+
+<<child='base.Rnw'>>=
+@
+
+<<child='echantillonnage.Rnw'>>=
+@
+
+<<child='estimation.Rnw'>>=
+@
+
+<<child='ajustement.Rnw'>>=
+@
+
+<<child='intervalle.Rnw'>>=
+@
+
+<<child='tests.Rnw'>>=
+@
+
+
+\appendix
+\include{tables}
+
+\include{solutions}
+
+\nocite{Hogg:mathstat:6e:2005,
+  Hogg:probstat:2001,
+  Mood:mathstat:1974,
+  Freund:mathstat:1992}
+\bibliography{stat}
+
+\cleardoublepage
+\cleartoverso
+
+\pagestyle{empty}
+
+\bandeverso
+\begin{textblock*}{71mm}(135mm, -50mm)
+  \textblockcolor{}
+  % \includegraphics{codebarre}
+\end{textblock*}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,1162 @@
+\chapter{Tests}
+\label{chap:tests}
+
+\Opensolutionfile{reponses}[reponses-tests]
+\Opensolutionfile{solutions}[solutions-tests]
+
+\begin{Filesave}{reponses}
+\bigskip
+\section*{Réponses}
+
+\end{Filesave}
+
+\begin{Filesave}{solutions}
+\section*{Chapitre \ref{chap:tests}}
+\addcontentsline{toc}{section}{Chapitre \protect\ref{chap:tests}}
+
+\end{Filesave}
+
+<<echo=FALSE>>=
+options(width = 55)
+@
+
+
+%%%
+%%% Début des exercices
+%%%
+
+\begin{exercice}
+Soit une proportion $p$ inconnue d'objets défectueux dans une grande population d'objets. On souhaite tester les hypothèses suivantes:
+\begin{align*}
+        \mathcal{H}_0 &: p = 0,2 \\
+        \mathcal{H}_1 &: p \ne 0,2.
+\end{align*}
+On suppose qu'un échantillon aléatoire de $n=20$ objets est tiré de la population. Soit $X$ le nombre d'objets défectueux dans l'échantillon aléatoire, on considère un test d'hypothèse qui rejette l'hypothèse nulle si $X \ge 7$ ou $X \le 1$. 
+\begin{enumerate}
+\item Est-ce que les hypothèses sont simples ou composites? Expliquer.
+\item Quelle est la région critique du test?
+\item Calculer la taille du test et la probabilité de faire une erreur de type I.
+\item Calculer la valeur de la fonction de puissance $\Pi(p)$ aux points
+$$
+p\in\{0,\,\, 0,1,\,\, 0,2,\,\, 0,3,\,\, 0,4,\,\, 0,5,\,\, 0,6,\,\, 0,7,\,\, 0,8,\,\, 0,9,\,\, 1\}
+$$ 
+et tracer la fonction de puissance en utilisant R ou Excel. Quel est le lien entre la fonction de puissance et les probabilités d'erreur de type I et II?
+\item Refaire (d) avec une taille d'échantillon de $n=50$ et $n=100$. Est-ce que le test semble bon?
+\item Suggérer une modification au test pour qu'il demeure significatif avec une taille d'échantillon différente de $20$.
+\end{enumerate}
+
+\begin{sol}
+\begin{enumerate}
+\item L'hypothèse nulle est simple étant donné que $\Theta_0 = \{ 0,2\}$ ne contient qu'une seule valeur. La contre-hypothèse est composite étant donné que $\Theta_1 = [0,\, 0,2) \cup (0,2,\, 1]$ contient plus d'une valeur de $\theta$.
+
+\item Les mesures $X_1, \ldots , X_{20}$ sont des variables aléatoires Bernoulli mutuellement indépendantes. La région critique est donc donnée par
+$$
+\mathcal{C} = \left\{ (x_1,\dots, x_{20}) \in \{0,1\}^n  :  x_1 + \dots + x_n \in \{ 0,1\} \cup \{7,\dots,20 \}\right \}.
+$$
+
+\item Parce que l'hypothèse nulle est simple, la taille du test et la probabilité d'erreur de type I sont les mêmes.
+$$
+\alpha =\Pr(X  \le 1, X \ge 7  |  p = 0,2). 
+$$
+Sous l'hypothèse nulle, $X = X_1 + \cdots + X_{20}$ est une distribution binomiale de taille $n=20$ et probabilité $p=0,2$. Ainsi, $\alpha$ peut être calculé comme suit:
+\begin{align*}
+\Pr(X  \le 1, X \ge 7) &= 1 - \Pr(2 \le X \ge 6) \\
+&= 1 - \sum_{x=2}^6 \Pr(X=x) \\
+&= 1 - 0,8441322 \\
+&= 0,1558678
+\end{align*}
+<<>>=
+pbinom(1,size=20,prob=0.2) + 1-pbinom(6,size=20,prob=0.2)
+@
+
+\item La fonction de puissance à $p_1\in [0,1]$ arbitraire est donnée par
+$$
+\Pi(p_1) = \Pr(X  \le 1, X \ge 7  |  p =p_1)
+$$
+et peut être calculée par le fait que $X \sim Bin(n=20, p=p_1)$. On répète la même démarche qu'en (c) en changeant la probabilité $p$ de la loi Binomiale pour chacune des valeurs de $p_1$. Avec \textsf{R}, on trouve
+<<>>=
+p <- seq(from=0,to=1,by=0.1)
+power <- pbinom(1,size=20,prob=p) + 1-pbinom(6,size=20,prob=p)
+power
+@
+La courbe de la fonction de puissance peut être tracée avec les points $(\Pi(p_1), p_1)$. En \textsf{R}, elle peut être tracée comme suit:
+<<fig.height=4,fig.width=5>>=
+plot(p,power,type="b")
+points(p,power,pch=16)
+@
+La puissance à $p=0,2$ est égale à la probabilité d'erreur de type I $\alpha$, alors que pour $ p \ne 0,2$, la probabilité d'erreur de type II $\beta$ est donnée par $1 - \Pi(p)$.
+
+\item La seule différence avec (d) est que maintenant $Y$ est une distribution binomiale de taille $n \in \{50,100\}$. La fonction de puissance à $$
+p\in\{0,\,\, 0,1,\,\, 0,2,\,\, 0,3,\,\, 0,4,\,\, 0,5,\,\, 0,6,\,\, 0,7,\,\, 0,8,\,\, 0,9,\,\, 1\}
+$$ 
+pour $n=50$ et $n=100$ est calculée de la même façon qu'en (d) en changeant la taille $n$ de la loi Binomiale pour $50$ et $100$. En \textsf{R}, on trouve:
+<<>>=
+(power.50 <- pbinom(1,size=50,prob=p) + 1-pbinom(6,size=50,prob=p))
+(power.100 <- pbinom(1,size=100,prob=p) + 1-pbinom(6,size=100,prob=p))
+@
+De la même façon qu'en (d), le graphique ci-dessous trace les fonctions de puissance pour $n=5$ (en rouge) et $n=100$ (en bleu), avec la puissance pour $n=20$ (en noir).
+<<fig.height=4, fig.width=5>>=
+plot(p,power,type="b")
+points(p,power.50,type="b",col="red")
+points(p,power.100,type="b",col="blue")
+@
+Bien que la puissance se comporte bien si $p \ne 0,2$ (i.e., elle s'approche de 1), l'erreur de type I est complètement inacceptable: elle est aussi grande que $0,999$ quand $n=100$. Le test n'est pas du tout utile pour ces tailles d'échantillon.
+
+\item La région de rejet devra dépendre de $n$, puisque plus la taille d'échantillon augmente, plus d'objets défectueux seront présents sous $\mathcal{H}_0$, simplement car plus d'objets sont inspectés. Sous l'hypothèse nulle, le nombre total d'objets défectueux va être une distribution binomiale de taille $n$ avec probabilité $p=0,2$. Les valeurs critiques pourraient être choisies comme des quantiles de la distribution binomiale.
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+  \label{ex:tests:x1x2}
+  Soit $X$ une variable aléatoire dont la fonction de densité de
+  probabilité est
+  \begin{displaymath}
+    f(x; \theta) = \theta x^{\theta - 1}, \quad 0 < x < 1.
+  \end{displaymath}
+  On suppose que $\theta$ peut prendre exclusivement les valeurs
+  $\theta = 1$ ou  $\theta = 2$.
+  \begin{enumerate}
+  \item Trouver une statistique exhaustive pour le paramètre $\theta$
+    de cette distribution.
+  \item On teste l'hypothèse $ \mathcal{H}_0: \theta = 1$ versus $ \mathcal{H}_1: \theta =
+    2$ à partir d'un échantillon aléatoire $X_1, X_2$. Si la région
+    critique est $C = \{(x_1, x_2); x_1 x_2 \geq 3/4\}$, calculer la
+    probabilité de faire une erreur de type I ($\alpha$) et la
+    probabilité de faire une erreur de type II ($\beta$).
+  \end{enumerate}
+  \begin{rep}
+    \begin{enumerate}
+    \item $\prod_{i = 1}^n X_i$
+    \item $\alpha = 0,034$, $\beta = 0,886$
+    \end{enumerate}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item On a
+      \begin{align*}
+        f(x_1, \dots, x_n;\theta) &= \prod_{i=1}^n f(x_i;\theta) \\
+        &= \theta^n\prod_{i=1}^nx_i^{\theta-1} \\
+        &= \left(
+          \theta^n \prod_{i=1}^n x_i^\theta
+        \right)
+        \left(
+          \prod_{i=1}^n x_i^{-1}
+        \right) \\
+        &= g(t(x_1, \dots, x_n); \theta) h(x_1, \dots, x_n),
+      \end{align*}
+      où
+      \begin{align*}
+        g(y; \theta) &= \theta^n y^n \\
+        t(x_1, \dots, x_n) &= \prod_{i=1}^n x_i \\
+        h(x_1, \dots, x_n) &= \prod_{i=1}^n x_i^{-1}.
+      \end{align*}
+      Ainsi, par le théorème de factorisation de Fisher--Neyman, $T(X_1, \dots, X_n) = \prod_{i = 1}^n X_i$ est une
+      statistique exhaustive pour $\theta$.
+    \item D'une part, l'erreur de type I consiste à rejeter
+      l'hypothèse $ \mathcal{H}_0$ alors qu'elle est vraie. La probabilité de
+      faire ce type d'erreur, notée $\alpha$, correspond donc à la probabilité que
+      la statistique du test se retrouve dans la région critique
+      lorsque l'hypothèse $ \mathcal{H}_0$ est vraie. On a donc
+      \begin{align*}
+        \alpha &= \Prob{X_1X_2 \geq \frac{3}{4}; \theta = 1} \\
+        &= \iint_C f_{X_1 X_2}(x_1, x_2; 1)\, dx_2 dx_1,
+      \end{align*}
+      où $C = \{(x_1, x_2); x_1 x_2 \geq 3/4\}$. Or, 
+      $$
+      f_{X_1 X_2}(x_1,
+      x_2; \theta) = f_{X_1}(x_1; \theta) f_{X_2}(x_2; \theta) =
+      \theta^2 x_1^{\theta - 1} x_2^{\theta - 1},
+      $$ 
+      d'où $f_{X_1
+        X_2}(x_1, x_2; 1) = 1$, $0 < x_1, x_2 < 1$. La région critique
+      $C$ est représentée à la figure~\ref{fig:tests:x1x2}.
+      \begin{figure}
+        \centering
+<<echo=FALSE, fig=TRUE, out.width = "0.6\\textwidth">>=
+plot(0:1, 0:1, pch = NA,
+     xlab = expression(x[1]), ylab = expression(x[2]))
+rect(0, 0, 1, 1, lwd = 2)
+x <- seq(0.75, 1, len = 101)
+y <- 0.75/x
+polygon(c(x, 1), c(y, 1), density = 10)
+@
+        \caption{Domaine de définition de la densité conjointe des
+          variables $X_1$ et $X_2$ de
+          l'exercice~\ref{chap:tests}.\ref{ex:tests:x1x2}. La zone
+          hachurée est la région critique $C = \{(x, y); x y \geq
+          3/4\}$ du test d'hypothèse.}
+        \label{fig:tests:x1x2}
+      \end{figure}
+      Ainsi,
+      \begin{align*}
+        \alpha
+        &= \int_{3/4}^1 \int_{3/(4 x_1)}^1 \,dx_2\,dx_1 \\
+        &= \int_{3/4}^1
+        \left(
+          1 - \frac{3}{4x_1}
+        \right)\, dx_1 \\
+        &= \frac{1}{4} + \frac{3}{4} \ln \frac{3}{4} \\
+        &\approx 0,034.
+      \end{align*}
+
+      D'autre part, l'erreur de type II consiste à ne pas rejeter
+      l'hypothèse $ \mathcal{H}_0$ alors qu'elle est fausse. La valeur $\beta$
+      est donc la probabilité que la statistique se retrouve à
+      l'extérieur de la région critique lorsque l'hypothèse $ \mathcal{H}_0$ est
+      fausse, c'est-à-dire
+      \begin{align*}
+        \beta &= \Prob{X_1 X_2 < \frac{3}{4}; \theta = 2} \\
+        &= 1 - \Prob{X_1 X_2 \geq \frac{3}{4}; \theta = 2}\\
+        &= 1 - \iint_C f_{X_1 X_2}(x_1, x_2; 2)\, dx_2 dx_1.
+      \end{align*}
+      Dès lors, puisque $f_{X_1 X_2}(x_1, x_2; 2) = 4 x_1 x_2$,
+      \begin{align*}
+        \beta
+        &= 1 - \int_{3/4}^1 \int_{3/(4x_1)}^1 4 x_1 x_2\, dx_2\, dx_1\\
+        &= \frac{9}{16} - \frac{9}{8}\ln \frac{3}{4} \\
+        &\approx 0,886.
+      \end{align*}
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice} 
+Soit $X_1, \dots, X_n$ un échantillon aléatoire tiré d'une distribution Poisson avec paramètre $\lambda$ inconnu. Soit $\lambda_0$ et $\lambda_1$ des valeurs spécifiques telles que $0 < \lambda_0 < \lambda_1$ et on souhaite tester les hypothèses suivantes:
+\begin{align*}
+\mathcal{H}_0 \: : \: \lambda & = \lambda_0, \\
+\mathcal{H}_1 \: : \: \lambda & = \lambda_1.
+\end{align*}
+[\emph{On sait que si $Z_1 \sim \mathcal{P}(\mu_1)$ est indépendante de $Z_2 \sim \mathcal{P}(\mu_2)$, alors $Z_1 +Z_2 \sim \mathcal{P}(\mu_1 + \mu_2)$.}]
+
+\begin{enumerate}
+\item Montrer que le test optimal au seuil $\alpha$ rejette $\mathcal{H}_0$ quand $\bar X_n > c$. Spécifier la valeur de $c$.
+
+\item Montrer que le test $\delta$ qui minimise $\alpha(\delta) + \beta(\delta)$ rejette $\mathcal{H}_0$ quand $\bar X_n > c^\star$. Trouver la valeur de $c^\star$.
+
+\item On suppose que $n=20$, $\lambda_0 = 1/20$ et $\lambda_1=1/10$. Calculer la valeur de la constante $c$ en a) quand $\alpha = 0,08$ et calculer les probabilités d'erreur de type I et II.
+
+\item On suppose que $n=20$, $\lambda_0 = 1/20$ et $\lambda_1=1/10$. Calculer la valeur de $c^\star$ en b) et déterminer la valeur minimale que peut atteindre $\alpha(\delta) + \beta(\delta)$. Quelles sont les probabilités d'erreur de type I et II?
+\end{enumerate}
+
+\begin{sol}
+\begin{enumerate}
+\item Ici, la fonction de distribution de l'échantillon est donnée par
+$$
+f(\boldsymbol{x}; \lambda) = e^{-\lambda n} \frac{\lambda^{x_1 + \dots + x_n}}{x_1! \times \dots \times x_n!}
+$$
+et le rapport de vraisemblance est
+$$
+\frac{f(\boldsymbol{x}; \lambda_1)}{f(\boldsymbol{x}; \lambda_0)} = e^{-\lambda_1 n + \lambda_0 n} \left(\frac{\lambda_1}{\lambda_0}\right)^{x_1 + \dots + x_n} = \exp\left\{ -(\lambda_1 - \lambda_0)n + n \bar x_n \ln\left(\frac{\lambda_1}{\lambda_0}\right) \right\}.
+$$
+Parce que les hypothèses sont simples, le Lemme de Neyman--Pearson dit que le test optimal rejette l'hypothèse nulle si pour une valeur critique $k>0$,
+$$
+\frac{f(\boldsymbol{x}; \lambda_1)}{f(\boldsymbol{x}; \lambda_0)} > \frac{1}{k}
+$$
+ce qui est équivalent à
+$$ 
+\exp\left\{ -(\lambda_1 - \lambda_0)n + n \bar x_n \ln\left(\frac{\lambda_1}{\lambda_0}\right) \right\} > \frac{1}{k}.
+$$
+Prendre le logarithme des deux côtés de l'inégalité donne
+$$
+\bar x_n > \underbrace{\frac{-\ln(k)/n + (\lambda_1 -\lambda_0)}{\ln(\lambda_1) - \ln(\lambda_0)}}_{=c}.
+$$
+Sous l'hypothèse nulle, on note que $n\bar X_n = X_1 + \dots + X_n$ est une distribution Poisson avec moyenne $n\lambda_0$. Ainsi, la valeur $c$ devrait être choisie telle que
+$$
+\Pr( n \bar X_n > nc  |  \lambda = \lambda_0) = \alpha
+$$
+pour un seuil $\alpha$, c'est-à-dire que $nc$ est le quantile $1-\alpha$ de la distribution Poisson avec moyenne $n\lambda_0$. À noter que le seuil de signification ne sera peut-être pas exact étant donné que la distribution Poisson est discrète.
+
+\item Ici, le test optimal rejette l'hypothèse nulle si
+$$
+\frac{f(\boldsymbol{x}; \lambda_1)}{f(\boldsymbol{x}; \lambda_0)} = \exp\left\{ -(\lambda_1 - \lambda_0)n + n \bar x_n \ln\left(\frac{\lambda_1}{\lambda_0}\right) \right\} > 1,
+$$
+c'est-à-dire lorsque 
+$$
+\bar x_n > \underbrace{\frac{\lambda_1 -\lambda_0}{\ln(\lambda_1) - \ln(\lambda_0)}}_{=c^*}.
+$$
+
+\item Si $n=20$ et $\lambda_0 = 1/20$, $n\bar X_n$ est une loi de Poisson avec moyenne $1$ sous l'hypothèse nulle. Le quantile de niveau $1-0,08 = 0,92$ de cette distribution est $2$ puisque
+\begin{center}
+\begin{tabular}{lcc}
+$x$ & $\Pr(n\bar X_n =x)$ & $\Pr(n\bar X_n \leq x)$ \\
+$0$ & $0,368$ & $0,368$ \\
+$1$ & $0,368$ & $0,736$ \\
+$2$ & $0,184$ & $0,920$ \\
+\end{tabular}
+\end{center}
+%<<>>=
+%qpois(0.932,lambda=5)
+%@
+Parce que 
+\begin{align*}
+\Pr( n \bar X_n > nc  |  \lambda = \lambda_0) &= \alpha \\
+1-\Pr( n \bar X_n \leq nc  |  \lambda = \lambda_0) &= \alpha 
+\end{align*}
+%<<>>=
+%round(1- ppois(8,lambda=5),3)
+%@
+la valeur critique $c$ égale  $2/20 = 0,1$ et le test rejette $\mathcal{H}_0$ si $n \bar X_n > 2$. La probabilité d'erreur de type I est donc
+$$
+\Pr(n\bar X_n > 2  |  \lambda = 1/20) = 0,08.
+$$
+La probabilité d'erreur de type II est donnée par
+$$
+\Pr(n \bar X_n \le 2  |  \lambda =1/10) = 0,6766764
+$$
+et peut être calculée par le fait que quand $\lambda =1/10$, $n\bar X_n$ est une loi de Poisson avec moyenne $2$.
+
+%<<>>=
+%round(ppois(8,lambda=10),3)
+%@
+
+\item Ici, la valeur de $c^\star$ est donnée par
+$$
+\frac{\lambda_1 -\lambda_0}{\ln(\lambda_1) - \ln(\lambda_0)} = \frac{1/20}{\ln(1/10) - \ln(1/20)} = \Sexpr{round(0.05/(log(0.1) - log(0.05)),5)},
+$$
+donc le test rejette l'hypothèse nulle si
+$$
+n\bar X_n > nc^* = 20\times \Sexpr{round(0.05/(log(0.1) - log(0.05)),5)} = \Sexpr{round(20*0.05/(log(0.1) - log(0.05)),5)},
+$$
+i.e. si $n \bar X_n > 1$. La probabilité d'erreur de type I est
+$$
+\Pr(n \bar X_n > 1  |  \lambda =1/20) = \Sexpr{round(1-ppois(1,lambda=1),3)}.
+$$
+La probabilité d'erreur de type II est
+$$
+\Pr(n \bar X_n \le 1  |  \lambda =1/10) = \Sexpr{round(ppois(1,lambda=2),3)},
+$$
+et la valeur minimale que peut atteindre $\alpha(\delta) + \beta(\delta)$ est
+$$
+\alpha(\delta) + \beta(\delta) = \Sexpr{round(1-ppois(1,lambda=1),3)} + \Sexpr{round(ppois(1,lambda=2),3)} = \Sexpr{round(1-ppois(1,lambda=1),3)+round(ppois(1,lambda=2),3)}.
+$$
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+  On suppose que la durée de vie d'un pneu en kilomètres a une
+  distribution normale de moyenne $\nombre{30000}$ et d'écart type
+  $\nombre{5000}$. Le fabricant du nouveau pneu \emph{Super Endurator
+    X24} prétend que la durée de vie moyenne de ce pneu est bien
+  supérieure à $\nombre{30000}$~km. Afin de vérifier les prétentions
+  du fabricant, on testera $ \mathcal{H}_0: \mu \leq \nombre{30000}$ versus
+  la contre-hypothèse $ \mathcal{H}_1: \mu > \nombre{30000}$ à partir de $n$
+  observations indépendantes $x_1, \dots, x_n$. On rejettera $ \mathcal{H}_0$ si
+  $\bar{x} \geq c$. Trouver les valeurs de $n$ et de $c$ de sorte que
+  la probabilité de faire une erreur de type I en $\mu =
+  \nombre{30000}$ est $0,01$ et que la probabilité de faire une erreur
+  de type II en $\mu = \nombre{35000}$ est $0,02$.
+  \begin{rep}
+    $n = 19 \text{ ou } 20$, $c = \nombre{32658}$
+  \end{rep}
+  \begin{sol}
+    On sait que $\bar{X} \sim \mathcal{N}(\mu, 5000^2/n)$. Or,
+    \begin{align*}
+      \alpha &= \prob{\bar{X} \geq c; \mu = \nombre{30 000}} \\
+      &= 1 -
+      \Phi\left(
+        \frac{\sqrt{n}(c - \nombre{30000})}{\nombre{5000}}
+      \right) \\
+      \intertext{d'où}
+      z_\alpha &=
+      \frac{\sqrt{n}(c-\nombre{30000})}{\nombre{5000}}.
+    \end{align*}
+    De même,
+    \begin{align*}
+      \beta &= \prob{\bar{X} < c; \mu = \nombre{35000}}\\
+      &= \Phi\left(
+        \frac{\sqrt{n}(c - \nombre{35000})}{\nombre{5000}}
+      \right), \\
+      \intertext{d'où}
+      z_{1 - \beta} &=
+      \frac{\sqrt{n}(c-\nombre{35000})}{\nombre{5000}}.
+    \end{align*}
+    On trouve dans une table de la loi normale que $z_\alpha =
+    z_{0,01} = 2,326$ et que $z_{1 - \beta} = z_{0,98} = -2,05$. En
+    résolvant pour $n$ et $c$ le système à deux équations et deux
+    inconnues, on obtient $n = 19,15$ et $c = \nombre{32658}$. Aux
+    fins du test, on choisira donc une taille d'échantillon de $n =
+    19$ ou $n = 20$.
+  \end{sol}
+\end{exercice}
+
+
+\begin{exercice}
+  \label{ex:tests:filles}
+  On suppose que le poids en grammes des bébés à la naissance au Canada est distribué selon une loi normale de moyenne $\mu = \nombre{3315}$ et de variance $\sigma^2 = 525^2$, garçons et filles confondus. Soit $X$ le poids d'une fillette née au Québec. On suppose $X \sim \mathcal{N}(\mu_X, \sigma_X^2)$.
+ \begin{enumerate}
+ \item Donner l'expression de la statistique du test $ \mathcal{H}_0: \mu_X \le \nombre{3315}$ versus $ \mathcal{H}_1: \mu_X > \nombre{3315}$ (les bébés sont en moyenne plus gros au Québec) si $n = 11$ et $\alpha = 0,01$. (La valeur de $\sigma_X^2$ est inconnue ici.)
+ \item Calculer la valeur de la statistique et tirer une conclusion  si l'échantillon de poids de 11 fillettes nées au Québec est le suivant:
+    \begin{center}
+      \begin{tabular}{llllll}
+        \nombre{3119}, &
+        \nombre{2657}, &
+        \nombre{3459}, &
+        \nombre{3629}, &
+        \nombre{3345}, &
+        \nombre{3629}, \\
+        \nombre{3515}, &
+        \nombre{3856}, &
+        \nombre{3629}, &
+        \nombre{3345}, &
+        \nombre{3062}.
+      \end{tabular}
+    \end{center}
+ %\item À quel niveau de confiance maximal rejette-t-on $ \mathcal{H}_0$?
+ \item Énoncer la statistique du test et la région critique du test $ \mathcal{H}_0: \sigma_X^2 \ge 525^2$ versus $ \mathcal{H}_1: \sigma_X^2 < 525^2$ (moins de variation dans le poids des bébés nés au Québec) si $\alpha =  0,05$.
+ \item Calculer la statistique du test à partir des données de la partie b). Quelle est la conclusion à tirer de ce résultat?
+% \item Calculer le seuil observé du test sur la variance.
+ \end{enumerate}
+
+  \begin{rep}
+    \begin{inparaenum}
+      \stepcounter{enumi}
+    \item $t = 0,699 < t_{10, \, 0,01}$
+      \stepcounter{enumi}
+    \item $y = 4,104 > \chi_{10, \,0,05}^2$
+    \end{inparaenum}
+  \end{rep}
+  
+ \begin{sol}
+   \begin{enumerate}
+   \item Il s'agit d'un simple test sur une moyenne. La statistique
+      pour un petit échantillon est
+      \begin{align*}
+        T &= \frac{\bar{X} - \mu_X}{\sqrt{S^2/n}} = \frac{\bar{X} - \nombre{3315}}{\sqrt{S^2/11}} \sim t_{10}.
+      \end{align*}
+      On rejette $ \mathcal{H}_0$ si $t > t_{10, \,0,01} = 2,764$.
+   \item On commence par calculer les statistiques $\bar{X}$ et $S_X^2$,
+   $$
+   \bar{X} = 3385,91 \quad \mbox{ et } \quad S_X^2 = \nombre{113108,49}.
+   $$
+   On trouve que $t = 0,699 < t_{10, \,0,01} = 2,764$, on ne rejette donc pas $ \mathcal{H}_0$ à un seuil de signification de $1$~\%.
+ %\item Le niveau de confiance auquel on rejetterait $ \mathcal{H}_0$ est $1 - p = \Sexpr{format(1 - tx$p.value, dig = 4, dec = ",")}$. %$
+ 
+    \item On a un test unilatéral à gauche sur une variance pour lequel la statistique est
+      \begin{align*}
+        Y = \frac{(n-1) S^2}{\sigma^2} = \frac{(10) S^2}{525^2} \sim \chi^2_{10}.
+      \end{align*}
+      On rejette $ \mathcal{H}_0$ si $y < \chi_{10, \, 0,95}^2 = 3,94$.
+    \item Ici, $y = 4,104 > 3,94$. On ne rejette donc pas $ \mathcal{H}_0$.
+%   \item On a $p = \prob{Y < 4,103}$, où $Y \sim \chi^2(10)$. Or,
+%<<echo=TRUE>>=
+%pchisq(4.103, 10)
+%@
+%d'où le seuil observé du test sur la variance est %
+%   $\Sexpr{format(pchisq(4.103, 10), dig = 3, dec = ",")}$.
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $Y$ le poids en grammes d'un garçon né au Québec et
+  supposons que $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$. On a les
+  observations suivantes:
+  \begin{center}
+    \begin{tabular}{llllll}
+      \nombre{4082}, &
+      \nombre{3686}, &
+      \nombre{4111}, &
+      \nombre{3686}, &
+      \nombre{3175}, &
+      \nombre{4139}, \\
+      \nombre{3686}, &
+      \nombre{3430}, &
+      \nombre{3289}, &
+      \nombre{3657}, &
+      \nombre{4082}.
+    \end{tabular}
+  \end{center}
+  Refaire les questions de
+  l'exercice~\ref{chap:tests}.\ref{ex:tests:filles}. Les réponses
+  obtenues dans ces deux exercices suggèrent-elles d'autres hypothèses
+  à explorer? Faire les tests appropriés le cas échéant.
+
+  \begin{rep}
+    \begin{inparaenum}
+      \stepcounter{enumi}
+    \item $t = 4,028 > t_{10, \,0,01}$
+      \stepcounter{enumi}
+    \item $y = 4,223 > \chi_{10, \, 0,95}^2$
+    \item tests sur les moyennes et les variances
+    \end{inparaenum}
+  \end{rep}
+  
+ \begin{sol}
+   \begin{enumerate}
+    \item La statistique à utiliser est la même qu'à l'exercice~\ref{chap:tests}.\ref{ex:tests:filles}.
+    \item On commence par calculer les statistiques $\bar{Y}$ et $S_Y^2$,
+   $$
+   \bar{Y} = 3729,36 \quad \mbox{ et } \quad S_Y^2 = \nombre{116388,85}.
+   $$
+   On trouve que $t = 4,028 > t_{10, \,0,01} = 2,764$, on rejette donc $ \mathcal{H}_0$ à un seuil de signification de $1$~\%.
+    \item La statistique à utiliser est la même qu'à l'exercice~\ref{chap:tests}.\ref{ex:tests:filles}.
+    \item On a $y = 4,223 > 3,94$. On ne rejette donc pas $ \mathcal{H}_0$.
+    \item Les moyennes semblent être différentes entre les deux groupes, mais les variances égales. On commence par vérifier si le ratio des variances est près de $1$. On teste 
+       \begin{align*}
+         \mathcal{H}_0 &: \sigma_X^2 / \sigma_Y^2 = 1 \\
+         \mathcal{H}_1 &: \sigma_X^2 / \sigma_Y^2 \ne 1
+      \end{align*}
+      La statistique à utiliser pour ce test est
+      \begin{align*}
+      F = \frac{S_Y^2 / \sigma_Y^2}{S_X^2 / \sigma_X^2} \sim \mathcal{F}_{m-1, n-1}
+      \end{align*}
+      Avec les données des deux numéros, on trouve que $f = 0,97$. À un seuil de signification de $\alpha = 10$\%, on trouve $\mathcal{F}_{10, 10, \, 0,05} = 2,98$ et $\mathcal{F}_{10, 10, \, 0,95} = 0,34$. On ne rejette donc pas $\mathcal{H}_0$ au seuil de $10$\%. Ainsi, on peut tester
+      \begin{align*}
+         \mathcal{H}_0 &: \mu_X = \mu_Y \\
+         \mathcal{H}_1 &: \mu_X \ne \mu_Y
+      \end{align*}
+en supposant les variances égales. La statistique utilisée pour ce test est
+\begin{align*}
+W = \frac{(\bar{X} - \bar{Y}) - (\mu_X - \mu_Y)}{\sqrt{S_X^2/n+S_Y^2/m}} \sim t_{n+m-2}.
+\end{align*}
+
+Avec les données des deux numéros, on trouve que $w = -2,378$. À un seuil de signification de $\alpha = 5$\%, on trouve $t_{20, \, 0,025} = -2,086$ et $t_{20, \, 0,975} = 2,086$. On rejette donc $\mathcal{H}_0$ au seuil de $5$\%. On établit donc que les fillettes et les garçons nés au Québec ont un poids moyen différent les uns des autres.
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Parmi les statistiques relevées par l'Organisation mondiale de
+  la santé (OMS) on compte la concentration en $\mu g/m^3$ de
+  particules en suspension dans l'air. Soit $X$ et $Y$ les
+  concentrations en $\mu g/m^3$ de particules en suspension dans l'air
+  aux centres-villes de Melbourne (Australie) et Houston (Texas),
+  respectivement. À partir de $n = 13$ observations de la variable
+  aléatoire $X$ et $m = 16$ observations de la variable aléatoire $Y$,
+  on souhaite tester $ \mathcal{H}_0: \mu_X \ge \mu_Y$ versus $ \mathcal{H}_1: \mu_X < \mu_Y$.
+  \begin{enumerate}
+  \item Définir la statistique du test et la région critique en
+    supposant égales les variances des distributions de $X$ et
+    $Y$. Utiliser un seuil de signification de $5$~\%.
+  \item Si $\bar{x} = 72,9$, $s_X = 25,6$, $\bar{y} = 81,7$ et $s_Y =
+    28,3$, quelle est la conclusion pour ce test?
+  \item Calculer la valeur $p$ de ce test. Est-elle conforme à la
+    conclusion en b)?
+  \item Tester si l'hypothèse de variances égales faite en a) est
+    valide avec un niveau de confiance de $90$~\%.
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+    \item $T = [(\bar{X} - \bar{Y}) - (\mu_X - \mu_Y)]/\sqrt{((n-1)S_X^2 +
+            (m-1)S_Y^2) (n^{-1} + m^{-1})/(n + m - 2)}$, $T \sim
+        t(n + m - 2)$
+    \item $t = -0,838 > t_{0,05}(27)$
+    \item $p = \Sexpr{format(pt(-.838, 27), digits = 4, dec = ",")}$
+    \item $f = 0,8311 < f_{0,05}(12, 15)$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item Nous avons un test unilatéral à gauche sur la différence entre deux moyennes. En supposant égales les variances des deux populations, on a $X \sim \mathcal{N}(\mu_X, \sigma^2)$ et $Y \sim  \mathcal{N}(\mu_Y, \sigma^2)$. On sait que $\bar{X} \sim \mathcal{N}(\mu_X, \sigma^2/n)$ et $\bar{Y} \sim \mathcal{N}(\mu_Y, \sigma^2/m)$, d'où un estimateur de $\mu_X - \mu_Y$ sur lequel baser un test est
+      \begin{equation*}
+        \bar{X} - \bar{Y} \sim
+        \mathcal{N}\left(
+          \mu_X - \mu_Y, \frac{\sigma^2}{n} + \frac{\sigma^2}{m} \right).
+      \end{equation*}
+      La variance $\sigma^2$ est toutefois inconnue. Un estimateur de ce paramètre est l'estimateur combiné, soit la moyenne pondérée des estimateurs de chaque échantillon:
+      \begin{equation*}
+      S_p^2 = \frac{(n - 1) S_X^2 + (m - 1) S_Y^2}{n + m - 2}.
+      \end{equation*}
+      Or, $(n + m - 2) S_p^2/\sigma^2 \sim \chi^2(n + m - 2)$. Par conséquent,
+   \begin{align*}
+          T &= \frac{\D \frac{(\bar{X} - \bar{Y}) - (\mu_X-\mu_Y)}{%
+            \sigma \sqrt{n^{-1} + m^{-1}}}}{%
+          \D \sqrt{\frac{(n + m - 2) S_p^2}{\sigma^2}}} \\[6pt]
+        &= \frac{(\bar{X} - \bar{Y}) - (\mu_X-\mu_Y)}{%
+          \D\sqrt{\frac{(n-1) S_X^2 + (m-1) S_Y^2}{n + m - 2}
+            \left(
+              \frac{1}{n} + \frac{1}{m}
+            \right)}} \sim t(m + n - 2).
+      \end{align*}
+On rejette $ \mathcal{H}_0: \mu_X \ge \mu_Y$ en faveur de $ \mathcal{H}_1: \mu_X < \mu_y$ si $t \leq -t_{0,05}(n + m - 2)$.
+  \item Avec les données de l'énoncé, la valeur de la statistique développée en a) est $t = -0,838$, alors que le 95{\ieme} centile d'une loi $t$ avec $13 + 16 - 2 = 27$ degrés de liberté est $t_{0,05}(27) = 1,703$. Puisque $\abs{t} < 1,703$, on ne rejette pas $ \mathcal{H}_0$.
+
+\item On a $p = \prob{T < -0,838}$, où $T \sim t(27)$. À l'aide de \textsf{R}, on trouve
+<<echo=TRUE>>=
+pt(-0.838, df = 27)
+@
+      Puisque
+      $p = \Sexpr{format(pt(-.838, 27), digits = 4, dec = ",")} > 0,05$, on ne rejette pas $ \mathcal{H}_0$. La conclusion est évidemment la même qu'en a).
+
+ \item On souhaite tester l'égalité de deux variances, c'est-à-dire $ \mathcal{H}_0: \sigma_X^2 = \sigma_Y^2$ versus $ \mathcal{H}_1: \sigma_X^2 \ne \sigma_Y^2$. Pour ce faire, on se base sur le fait que 
+ $(n-1) S_X^2/\sigma_X^2 \sim \chi^2(n - 1)$ et que $(m-1) S_Y^2/\sigma_Y^2 \sim \chi^2(m - 1)$. Ainsi, sous $ \mathcal{H}_0$ (c'est-à-dire lorsque  $\sigma_X^2 = \sigma_Y^2$),
+      \begin{displaymath}
+        F = \frac{(n-1) S_X^2/(n - 1)}{(m-1) S_Y^2/(m - 1)} \sim F(n - 1, m - 1).
+      \end{displaymath}
+      On rejette $ \mathcal{H}_0$ si la valeur de la statistique est supérieure
+      au $100(1 - \alpha/2)${\ieme} centile d'une loi $F$ avec $n - 1$
+      et $m - 1$ degrés de liberté. Ici, on a $f = 0,8311$ et
+      $f_{0,05}(12, 15) = 2,48$, et pour l'autre côté, la valeur de $f_{0,95}(12, 15)$ (ou de $f_{0,05}(15, 12)$) n'est pas donnée dans la table, mais on peut la trouver avec \textsf{R} comme suit:
+<<>>=
+qf(0.05,12,15)
+@      
+     Puisque $\Sexpr{round(qf(0.05,12,15),2)} < 0,8311 < 2,48$,  on ne rejette donc pas $ \mathcal{H}_0$.
+    L'hypothèse des variances égales est donc raisonnable.
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+
+\begin{exercice}
+  Un fabricant de dentifrice prétend que $75~\%$ de tous les dentistes
+  recommandent son produit à ses patients. Sceptique, un groupe de
+  protection des consommateurs décide de tester $ \mathcal{H}_0: \theta = 0,75$
+  contre $ \mathcal{H}_1: \theta \ne 0,75$, où $\theta$ est la proportion de
+  dentistes recommandant le dentifrice en question. Un sondage auprès
+  de $390$ dentistes a révélé que $273$ d'entre eux recommandent
+  effectivement ce dentifrice.
+  \begin{enumerate}
+  \item Quelle est la conclusion du test avec un seuil de signification
+    de $\alpha = 0,05$?
+  \item Quelle est la conclusion du test avec un seuil de signification
+    de $\alpha = 0,01$?
+  \item Quel est le seuil observé du test?
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+    \item $z = -2,28$
+      \stepcounter{enumi}
+    \item $0,0226$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item Soit $X$ la variable aléatoire du nombre de dentistes qui
+      recommande le dentifrice parmi un groupe-test de 390 dentistes.
+      On a donc que $X \sim \text{Binomiale}(390, \theta)$ et on teste
+      \begin{align*}
+         \mathcal{H}_0 &: \theta = 0,75 \\
+         \mathcal{H}_1 &: \theta \ne 0,75.
+      \end{align*}
+      Il s'agit d'un test bilatéral sur une proportion avec un grand
+      échantillon. La statistique du test est
+      \begin{displaymath}
+        Z = \frac{\hat{\theta} - 0,75}{%
+          \sqrt{0,75 (1 - 0,75)/390}}
+      \end{displaymath}
+      et on rejette $ \mathcal{H}_0$ si $\abs{z} > z_{\alpha/2}$. Ici, on a
+      $\alpha = 0,05$, $\hat{\theta} = 273/390$, d'où $z = -2,28$.
+      Puisque $\abs{z} > z_{0,025} = 1,96$, on juge, à un seuil de
+      signification de 5~\%, que la proportion de dentistes qui
+      recommandent le dentifrice est suffisamment éloignée de la
+      prétention du fabricant pour rejetter l'hypothèse $ \mathcal{H}_0$.
+
+%      On peut vérifier les résultats ci-dessus avec la fonction
+%      \texttt{prop.test} de \textsf{R}:
+%<<echo=TRUE>>=
+%prop.test(273, n = 390, p = 0.75, correct = FALSE)
+%@
+%      On constate que la valeur test $\theta = 0,75$ ne se trouve pas
+%      dans l'intervalle de confiance à 95~\%, d'où le rejet de
+%      l'hypothèse $ \mathcal{H}_0$.
+    \item Puisque $z_{0,005} = 2,576 > 2,28$, on ne rejette pas
+      l'hypothèse  $ \mathcal{H}_0$ à un seuil de signification de 1~\%.
+%      D'ailleurs un intervalle de confiance à 99~\% nous est fourni
+%      par la fonction \texttt{prop.test}:
+%<<echo=TRUE>>=
+%prop.test(273, n = 390, p = 0.75, conf.level = 0.99,
+%          correct = FALSE)
+%@
+%      On constate que cet intervalle comprend la valeur $\theta =
+%      0,75$.
+    \item Le seuil observé est le plus grand seuil de signification auquel on
+      rejette $ \mathcal{H}_0$. Ainsi,
+      \begin{equation*}
+        p = 2 \prob{Z > 2,28} \approx 0,0226.
+      \end{equation*}
+      On rejette donc $ \mathcal{H}_0$ avec un niveau de confiance maximal de
+      $97,74$~\%. %Cette valeur $p$ apparaît dans les résultats de la fonction \texttt{prop.test} en a) et b).
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Soit $\theta$ la proportion de bonbons rouges dans une boîte de
+  Smarties. On prétend que $\theta = 0,20$.
+  \begin{enumerate}
+  \item Définir la statistique de test et la région critique avec un
+    seuil de signification de $5~\%$ pour le test
+    \begin{align*}
+        \mathcal{H}_0 &: \theta = 0,2 \\
+        \mathcal{H}_1 &: \theta \ne 0,2.
+	\end{align*}
+  \item Pour faire le test, les $20$ membres de la section locale des
+    Amateurs de Smarties Associés (ASA) ont chacun compté le nombres
+    de bonbons rouges dans une boîte de $50$ grammes de Smarties. Ils
+    ont obtenu les proportions suivantes:
+    \begin{gather*}
+      \frac{8}{56},  \quad
+      \frac{13}{55}, \quad
+      \frac{12}{58}, \quad
+      \frac{13}{56}, \quad
+      \frac{14}{57}, \quad
+      \frac{5}{54},  \quad
+      \frac{14}{56}, \quad
+      \frac{15}{57}, \quad
+      \frac{11}{54}, \quad
+      \frac{13}{55}, \\[12pt]
+      \frac{10}{57}, \quad
+      \frac{8}{59},  \quad
+      \frac{10}{54}, \quad
+      \frac{11}{55}, \quad
+      \frac{12}{56}, \quad
+      \frac{11}{57}, \quad
+      \frac{6}{54},  \quad
+      \frac{7}{58},  \quad
+      \frac{12}{58}, \quad
+      \frac{14}{58}.
+    \end{gather*}
+    Si chaque membre de l'ASA fait le test mentionné en a), quelle
+    proportion des membres rejette l'hypothèse $ \mathcal{H}_0$?
+  \item En supposant vraie l'hypothèse $ \mathcal{H}_0$, à quelle proportion de
+    rejets de l'hypothèse $ \mathcal{H}_0$ peut-on s'attendre?
+  \item Pour chacun des ratios en b) on peut construire un intervalle
+    de confiance à $95~\%$ pour $\theta$. Quelle proportion de ces
+    intervalles de confiance contiennent $\theta = 0,20$?
+  \item Si les $20$ résultats en b) sont agrégés de sorte que l'on a
+    compté un total de $219$ bonbons rouges parmi $\nombre{1124}$ Smarties,
+    rejette-t-on l'hypothèse $ \mathcal{H}_0$, toujours avec $\alpha = 0,05$?
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+      \item $Z = (\hat{\theta} - 0,20)/\sqrt{0,20 (1 - 0,20)/n}$
+      \item $0$~\%
+      \item $0,05$
+      \item $100$~\%
+      \item $p = 0,6654$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item Il s'agit d'un test bilatéral sur une proportion avec un grand
+      échantillon. La statistique du test est
+      \begin{displaymath}
+        Z = \frac{\hat{\theta} - 0,20}{%
+          \sqrt{0,20 (1 - 0,20)/n}}
+      \end{displaymath}
+      et on rejette $ \mathcal{H}_0$ si $\abs{z} > z_{0,025} = 1,96$.
+    \item En calculant la valeur de la statistique pour chacune des
+      proportions données, on constate que toutes les statistiques
+      sont plus inférieures à $1,96$. Auncun membre ne rejette donc
+      l'hypothèse $ \mathcal{H}_0$.
+    \item Étant donné que le seuil de signification est $5~\%$, si
+      l'hypothèse $ \mathcal{H}_0$ est vraie, on peut s'attendre à un taux de
+      rejet de $5$~\%.
+    \item Si, en b), l'on n'a jamais rejeté l'hypothèse $ \mathcal{H}_0$, c'est
+      que $100$~\% des intervalles de confiance à 95~\% pour $\theta$
+      contiennent la valeur $0,20$.
+    \item La valeur de la statistique est
+      \begin{equation*}
+        z = \frac{219/1124 - 0,20}{\sqrt{(0,20)(1 - 0,20)/1124}}
+        = -0,4325
+      \end{equation*}
+      et $\abs{z} < 1,96$. Donc, on ne rejette pas $ \mathcal{H}_0$ à un seuil de
+      signification de $5$~\%. La valeur $p$ associée est:
+      \begin{align*}
+        p &= \prob{\abs{Z} > -0,4325}\\
+        &= 2 \prob{Z > 0,4325}\\
+        &= 0,6654,
+      \end{align*}
+      ce qui représente le seuil de signification minimal auquel il
+      est possible de rejeter $ \mathcal{H}_0$. %Ces résultats sont confirmés par
+%      la fonction \texttt{prop.test} de \textsf{R}:
+%<<echo=TRUE>>=
+%prop.test(219, 1124, p = 0.2, correct = FALSE)
+%@
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  Lors d'un sondage mené auprès de $800$ adultes dont $605$
+  non-fumeurs, on a posé la question suivante: \emph{Devrait-on introduire
+  une nouvelle taxe sur le tabac pour aider à financer le système de
+  santé au pays?} Soit $\theta_1$ et $\theta_2$ la proportion de
+  non-fumeurs et de fumeurs, respectivement, qui ont répondu par
+  l'affirmative à cette question. Les résultats du sondage sont les
+  suivants: $x_1 = 351$ non-fumeurs ont répondu oui, contre $x_2 = 41$
+  fumeurs.
+  \begin{enumerate}
+  \item Tester l'hypothèse nulle que $\theta_1 = \theta_2$ versus la contre-hypothèse $\theta_1 \ne \theta_2$ avec un seuil de signification de $5~\%$.
+  \item Trouver un intervalle de confiance à $95~\%$ pour $\theta_1 -\theta_2$. Cet intervalle permet-il d'obtenir la même conclusion qu'en a)?
+  \item Trouver un intervalle de confiance à $95~\%$ pour la proportion de la population totale en faveur de l'introduction d'une nouvelle taxe sur le tabac.
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+    \item $z = 10,45 > 1,96$
+    \item $(0,3005, \, 0,4393)$
+    \item $(0,4555, \, 0,5246)$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item Il s'agit d'un test sur la différence entre deux
+      proportions. Il faut commencer par construire la statistique. On
+      a
+      \begin{align*}
+        X &\sim \text{Binomiale}(n, \theta_1)\\
+        Y &\sim \text{Binomiale}(m, \theta_2).
+      \end{align*}
+      Pour $n$ et $m$ grands, on a, approximativement,
+      \begin{align*}
+        X &\sim N(n\theta_1, n\theta_1(1 - \theta_1)) \\
+        Y &\sim N(m\theta_2, m\theta_2(1 - \theta_2),
+      \end{align*}
+      et donc, toujours approximativement,
+      \begin{align*}
+        \hat{\theta}_1 &= \frac{X}{n}
+        \sim N\left(\theta_1,
+          \frac{\theta_1(1-\theta_1)}{n}\right) \\
+        \hat{\theta}_2 &= \frac{Y}{m}
+        \sim N\left(\theta_2, \frac{\theta_2(1-\theta_2)}{m}\right).
+      \end{align*}
+      Par conséquent,
+      \begin{displaymath}
+        \frac{(\hat{\theta}_1 - \hat{\theta}_2) - (\theta_1 -
+          \theta_2)}{\sqrt{\theta_1(1-\theta_1)/n +
+            \theta_2(1-\theta_2)/m}} \sim N(0, 1).
+      \end{displaymath}
+      Pour pouvoir calculer la valeur de cette statistique pour un
+      échantillon aléatoire, on remplace $\theta_1$ et $\theta_2$ dans
+      le radical par $\hat{\theta}_1 = X/n$ et $\hat{\theta}_2 = Y/m$,
+      dans l'ordre. Un intervalle de confiance de niveau $1 - \alpha$
+      pour $\theta_1 - \theta_2$ est donc
+      \begin{displaymath}
+        (\hat{\theta}_1 - \hat{\theta}_2) \pm
+        z_{\alpha/2} \sqrt{\frac{\hat{\theta}_1 (1 - \hat{\theta}_1)}{n} +
+          \frac{\hat{\theta}_2 (1 - \hat{\theta}_2)}{m}}.
+      \end{displaymath}
+      De manière similaire, la statistique utilisée pour tester la
+      différence entre les deux proportions $\theta_1$ et $\theta_2$ est
+      \begin{displaymath}
+        Z =  \frac{(\hat{\theta}_1 - \hat{\theta}_2) - (\theta_1 -
+          \theta_2)}{\sqrt{\hat{\theta}_1 (1 - \hat{\theta}_1)/n +
+            \hat{\theta}_2 (1 - \hat{\theta}_2)/m}},
+      \end{displaymath}
+      et on rejette $ \mathcal{H}_0: \theta_1 = \theta_2$ en faveur de $ \mathcal{H}_1:
+      \theta_1 \ne \theta_2$ si $\abs{z} > z_{\alpha/2}$.
+
+      Ici, on a $x = 351$, $y = 41$, $n = 605$ et $m = 800 - 605 =
+      195$. Ainsi, $\hat{\theta}_1 = 0,5802$, $\hat{\theta}_2 =
+      0,2103$ et $\abs{z} = 10,44 > 1,96$. On rejette donc $ \mathcal{H}_0$ à un
+     seuil de signification de $5$~\%. %La fonction \texttt{prop.test}
+%      de \textsf{R} corrobore ces résultats:
+%<<echo=TRUE>>=
+%prop.test(c(351, 41), c(605, 195), correct = FALSE)
+%@
+    \item L'intervalle de confiance est
+      \begin{displaymath}
+        (\theta_1 - \theta_2) \in (0,3005, \, 0,4393).
+      \end{displaymath}
+      Comme $0$ n'appartient pas à cet intervalle, on rejette $ \mathcal{H}_0$.
+    \item On cherche maintenant un intervalle de confiance pour la
+      proportion de la population en faveur de l'introduction du taxe
+      sur le tabac. On a une observation $x = 351 + 41 = 392$ d'une
+      distribution Binomiale$(800, \theta)$, d'où $\hat{\theta} =
+      392/800 = 0,49$. Un intervalle de confiance à 95~\% pour
+      $\theta$ est
+      \begin{align*}
+        \theta &\in \hat{\theta} \pm 1,96 \sqrt{\frac{\hat{\theta} (1 -
+            \hat{\theta})}{800}} \\
+        &\in 0,49 \pm 1,96 \sqrt{\frac{0,49 (0,51)}{800}} \\
+        &\in (0,4555, \, 0,5246).
+      \end{align*}
+      Vérification avec \textsf{R}:
+<<echo=TRUE>>=
+prop.test(351 + 41, 800, correct = FALSE)$conf.int
+@ %$
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+
+
+
+
+\begin{exercice}
+Télécharger le fichier \texttt{contents.csv} sur le site de cours. Il contient les pertes de biens, dues à un incendie, de plus d'un million de couronnes danoises provenant de réclamations faites à la compagnie de réassurance Copenhagen Re entre 1980 et 1990. Les données peuvent être importées en \textsf{R} comme suit, après avoir changé l'environnement de travail de \textsf{R} au dossier dans lequel vous avez enregistré le fichier \texttt{contents.csv}:
+
+<<>>=
+ct <- read.csv("contents.csv",header=TRUE,row.names=1)
+attach(ct)
+data <- Contents
+@
+
+Les données peuvent aussi être importées par \textsf{RStudio} en cliquant sur ``Import Dataset''.
+On se rappelle également que la distribution exponentielle est un cas spécial de la distribution Gamma quand le paramètre $\alpha$ égal $1$.
+\begin{enumerate}
+\item Ajuster la distribution Gamma aux données et construire un intervalle de confiance à $95$\% pour $\alpha$. Est-ce qu'il contient la valeur $\alpha=1$? Que peut-on en conclure?
+\item Tester l'hypothèse que $\alpha=1$ à un niveau de $5$\% en utilisant le test de Wald. Comparer la conclusion avec celle en (a).
+\item Tester l'hypothèse que le modèle exponentiel est une simplification adéquate du modèle Gamma en utilisant un test du rapport de vraisemblance au niveau $5$\%. Comparer la conclusion avec celle en (b).
+\end{enumerate}
+
+\begin{sol}
+\begin{enumerate}
+\item Premièrement, on ajuste le modèle Gamma aux données.
+<<>>=
+library(MASS)
+m3 <- fitdistr(data,densfun="gamma",start=list(shape=0.5,rate=0.2))
+@
+L'estimation du paramètre $\alpha$ et l'estimation de son écart-type sont
+<<>>=
+m3$estimate[1]
+m3$sd[1]
+@
+Le quantile $97,5$\% de la loi normale standard est
+$$
+z_{0,025} = \Sexpr{round(qnorm(0.975),3)}.
+$$
+On trouve l'intervalle de confiance bilatéral approximatif pour $\alpha$ comme suit:
+\begin{multline*}
+[\hat \alpha - z_{0,025} \hat \sigma_{\hat \alpha}, \hat \alpha + z_{0,025} \hat \sigma_{\hat \alpha}] = [\Sexpr{round(as.numeric(m3$estimate[1]),5)} - \Sexpr{round(qnorm(0.975),3)} \times \Sexpr{round(as.numeric(m3$sd[1]),5)}, \Sexpr{round(as.numeric(m3$estimate[1]),5)} + \Sexpr{round(qnorm(0.975),3)} \times \Sexpr{round(as.numeric(m3$sd[1]),5)}]\\
+= [\Sexpr{round(as.numeric(m3$estimate[1]) - qnorm(0.975)*as.numeric(m3$sd[1]),5)}, \Sexpr{round(as.numeric(m3$estimate[1]) +qnorm(0.975)*as.numeric(m3$sd[1]),5)}].
+\end{multline*}
+L'intervalle ne contient pas la valeur $\alpha=1$. Il y a donc évidence, au seuil $5$\%, que $\alpha \ne 1$, c'est-à-dire que la distribution exponentielle n'est pas une bonne simplification du modèle Gamma.
+
+\item Les hypothèses de test sont:
+$$
+\mathcal{H}_0  :  \alpha = 1, \mathcal{H}_1 :  \alpha \ne 1
+$$
+et la statistique de Wald est donnée par
+$$
+w_n = \frac{\hat \alpha - 1}{\hat \sigma_{\hat \alpha}}  = \frac{\Sexpr{round(as.numeric(m3$estimate[1]),5)}-1}{\Sexpr{round(as.numeric(m3$sd[1]),5)}} = \Sexpr{round((as.numeric(m3$estimate[1])-1)/as.numeric(m3$sd[1]),5)}.
+$$
+Clairement, $w_n$ est plus petite que 
+$$
+- z_{0,025} = -\Sexpr{round(qnorm(0.975),3)}.
+$$ 
+Ainsi, $\mathcal{H}_0$ est rejetée à un niveau de confiance $5$\%. La conclusion est la même qu'en (a).
+
+\item Pour calculer la statistique de test, on ajuste d'abord le modèle exponentiel aux données:
+<<>>=
+m2 <- fitdistr(data,densfun="exponential")
+@
+La log-vraisemblance des deux modèles est donnée par
+<<>>=
+m3$loglik
+m2$loglik
+@
+ce qui donne la statistique du rapport de vraisemblance
+$$
+w= 2\{\ell(\hat \alpha,\hat \beta)-\ell(\hat \beta)\} = 2 (\Sexpr{round(m3$loglik,4)} + \Sexpr{round(-m2$loglik,4)}) = \Sexpr{round(2*(m3$loglik-m2$loglik),4)}.
+$$
+Clairement, l'hypothèse que $\alpha=1$ est rejetée parce que la valeur de la statistique du rapport de vraisemblance est beaucoup plus grande que le quantile $97,5$\% de la distribution khi-carrée avec $1$ degré de liberté.
+$$
+\chi^2_{1,0.025} = \Sexpr{round(qchisq(0.975,df=1),3)}.
+$$
+La conclusion est donc la même qu'en b): le modèle exponentiel n'est pas une simplification adéquare du modèle Gamma pour l'ajustement des données.
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+\begin{exercice}
+\label{ex:test:titanic}
+Le tableau de contingence suivant montre le destin des passagers du Titanic en fonction de la classe de tarification du billet, représentant le statut socio-économique.
+<<echo=FALSE>>=
+(mytab <- t(apply(apply(Titanic,c(3,4),rowSums),3,rowSums)))
+@
+\begin{enumerate}
+\item Peut-on conclure que la probabilité de survie au naufrage du Titanic était différente selon la classe tarifaire au seuil de 5~\%~? 
+\item Avec \textsf{R}, calculer le seuil observé du test utilisé en a).
+\item Avec \textsf{R}, visualiser les probabilités de survie estimées avec un diagramme en mosaïque.
+\end{enumerate}
+\begin{rep}
+a) oui \quad b) $\Sexpr{pchisq(190.39,3,lower.tail=FALSE)}$
+\end{rep}
+\begin{sol}
+\begin{enumerate}
+\item L'hypothèse nulle est $\mathcal{H}_0 :$ les lignes et les colonnes sont indépendantes. On doit donc faire un test du $\chi^2$. On calcule les totaux des lignes:
+\begin{align*}
+r_1 &= 122+167+528+673 = \Sexpr{122+167+528+673}\\
+r_2 &= 203+118+178+212 = \Sexpr{203+118+178+212}
+\end{align*}
+ On calcule les totaux des colonnes:
+\begin{align*}
+c_1 &= 122+203 = \Sexpr{122+203}\\
+c_2 &= 167+118 = \Sexpr{167+118}\\
+c_3 &= 528+178 = \Sexpr{528+178}\\
+c_4 &= 673+212 = \Sexpr{673+212}\\
+\end{align*}
+On a $n=2201$ et les nombre espérés dans les cellules sont calculés comme suit.
+\begin{align*}
+\widehat{\esp{n_{ij}}} &= r_ic_j/n\\
+\widehat{\esp{n_{11}}} &= \Sexpr{122+167+528+673}*\Sexpr{122+203}/2201= \Sexpr{(122+167+528+673)*(122+203)/2201}.
+\end{align*}
+On trouve donc les compte espérés
+<<echo=FALSE>>=
+rowtots <- rowSums(mytab)
+coltots <- colSums(mytab)
+(Ei <- round(matrix(rep(rowtots,4),nrow=2)*matrix(rep(coltots,2),byrow=TRUE,nrow=2)/sum(mytab),2))
+Xstat <- sum((mytab-Ei)^2/Ei)
+@
+La statistique du $\chi^2$ est
+\begin{align*}
+X^2 =&\sum_{i=1}^2\sum_{j=1}^4 \frac{\{n_{ij}-\widehat{\esp{n_{ij}}}\}^2}{\widehat{\esp{n_{ij}}}}\\
+& = \frac{(122-220.01)^2}{220.01}+\cdots+\frac{(212-285.89)^2}{285.89}\\
+&= \Sexpr{round(Xstat,2)}
+\end{align*}
+Le nombre de degrés de liberté est $1\times 3 = 3$ et la valeur critique donnée dans la table est $\chi^2_{3,95\%} = 7.81473$. Puisque $\Sexpr{round(Xstat,2)}>7.81473$, on rejette l'hypothèse nulle au seuil de 5~\%. La probabilité de survie dépend de la classe tarifaire.
+
+\item On trouve
+<<>>=
+pchisq(190.39,3,lower.tail=FALSE)
+@
+
+\item On peut tracer le diagramme en mosaïque avec les commandes suivantes. Le résultat se trouve dans la Figure~\ref{fig:test:Titanic}.
+<<eval=FALSE>>=
+tableau <- matrix(c(122,203,167,118,528,178,673,212),nrow=2,
+              dimnames=list(Survived=c("No","Yes"), 
+                         Class=c("1st","2nd","3rd","Crew")))
+mosaicplot(t(tableau), color=TRUE, main="")
+@
+
+\begin{figure}
+        \centering
+<<echo=FALSE, fig=TRUE, out.width = "0.6\\textwidth">>=
+tableau <- matrix(c(122,203,167,118,528,178,673,212),nrow=2,
+              dimnames=list(Survived=c("No","Yes"), 
+                         Class=c("1st","2nd","3rd","Crew")))
+mosaicplot(t(tableau), color=TRUE, main="",cex=1.2)
+@
+        \caption{Diagramme en mosaïque des survivants du Titanic par classe tarifaire de
+          l'exercice
+          \ref{chap:tests}.\ref{ex:test:titanic}.}
+        \label{fig:test:Titanic}
+      \end{figure}
+      
+\end{enumerate}
+\end{sol}
+\end{exercice}
+
+
+%\begin{exercice}
+%  On considère $W_S$, la statistique de Wilcoxon dans dans une
+%  expérience comportant $40$ sujets divisés en deux groupes: un groupe
+%  \emph{contrôle} de $23$ sujets et un groupe \emph{traitement} de
+%  $17$ sujets. On considère le test
+%  \begin{align*}
+%     \mathcal{H}_0 &: \text{le traitement n'est pas efficace} \\
+%     \mathcal{H}_1 &: \text{le traitement est efficace}.
+%  \end{align*}
+%  \begin{enumerate}
+%  \item Calculer la plus petite valeur possible de $W_S$.
+%  \item Calculer la plus grande valeur possible de $W_S$.
+%  \item Calculer l'espérance de $W_S$ lorsque l'hypothèse nulle est vraie.
+%  \end{enumerate}
+%  \begin{rep}
+%    \begin{inparaenum}
+%    \item $153$
+%    \item $544$
+%    \item $348,5$
+%    \end{inparaenum}
+%  \end{rep}
+%  \begin{sol}
+%    \begin{enumerate}
+%    \item La plus petite valeur de la statistique de Wilcoxon
+%      s'obtiendra lorsque tous les sujets du groupe traitement
+%      recevront les plus petits rangs, c'est-à-dire les rangs de $1$ à
+%      $17$. La statistique est alors
+%      \begin{displaymath}
+%        W_S = \sum_{i=1}^{17} i = \frac{(17)(18)}{2} = 153.
+%      \end{displaymath}
+%    \item La plus grande valeur de la statistique de Wilcoxon
+%      s'obtiendra lorsque tous les sujets du groupe traitement
+%      recevront les plus grands rangs, c'est-à-dire les rangs de $27$
+%      à $40$. La statistique est alors
+%      \begin{displaymath}
+%        W_S = \sum_{i=1}^{40} i - \sum_{i=1}^{23} i =
+%        \frac{(40)(41)}{2} - \frac{(23)(24)}{2} = 544.
+%      \end{displaymath}
+%    \item Comme la distribution de la statistique de Wilcoxon sous
+%      l'hypothèse nulle est symétrique, la moyenne est donc la valeur
+%      centrale, c'est-à-dire
+%      \begin{displaymath}
+%        153 + \frac{544 - 153}{2} = 348,5.
+%      \end{displaymath}
+%    \end{enumerate}
+%  \end{sol}
+%\end{exercice}
+%
+%\begin{exercice}
+%  On considère $W_S$, la statistique de Wilcoxon dans dans une
+%  expérience comportant $7$ sujets divisés en deux groupes avec $4$
+%  sujets dans le groupe \emph{traitement} et $3$ sujets dans le groupe
+%  \emph{contrôle}.  On teste les hypothèses
+%  \begin{align*}
+%     \mathcal{H}_0 &: \text{le traitement n'est pas efficace} \\
+%     \mathcal{H}_1 &: \text{le traitement est efficace}.
+%  \end{align*}
+%  On suppose qu'un traitement est efficace s'il fait augmenter la
+%  valeur de la statistique.
+%  \begin{enumerate}
+%  \item On obtient pour les sujets du groupe \emph{traitement} les
+%    rangs $\{1, 3, 5, 6\}$. Calculer la valeur de la statistique de
+%    Wilcoxon.
+%  \item Calculer le nombre de configurations possibles.
+%  \item Calculer la valeur $p$ du test.
+%  \end{enumerate}
+%  \begin{rep}
+%    \begin{inparaenum}
+%    \item $15$
+%    \item $35$
+%    \item $24/35$
+%    \end{inparaenum}
+%  \end{rep}
+%  \begin{sol}
+%    \begin{enumerate}
+%    \item Simplement $W_S = 1 + 3 + 5 + 6 = 15$.
+%    \item Il y a $\binom{7}{4} = \binom{7}{3} = 35$ configurations
+%      possibles.
+%    \item Il faut trouver les 35 configurations possibles et calculer
+%      les $35$ valeurs de $W_S$ correspondantes. On obtient:
+%      \begin{inparablank}
+%        \item 1 fois 10;
+%        \item 1 fois 11;
+%        \item 2 fois 12;
+%        \item 3 fois 13;
+%        \item 4 fois 14;
+%        \item 4 fois 15;
+%        \item 5 fois 16;
+%        \item 4 fois 17;
+%        \item 4 fois 18;
+%        \item 3 fois 19;
+%        \item 2 fois 20;
+%        \item 1 fois 21 et
+%        \item 1 fois 22.
+%      \end{inparablank}
+%      La valeur $p$ est donc
+%      \begin{displaymath}
+%        p = (3)\left(\frac{4}{35}\right) +
+%        (1)\left(\frac{5}{35}\right) (1)\left(\frac{3}{35}\right) +
+%        (1)\left(\frac{2}{35}\right) + (2)\left(\frac{1}{35}\right) = \frac{24}{35}.
+%      \end{displaymath}
+%  \end{enumerate}
+%\end{sol}
+%\end{exercice}
+
+
+\Closesolutionfile{solutions}
+\Closesolutionfile{reponses}
+
+
+%\section*{Exercices proposés dans \cite{Wackerly:mathstat:7e:2008}}
+%
+%\begin{trivlist}
+%\item 3.145--3.151, 3.153, 3.155, 3.158, 3.159, 3.161, 3.162, 3.163
+%\end{trivlist}
+
+
+%%%
+%%% Insérer les réponses
+%%%
+\input{reponses-tests}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "exercices_analyse_statistique"
+%%% coding: utf-8-unix
+%%% End:

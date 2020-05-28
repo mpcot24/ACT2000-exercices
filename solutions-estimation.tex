@@ -1,0 +1,669 @@
+\section*{Chapitre \ref{chap:estimation}}
+\addcontentsline{toc}{section}{Chapitre \protect\ref{chap:estimation}}
+
+\begin{solution}{3.1}
+    On a
+    \begin{align*}
+      \Esp{\frac{1}{n}\sum_{i=1}^n(X_i - \mu)^2}
+      &= \frac{1}{n} \sum_{i=1}^n \esp{(X_i-\mu)^2} \\
+      &= \frac{1}{n} \sum_{i=1}^n \esp{X_i^2 -2\mu X_i + \mu^2} \\
+      &= \frac{1}{n} \sum_{i=1}^n (\esp{X_i^2} - \mu^2) \\
+      &= \frac{1}{n} \sum_{i=1}^n [(\sigma^2 + \mu^2) - \mu^2] \\
+      &= \frac{1}{n} \sum_{i=1}^n \sigma^2 \\
+      &= \sigma^2,
+    \end{align*}
+    d'où l'expression du côté gauche de l'égalité est un estimateur
+    sans biais du paramètre $\sigma^2$.
+  
+\end{solution}
+\begin{solution}{3.2}
+    On a,
+    \begin{align*}
+      \esp{a_1 X_1 + \dots + a_n X_n}
+      &= \esp{a_1 X_1} + \dots + \esp{a_n X_n}\\
+      &= (a_1 + \dots + a_n) \esp{X_1} \\
+      &= (a_1 + \dots + a_n) \mu.
+    \end{align*}
+    Pour que $a_1 X_1 + \dots + a_n X_n$ soit un estimateur sans biais
+    de $\mu$, il faut que $\sum_{i=1}^n a_i = 1$.
+  
+\end{solution}
+\begin{solution}{3.3}
+    \begin{enumerate}
+    \item Il faut d'abord calculer l'espérance de l'estimateur:
+      \begin{align*}
+        \esp{\bar{X}_n^2} &= \var{\bar{X}_n} + \esp{\bar{X}_n}^2 \\
+        &= \frac{\sigma^2}{n} + \mu^2.
+      \end{align*}
+      On voit que $\bar{X}_n^2$ est un estimateur biaisé de $\mu^2$ et
+      que le biais est $\sigma^2/n$.
+    \item Puisque
+      \begin{align*}
+        \lim_{n \rightarrow \infty} \esp{\bar{X}_n^2} =
+        \lim_{n \rightarrow \infty} \frac{\sigma^2}{n} + \mu^2 = \mu^2,
+      \end{align*}
+      $\bar{X}_n^2$ est un estimateur asymptotiquement sans biais de
+      $\mu^2$.
+    \end{enumerate}
+  
+\end{solution}
+\begin{solution}{3.4}
+    La fonction de densité de probabilité de la $k${\ieme} statistique
+    d'ordre est donnée par le Théorème 6.5 des notes de cours.
+    $$
+    f_{X_{(k)}}(x)=\frac{n!}{(k-1)!(n-k)!}F(x)^{k-1}\{1-F(x)\}^{n-k}f(x)
+    $$
+    Pour $n = 3$ et $X_i \sim U(0, \theta)$, $i = 1, 2, 3$, on a
+    \begin{align*}
+      f_{X_{(1)}}(x)
+      &= 3 \left(1 - \frac{x}{\theta} \right)^2
+      \left( \frac{1}{\theta} \right) \\
+      &= 3 \left(
+        \frac{1}{\theta} - \frac{2x}{\theta^2} + \frac{x^2}{\theta^3}
+      \right), \quad 0 < x < \theta \\
+      \intertext{et}
+      f_{X_{(2)}}(x)
+      &= 6 \left( \frac{x}{\theta} \right)
+      \left( 1 - \frac{x}{\theta} \right)
+      \left( \frac{1}{\theta} \right) \\
+      &= 6 \left(
+        \frac{x}{\theta^2} - \frac{x^2}{\theta^3}
+      \right), \quad 0 < x < \theta.
+    \end{align*}
+    Ainsi, d'une part,
+    \begin{align*}
+      \esp{4X_{(1)}} &= 4 \int_0^{\theta} x f_{X_{(1)}}(x)\, dx \\
+      &= 12 \int_0^{\theta}
+      \left(
+        \frac{x}{\theta} - \frac{2x^2}{\theta^2} + \frac{x^3}{\theta^3}
+      \right)\, dx \\
+      &= 12 \left(
+        \frac{\theta}{2} - \frac{2 \theta}{3} + \frac{\theta}{4}
+      \right) \\
+      &= \theta \\
+      \intertext{et} \displaybreak[0]
+      \esp{2X_{(2)}} &= 2 \int_0^{\theta} x f_{X_{(2)}}(x)\, dx \\
+      &= 12 \int_0^\theta
+      \left(
+        \frac{x^2}{\theta^2} - \frac{x^3}{\theta^3}
+      \right)\, dx \\
+      &= 12 \left( \frac{\theta}{3} - \frac{\theta}{4} \right) \\
+      &= \theta,
+    \end{align*}
+    d'où $4 X_{(1)}$ et $2 X_{(2)}$ sont des estimateurs sans biais de
+    $\theta$. D'autre part,
+    \begin{align*}
+      \esp{(4X_{(1)})^2} &= 16 \int_0^{\theta} x^2 f_{X_{(1)}}(x)\, dx \\
+      &= 48 \int_0^{\theta}
+      \left(
+        \frac{x^2}{\theta} - \frac{2x^3}{\theta^2} + \frac{x^4}{\theta^3}
+      \right)\, dx \\
+      &= 48 \left(
+        \frac{\theta^2}{3} - \frac{2 \theta^2}{4} + \frac{\theta^2}{5}
+      \right) \\
+      &= \frac{8 \theta^2}{5} \\
+      \intertext{et} \displaybreak[0]
+      \esp{(2X_{(2)})^2} &= 4 \int_0^{\theta} x^2 f_{X_{(2)}}(x)\, dx \\
+      &= 24 \int_0^\theta
+      \left(
+        \frac{x^3}{\theta^3} - \frac{x^4}{\theta^3}
+      \right)\, dx \\
+      &= 24 \left( \frac{\theta^2}{4} - \frac{\theta^2}{5} \right) \\
+      &= \frac{6 \theta^2}{5}.
+    \end{align*}
+    Par conséquent,
+    \begin{align*}
+      \var{4 X_{(1)}}
+      &= \frac{8 \theta^2}{5} - \theta^2 = \frac{3 \theta^2}{5} \\
+      \intertext{et}
+      \var{2 X_{(2)}}
+      &= \frac{6 \theta^2}{5} - \theta^2 = \frac{\theta^2}{5}.
+    \end{align*}
+  
+\end{solution}
+\begin{solution}{3.5}
+    Soit $X_{(n)} = \max(X_1, \dots, X_n)$ et $X_{(1)} = \min(X_1,
+    \dots, X_n)$, où $X_i \sim U(0, \theta)$, $i = 1, \dots, n$. On
+    sait alors que
+    \begin{align*}
+      f_{X_{(n)}}(x)
+      &= n (F(x))^{n - 1} f(x) \\
+      &= \frac{n x^{n - 1}}{\theta^n}, \quad 0 < x < \theta \\
+      \intertext{et que}
+      f_{X_{(1)}}(x)
+      &= n (1 - F(x))^{n - 1} f(x) \\
+      &= \frac{n (\theta - x)^{n - 1}}{\theta^n}, \quad 0 < x < \theta.
+    \end{align*}
+    \begin{enumerate}
+    \item On souhaite développer un estimateur sans biais de $\theta$
+      basé sur $X_{(n)}$. En premier lieu,
+      \begin{align*}
+        \esp{X_{(n)}} &= \int_0^\theta x f_{X_{(n)}}(x)\, dx \\
+        &= \frac{n}{\theta^n}\int_0^\theta x^n \,dx\\
+        &= \frac{n \theta}{n + 1}.
+      \end{align*}
+      Un estimateur sans biais de $\theta$ est donc $(n + 1)
+      X_{(n)}/n$.
+    \item Comme en a), on calcule d'abord l'espérance de la statistique:
+      \begin{align*}
+        \esp{X_{(1)}} &= \int_0^\theta x f_{X_{(1)}}(x)\, dx \\
+        &= \frac{n}{\theta^n}
+        \int_{0}^\theta
+        x (\theta - x)^{n - 1}x\,dx \\
+        &=\frac{\theta}{n + 1}
+      \end{align*}
+      en intégrant par parties. Un estimateur sans biais de $\theta$
+      basé sur le minimum de l'échantillon est donc $(n + 1) X_{(1)}$.
+    \end{enumerate}
+  
+\end{solution}
+\begin{solution}{3.6}
+    On sait que $\esp{X} = np$ et que $\var{X} = np (1 - p)$. Or,
+    \begin{align*}
+      \Esp{n\left(\frac{X}{n}\right)\left(1-\frac{X}{n}\right)} &=
+      \esp{X} - \frac{\esp{X^2}}{n}\\
+      &= np - \frac{\var{X} + \esp{X}^2}{n}\\
+      &= np - \frac{np(1 - p) + n^2 p^2}{n}\\
+      &= (n - 1) p (1 - p) \\
+      &= n p (1 - p) - p(1 - p).
+    \end{align*}
+    La statistique est donc un estimateur biaisé de la variance et le
+    biais est $-p (1 - p)$. La statistique sur-estime la variance.
+  
+\end{solution}
+\begin{solution}{3.7}
+    Il faut démontrer que $\lim_{n \rightarrow \infty}
+    \prob{\abs{X_{(1)} - \theta} < \epsilon} = 1$. On sait que si $X
+    \sim U(\theta, \theta + 1)$, alors
+    \begin{align*}
+      f_X(x) &= 1, \quad \theta < x < \theta + 1 \\
+      F_X(x) &= x - \theta, \quad \theta < x < \theta + 1
+    \end{align*}
+    et
+    \begin{align*}
+      f_{X_{(1)}}(x) &= n f_X(x) (1 - F_X(x))^{n - 1} \\
+      &= n (1 - x + \theta)^{n - 1}, \quad \theta < x < \theta + 1.
+    \end{align*}
+    Ainsi,
+    \begin{align*}
+      \prob{\abs{X_{(1)} - \theta} < \epsilon}
+      &= \prob{\theta - \epsilon < X_{(1)} < \theta + \epsilon} \\
+      &= \int_\theta^{\theta + \epsilon} n (1 - x + \theta)^{n-1}\, dx \\
+      &= 1 - (1 - \epsilon)^n.
+    \end{align*}
+    Or, cette dernière expression tend vers $1$ lorsque $n$ tend vers
+    l'infini, ce qui complète la démonstration.
+  
+\end{solution}
+\begin{solution}{3.8}
+    Puisque $\bar{X}$ est un estimateur sans biais de la moyenne d'une
+    distribution, quelqu'elle fut, et que $\lim_{n \rightarrow \infty}
+    \var{\bar{X}} = \lim_{n \rightarrow \infty} \var{X}/n = 0$, alors
+    $\bar{X}$ est toujours un estimateur convergent de la
+    moyenne.
+  
+\end{solution}
+\begin{solution}{3.9}
+\begin{enumerate}
+\item On peut conclure que ${\hat \mu}_1$ est un estimateur sans biais de $\mu$ par le fait que
+$$
+\ex({\hat \mu}_1) = \frac{1}{2} \, \{ \ex (X_1) + \ex(X_2)\} = \frac{1}{2} \, (\mu + \mu) = \mu.
+$$
+De même, ${\hat \mu}_2$ est un estimateur sans biais de $\mu$, car
+\begin{eqnarray*}
+\ex ({\hat \mu}_2) &=& \frac{1}{4} \, \ex (X_1) + \frac{1}{2(n-2)} \, \sum_{i=2}^{n-1} \ex (X_i) + \frac{1}{4} \, \ex (X_n) \\
+&=& \frac{1}{4} \, \mu + \frac{1}{2(n-2)} \, (n-2)\mu + \frac{1}{4} \, \mu \\
+&=& \frac{1}{4} \, \mu + \frac{1}{2} \, \mu + \frac{1}{4} \, \mu = \mu.
+\end{eqnarray*}
+Finalement, ${\hat \mu}_3$ est un estimateur sans biais de $\mu$ puisque
+$$
+\ex ( {\hat \mu}_3) = \frac{1}{n} \, \sum_{i=1}^n \ex (X_i) = \frac{n\mu}{n} = \mu.
+$$
+
+\item Par définition,
+$$
+\mbox{eff} ({\hat \mu}_3, {\hat \mu}_2) = \frac{\vr({\hat \mu}_2)} {\vr ({\hat \mu}_3)} \quad \mbox{et} \quad \mbox{eff} ({\hat \mu}_3, {\hat \mu}_1) = \frac{\vr({\hat \mu}_1)} {\vr ({\hat \mu}_3)} \,.
+$$
+Pour calculer ces ratios, on doit commencer par déterminer la variance de chacun des trois estimateurs. D'abord, on trouve
+$$
+\vr({\hat \mu}_1) = \frac{1}{4} \, \{ \vr (X_1) + \vr (X_2) \} = \frac{\sigma^2}{2} \, .
+$$
+Ensuite,
+\begin{eqnarray*}
+\vr({\hat \mu}_2) &=& \frac{1}{16} \, \vr( X_1) + \frac{1}{4(n-2)^2} \, \sum_{i=2}^{n-1} \vr (X_i) + \frac{1}{16} \, \vr( X_n) \\
+&=& \frac{1}{16} \, \sigma^2 + \frac{1}{4(n-2)^2} \, (n-2) \sigma^2 + \frac{1}{16} \, \sigma^2 \\
+&=& \frac{2(n-2) + 4}{16(n-2)} \, \sigma^2 \\
+&=& \frac{n}{8(n-2)} \, \sigma^2.
+\end{eqnarray*}
+Finalement,
+$$
+\vr({\hat \mu}_3) = \frac{1}{n^2} \, \sum_{i=1}^n \vr (X_i) = \frac{n}{n^2} \, \sigma^2 = \frac{\sigma^2}{n} \, .
+$$
+Il en découle que
+$$
+\mbox{eff} ({\hat \mu}_3, {\hat \mu}_2) =  \frac{\displaystyle\frac{n\sigma^2}{8(n-2)}}{\displaystyle\frac{\sigma^2}{n}} =  \frac{n^2}{8(n-2)}
+$$
+et
+$$
+\mbox{eff} ({\hat \mu}_3, {\hat \mu}_1) =  \frac{\displaystyle\frac{\sigma^2}{2}}{\displaystyle\frac{\sigma^2}{n}} =  \frac{n}{2} \, .
+$$
+
+\item Pour toute valeur de $n \ge 3$, on a
+$$
+\mbox{eff} ({\hat \mu}_3, {\hat \mu}_1) > 1 \quad \mbox{et} \quad \mbox{eff} ({\hat \mu}_3, {\hat \mu}_2) > 1.
+$$
+Donc, ${\hat \mu}_3$ est toujours préférable à ${\hat \mu}_1$ ou ${\hat \mu}_2$.
+\end{enumerate}
+\end{solution}
+\begin{solution}{3.10}
+\begin{enumerate}
+\item La fonction de répartition de $\hat \beta=\min(X_1,\ldots,X_n)$, pour $x\geq \beta$, est
+\begin{align*}
+\Pr[\min(X_1,\ldots,X_n)\leq x] & = 1- \Pr[\min(X_1,\ldots,X_n)> x]\\
+&= 1-\Pr[X_1>x,\ldots,X_n>x]\\
+&=1-\Pr[X_1>x]\times\cdots\times\Pr[X_n>x],\mbox{ par indépendance}\\
+&=1-\{\Pr[X_1>x]\}^n,\mbox{ par i.d.}\\
+&=1-\left\{\frac{\beta}{x}\right\}^{\alpha n}\\
+\end{align*}
+Donc, $\min(X_1,\ldots,X_n)$ a la même fonction de répartition que $X$ avec un nouveau paramètre $\alpha^\star=\alpha n$. Ce qui signifie que la densité est
+$$
+f_{\min}(x)=\alpha n \beta^{\alpha n}x^{-(\alpha n+1)},\quad x\geq \beta.
+$$
+
+\item On utilise la définition d'un estimateur convergent. Si $\varepsilon>0$,
+\begin{align*}
+\Pr[|\hat\beta-\beta|\leq \varepsilon]&=\Pr[\beta-\varepsilon<\hat\beta\leq \beta+\varepsilon] \\
+&=\Pr[\hat\beta\leq \beta+\varepsilon],
+\end{align*}
+puisque $\Pr[\hat\beta<\beta]=0$ par le fait que le domaine du minimum est le même que celui des observations, $[\beta,\infty)$. Ainsi,
+\begin{align*}
+\Pr[|\hat\beta-\beta|\leq \varepsilon]&=\Pr[\hat\beta\leq \beta+\varepsilon]=1-\left(\frac{\beta}{\beta+\varepsilon}\right)^{\alpha n}.
+\end{align*}
+Puisque $\varepsilon$ est positif, le ratio $\frac{\beta}{\beta+\varepsilon}<1$ et donc $\left(\frac{\beta}{\beta+\varepsilon}\right)^{\alpha n}\to 0$ quand $n\to\infty$. Ainsi,
+$$
+\lim_{n\to\infty} \Pr[|\hat\beta-\beta|\leq \varepsilon]=1,
+$$
+et $\hat\beta$ est convergent pour $\beta$.
+
+\item On trouve d'abord $\ex[\hat\beta]$ et $\ex[\hat\beta^2]$:
+\begin{align*}
+\ex[\hat\beta]&=\int_\beta^\infty x \alpha n \beta^{\alpha n}x^{-(\alpha n+1)}\d x = \int_\beta^\infty  \alpha n \beta^{\alpha n}x^{-\alpha n}\d x = \frac{\alpha n\beta}{\alpha n-1}\\
+\ex[\hat\beta^2]&=\int_\beta^\infty x^2 \alpha n \beta^{\alpha n}x^{-(\alpha n+1)}\d x = \int_\beta^\infty  \alpha n \beta^{\alpha n}x^{-(\alpha n-1)}\d x = \frac{\alpha n\beta^2}{\alpha n-2}.
+\end{align*}
+Le biais est donc
+$$
+B(\hat\beta)=\ex[\hat\beta]-\beta = \frac{\alpha n\beta}{\alpha n-1}-\beta = \frac{\beta}{\alpha n -1}\to 0
+$$
+quand $n\to \infty$. L'estimateur est donc asymptotiquement sans biais.
+
+La variance est
+$$
+\vr(\hat\beta)= \frac{\alpha n\beta^2}{\alpha n-2}-\left(\frac{\alpha n\beta}{\alpha n-1}\right)^2 = \frac{\alpha n\beta^2}{(\alpha n-2)(\alpha n-1)^2}
+$$
+et l'erreur quadratique moyenne est
+$$
+\mbox{EQM}(\hat\beta)=\vr(\hat\beta)+B^2(\hat\beta)= \frac{\alpha n\beta^2}{(\alpha n-2)(\alpha n-1)^2}+\frac{\beta^2}{(\alpha n -1)^2}=\frac{2\beta^2}{(\alpha n-1)(\alpha n-2)}.
+$$
+
+\item Si $\alpha$ est connu, le paramètre inconnu est $\beta$ et
+$$
+f(x_1|\alpha,\beta) \times \dots \times f(x_n|\alpha,\beta)  =\underbrace{ \left(\prod_{i=1}^n x_i\right)^{-(\alpha+1)}}_{h(x_1, \dots, x_n)} \underbrace{(\alpha \beta^\alpha)^n\mathbf{1} \{ \min(x_1,\dots, x_n) \ge \beta\} }_{g\{ \min(x_1,\dots, x_n), \beta \}}.
+$$
+Par le théorème de factorisation de Fisher--Neyman, $\min(X_1,\dots, X_n)$ est une statistique exhaustive pour $\beta$.
+
+\item On observe que
+\begin{align*}
+f(y_1|\alpha,\beta) \times \dots \times f(x_n|\alpha,\beta)  & = \alpha\beta^{\alpha}x_1^{-(\alpha+1)} \mathbf{1}(x_1 \ge \beta)\times \dots \times \alpha\beta^{\alpha} x_n^{-(\alpha+1)} \mathbf{1}(x_n \ge \beta)\\
+& = (\alpha \beta^\alpha)^n \left(\prod_{i=1}^n x_i\right)^{-(\alpha+1)} \times \mathbf{1} \{ \min(x_1,\dots, x_n) \ge \beta\}.
+\end{align*}
+Si $\beta$ est connu, le paramètre incconu est $\alpha$. Puisque
+$$
+f(x_1|\alpha,\beta) \times \dots \times f(x_n|\alpha,\beta)  =\underbrace{(\alpha \beta^\alpha)^n \left(\prod_{i=1}^n x_i\right)^{-(\alpha+1)}}_{g(\prod x_i , \alpha)} \underbrace{\mathbf{1} \{ \min(x_1,\dots, x_n) \ge \beta\}}_{h(x_1,\dots, x_n)},
+$$
+on peut conclure par le théorème de factorisation de Fisher--Neyman que $X_1 \times \cdots \times X_n$ est une statistique exhaustive pour $\alpha$.
+
+\item Lorsque $\alpha$ et $\beta$ sont inconnus,
+$$
+f(x_1|\alpha,\beta) \times \dots \times f(x_n|\alpha,\beta)  =\underbrace{(\alpha \beta^\alpha)^n \left(\prod_{i=1}^n x_i\right)^{-(\alpha+1)}\mathbf{1} \{ \min(x_1,\dots, x_n) \ge \beta\}}_{g\{\prod x_i, \min(x_1,\dots, x_n), \alpha,\beta\}}
+$$
+donc les statistiques $X_1 \times \cdots \times X_n$ et $\min(X_1,\dots, X_n)$ sont conjointement exhaustives pour $\alpha$ et $\beta$.
+\end{enumerate}
+\end{solution}
+\begin{solution}{3.11}
+    On a un échantillon aléatoire de taille 1. Or,
+    \begin{align*}
+      f(x_1; \sigma^2)
+      &= \frac{1}{\sqrt{2\pi \sigma^2}}\, e^{-x_1^2/(2 \sigma^2)} \\
+      &= \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-\abs{x_1}^2/(2 \sigma^2)} \\
+      &= g(\abs{x_1}; \sigma^2) h(x_1), \\
+      \intertext{avec}
+      g(x; \sigma^2)
+      &= \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-x^2/(2 \sigma^2)}
+    \end{align*}
+    et $h(x) = 1$. Ainsi, par le théorème de factorisation de Fisher--Neyman,
+    $\abs{X_1}$ est une statistique exhaustive pour $\sigma^2$.
+  
+\end{solution}
+\begin{solution}{3.12}
+    Soit $X_1, \dots, X_n$ un échantillon aléatoire d'une distribution
+    uniforme sur l'intervalle $(-\theta, \theta)$. La fonction de
+    vraisemblance de cet échantillon est
+    \begin{equation*}
+      f(x_1, \dots, x_n; \theta) =
+      \begin{cases}
+        (2 \theta)^{-n}, & -\theta < x_i < \theta, i = 1, \dots, n \\
+        0, & \text{ailleurs}.
+      \end{cases}
+    \end{equation*}
+    La fonction de vraisemblance est donc non nulle seulement si
+    toutes les valeurs de l'échantillon se trouvent dans l'intervalle
+    $(-\theta, \theta)$ ou, de manière équivalente, si $\max_{i = 1,
+      \dots, n} (\abs{x_i}) < \theta$. On peut donc, par exemple,
+    réécrire la fonction de vraisemblance sous la forme
+    \begin{align*}
+      f(x_1, \dots, x_n; \theta)
+      &= \left( \frac{1}{2\theta} \right)^n
+      I_{\{0 \leq \max_{i = 1, \dots, n}(\abs{x_i}) \leq \theta)\}} \\
+      &= g \left( \max_{i = 1, \dots, n}(\abs{x_i}); \theta \right)
+      h(x_1, \dots, x_n), \\
+      \intertext{avec}
+      g(x; \theta)
+      &= \left( \frac{1}{2\theta} \right)^n
+      I_{\{0 \leq x \leq \theta)\}}
+    \end{align*}
+    et $h(x_1, \dots, x_n) = 1$. Ainsi, par le théorème de
+    factorisation de Fisher--Neyman, on établit que $T = \max_{i = 1, \dots,
+      n}(\abs{X_i})$ est une statistique exhaustive pour le paramètre
+    $\theta$. Une autre factorisation possible serait
+    \begin{equation*}
+      f(x_1, \dots, x_n; \theta) =
+      \left( \frac{1}{2\theta} \right)^n
+      I_{\{-\infty < x_{(n)} < \theta)\}}
+      I_{\{-\theta < x_{(1)} < \infty)\}},
+    \end{equation*}
+    ce qui donne comme statistique exhaustive $T = (X_{(1)}, X_{(n)})$.
+  
+\end{solution}
+\begin{solution}{3.13}
+    Nous allons démontrer un résultat général applicable à plusieurs
+    distributions, dont la Poisson. Il existe une famille de
+    distributions que l'on nomme la \emph{famille exponentielle} (il
+    ne s'agit pas d'une référence à la densité exponentielle, bien que
+    cette dernière soit un cas particulier de la famille
+    exponentielle). Cette famille comprend toutes les distributions
+    dont la densité peut s'écrire sous la forme
+    \begin{displaymath}
+      f(x; \theta) = h(x) c(\theta) e^{\eta(\theta) t(x)},
+    \end{displaymath}
+    où $h$, $c$, $\eta$ et $t$ sont des fonctions quelconques. Par
+    exemple, la fonction de masse de probabilité de la loi de Poisson
+    peut s'écrire comme suit:
+    \begin{align*}
+      f(x; \theta) &= \frac{\theta^x e^{-\theta}}{x!} \\
+      &= \left( \frac{1}{x!} \right) e^{-\theta} e^{\ln(\theta) x} \\
+      &= h(x) c(\theta) e^{\eta(\theta) t(x)},
+    \end{align*}
+    avec $h(x) = (x!)^{-1}$, $c(\theta) = e^{-\theta}$, $\eta(\theta)
+    = \ln \theta$ et $t(x) = x$. La loi est donc membre de la famille
+    exponentielle. Les lois binomiale, gamma, normale et bêta font
+    aussi partie de la famille exponentielle. En revanche, des lois
+    comme l'uniforme sur $(0,\theta)$ et l'exponentielle translatée
+    n'en font pas partie.
+
+    Pour tous les membres de la famille exponentielle, on a
+    \begin{equation*}
+      f(x_1, \dots, x_n; \theta) =
+      \left( \prod_{i = 1}^n h(x_i) \right)
+      (c(\theta))^n
+      e^{ \eta(\theta) \sum_{i=1}^n x_i}.
+    \end{equation*}
+    Ainsi, on voit que le théorème de factorisation permet de conclure
+    que la statistique
+    \begin{displaymath}
+      T(X_1, \dots, X_n)  = \sum_{i = 1}^n X_i
+    \end{displaymath}
+    est une statistique exhaustive pour le paramètre $\theta$ pour
+    tous les membres de la famille exponentielle, dont la loi de
+    Poisson.
+  
+\end{solution}
+\begin{solution}{3.14}
+\begin{enumerate}
+\item On trouve que $\tilde{\lambda}$ est sans biais pour $\lambda$ par le fait que
+$$
+\ex[\tilde{\lambda}] = \ex[X_1] = \lambda.
+$$
+
+\item Par le théorème de Rao--Blackwell, on trouve
+$$
+\lambda^\ast = \ex \left[ \tilde{\lambda} | T \right] = \ex \left[ X_1 | \sum_{i=1}^n X_i = t \right].
+$$
+Par contre, on remarque que
+$$
+\sum_{i=1}^n \ex \left[ X_i | \sum_{i=1}^n X_i = t \right] = \ex \left[\sum_{i=1}^n X_i | \sum_{i=1}^n X_i = t \right] = t.
+$$
+Puisque $X_1, \dots, X_n$ sont i.i.d., chaque élément de la somme doit être équivalent et donc égal à $t/n$.
+On trouve que
+$$
+\lambda^\ast = \frac{T}{n} = \frac{\sum_{i=1}^n X_i}{n} = \bar{X}.
+$$
+\end{enumerate}
+\end{solution}
+\begin{solution}{3.15}
+    On peut réécrire la fonction de masse de probabilité de la loi
+    géométrique comme suit:
+    \begin{align*}
+      \prob{X = x} &= \theta e^{\ln(1 - \theta) x} \\
+      &= h(x) c(\theta) e^{\eta(\theta) t(x)},
+    \end{align*}
+    avec $h(x) = 1$, $c(\theta) = \theta$, $\eta(\theta) = \ln (1 -
+    \theta)$ et $t(x) = x$. La loi géométrique est donc membre de la
+    famille exponentielle (voir la solution de
+    l'exercice~\ref{chap:estimation}.\ref{ex:ponctuelle:fam_exponentielle}).
+    Par conséquent, $T(X_1, \dots, X_n) = \sum_{i=1}^n X_i$ est une
+    statistique exhaustive pour le paramètre $\theta$.
+  
+\end{solution}
+\begin{solution}{3.16}
+\begin{enumerate}
+\item Puisque
+$$
+\Pr[X_1=x_1,\ldots,X_n=x_n]=\prod_{i=1}^n \frac{\lambda^{x_i} e^{-\lambda}}{x_i!}=\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n} \frac{1}{\prod_{i=1}^n x_i!}
+$$
+se factorise en $g(\sum_{i=1}^n x_i,\lambda)=\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n}$ et $h(x_1,\ldots,x_n)=\frac{1}{\prod_{i=1}^n x_i!}$, le théorème de factorisation de Fisher--Neyman implique que $\sum_{i=1}^n X_i$ est une statistique exhaustive pour $\lambda$. On voit facilement avec le critère de Lehman-Scheffé que cette statistique est exhaustive minimale.
+
+\item La règle du pouce pour trouver un MVUE est de trouver un estimateur qui est sans biais et qui est basé sur une statistique exhaustive obtenue par le théorème de factorisation de Fisher--Neyman. On a
+$$
+\ex[\bar X_n]=\lambda,
+$$
+est donc sans biais et $\bar X_n=T/n$, où $T$ est une statistique exhaustive pour $\lambda$, comme montré en a).
+Ainsi, $\bar X_n$ est un MVUE pour $\lambda$.
+
+\item Dans ce cas,
+$$
+\ln \{ f(x;\lambda)\} = -\lambda   +x \ln (\lambda) - \ln(x!)
+$$
+et
+$$
+\frac{\partial^2}{\partial \lambda^2} \, f(x;\lambda) = - \frac{x}{\lambda^2}.
+$$
+Ainsi,
+$$
+n \ex\left[ -\frac{\partial^2}{\partial \lambda^2} \ln \{f(X;\lambda)\}\right] = \frac{n}{\lambda^2} \ex(X) = \frac{n}{\lambda}.
+$$
+La borne inférieure de Cram\'er--Rao--Fr\'echet est donc
+$$
+\frac{\lambda}{n} = \vr(\bar X_n),
+$$
+ce qui montre que $\bar X_n$ est un estimateur efficace pour $\lambda$.
+\end{enumerate}
+\end{solution}
+\begin{solution}{3.17}
+    Pour commencer, on a l'identité suivante:
+    \begin{align*}
+      \frac{\partial}{\partial \theta} \ln f(x;\theta) &=
+      \frac{1}{f(x;\theta)}\frac{\partial}{\partial \theta}
+      f(x;\theta) \\
+      \intertext{qui peut être réécrite sous la forme}
+      \left(
+        \frac{\partial}{\partial \theta} \ln f(x;\theta)
+      \right) f(x;\theta)
+      &= \frac{\partial}{\partial \theta} f(x;\theta).
+    \end{align*}
+    Ainsi, en dérivant de part et d'autre
+    \begin{displaymath}
+      \int_{-\infty}^\infty f(x; \theta)\, dx = 1,
+    \end{displaymath}
+    par rapport à $\theta$, on obtient
+    \begin{equation*}
+      \int_{-\infty}^\infty
+      \left(
+        \frac{\partial}{\partial \theta} \ln f(x;\theta)
+        \right) f(x;\theta)\, dx = 0.
+    \end{equation*}
+    En dérivant une seconde fois cette identité, on a alors
+    \begin{gather*}
+      \int_{-\infty}^\infty
+      \left(
+        \frac{\partial^2}{\partial \theta^2} \ln f(x;\theta)
+      \right) f(x;\theta)\, dx +
+      \int_{-\infty}^\infty
+      \left(
+        \frac{\partial}{\partial \theta} \ln f(x;\theta)
+      \right)
+      \left(
+        \frac{\partial}{\partial \theta} f(x;\theta)
+      \right) dx = 0 \\
+      \intertext{ou, de manière équivalente,}
+      \int_{-\infty}^\infty
+      \left(
+        \frac{\partial}{\partial \theta} \ln f(x;\theta)
+      \right)^2
+      f(x;\theta)\, dx =
+      - \int_{-\infty}^\infty
+      \left(
+        \frac{\partial^2}{\partial \theta^2} \ln f(x;\theta)
+      \right) f(x;\theta)\, dx, \\
+      \intertext{soit}
+      \Esp{\left( \frac{\partial}{\partial \theta}
+          \ln f(X; \theta) \right)^2} =
+      - \Esp{\frac{\partial^2}{\partial \theta^2}
+        \ln f(X; \theta)}.
+    \end{gather*}
+  
+\end{solution}
+\begin{solution}{3.18}
+    On sait que $\esp{\bar{X}_n} = \esp{X}$ pour toute distribution et
+    donc que $\bar{X}$ est toujours un estimateur sans biais de la
+    moyenne. Pour une loi de Poisson, la moyenne est égale à $\lambda$
+    et donc $\bar{X}$ est un estimateur sans biais de $\lambda$. Pour
+    démontrer que la statistique est un estimateur à variance
+    minimale, il faut montrer que $\bar{X}_n$ est une statistique exhaustive minimale pour $\lambda$. On a que, pour tout $x_1,\ldots,x_n, \in\mathbb{R}$,
+    \begin{align*}
+    f(x_1;\lambda)\times\cdots\times f(x_n;\lambda) & =  \frac{\exp(-n\lambda)\lambda^{x_1+\cdots+x_n}}{\prod_{i=1}^n x_i !} \\
+    &= \frac{\exp(-n\lambda)\lambda^{n \bar{x}_n}}{\prod_{i=1}^n x_i !} = g(\bar{x}_n; \lambda)h(x_1,\ldots,x_n).
+    \end{align*}
+    Selon le critère de Fisher--Neyman, $\bar{X}_n$ est une statistique exhaustive. De plus, cette statistique est minimale, puisque pour tout $x_1,\ldots,x_n,y_1,\ldots,y_n \in\mathbb{R}$, on a que le ratio
+    \begin{align*}
+    \frac{f(x_1;\lambda)\times\cdots\times f(x_n;\lambda)}{f(y_1;\lambda)\times\cdots\times f(y_n;\lambda)}
+    &= \frac{\exp(-n\lambda)\lambda^{n \bar{x}_n}}{\prod_{i=1}^n x_i !} \frac{\prod_{i=1}^n y_i !}{\exp(-n\lambda)\lambda^{n \bar{y}_n}} \\
+&= \lambda^{n (\bar{x}_n- \bar{y}_n)} \frac{\prod_{i=1}^n y_i !}{\prod_{i=1}^n x_i !}
+    \end{align*}
+    ne dépend pas de $\lambda$ si et seulement si $\bar{x}_n=\bar{y}_n$.
+
+    De façon alternative, on pourrait aussi démontrer que l'estimateur est sans biais à variance minimale en montrant qu'il est sans biais, puis en montrant que sa variance est égale à la borne inférieure de
+    de Rao--Cramér. Or, d'une part, on a
+    \begin{equation*}
+      \var{\bar{X}} = \frac{\var{X}}{n} = \frac{\lambda}{n}.
+    \end{equation*}
+    D'autre part,
+    \begin{align*}
+      \frac{\partial}{\partial \lambda} \ln f(x; \lambda)
+      &= \frac{\partial}{\partial \lambda}
+      (x \ln(\lambda) - \lambda - \ln(x!)) \\
+      &= \frac{x}{\lambda} - 1 \\
+      &= \frac{x - \lambda}{\lambda}
+    \end{align*}
+    et donc
+    \begin{align*}
+      \Esp{\left( \frac{\partial}{\partial \lambda}
+          \ln f(X; \lambda) \right)^2}
+      &= \frac{1}{\lambda^2}\Esp{(X - \lambda)^2} \\
+      &= \frac{\Var{X}}{\lambda^2} \\
+      &= \frac{1}{\lambda}.
+    \end{align*}
+    Ainsi, la borne de Rao--Cramér est $\lambda/n$. On a donc démontré
+    que $\bar{X}$ est un estimateur sans biais à variance minimale du
+    paramètre $\lambda$ de la loi de Poisson.
+  
+\end{solution}
+\begin{solution}{3.19}
+    Si $X$ a une distribution binomiale de paramètres $n \in \N$ et $0
+    \leq \theta \leq 1$, alors on peut représenter la variable
+    aléatoire sous la forme $X = Y_1 + \dots + Y_n$, où $Y_i \sim
+    \text{Bernoulli}(\theta)$, $i = 1, \dots, n$. Ainsi, $X/n =
+    \bar{Y}$. Dès lors, on sait $\bar{Y}$ est un estimateur sans biais
+    de $\esp{Y} = \theta$. Pour montrer qu'il est MVUE, soit on montre que $\bar{Y}$
+    est une statistique exhaustive minimale, ce qui est le cas selon le critère de Lehmann--Scheffé, soit on montre que la variance atteint la borne minimale de Cramer--Rao.
+
+    En effet, on a que $\var{\bar{Y}} = \var{Y}/n = \theta(1
+    - \theta)/n$. De plus, si $f(y; \theta) = \theta^y (1 - \theta)^{1
+      - y}$, $y = 0, 1$, est la densité d'une Bernoulli, alors
+    \begin{align*}
+      \Esp{\left( \frac{\partial}{\partial \theta}
+          \ln f(Y; \theta) \right)^2}
+      &= \Esp{\left( \frac{Y - \theta}{\theta (1 - \theta)}
+        \right)^2} \\
+      &= \frac{\var{Y}}{[\theta (1 - \theta)]^2} \\
+      &= \frac{1}{\theta (1 - \theta)}
+    \end{align*}
+    et donc la borne de Rao--Cramér est $\theta (1 - \theta)/n =
+    \var{\bar{Y}}$. Par conséquent, $\bar{Y}$ est un estimateur sans
+    biais à variance minimale du paramètre $\theta$ de la Bernoulli
+    ou, de manière équivalente, $X/n$ est un estimateur sans biais à
+    variance minimale du paramètre $\theta$ de la binomiale.
+  
+\end{solution}
+\begin{solution}{3.20}
+    \begin{enumerate}
+    \item On a
+      \begin{align*}
+        \esp{\omega \bar{X}_1 + (1 - \omega)\bar{X}_2} &=
+        \omega\Esp{\bar{X}_1} + (1 - \omega)\Esp{\bar{X}_2}\\
+        &= \omega\mu +(1 - \omega)\mu\\
+        &= \mu.
+      \end{align*}
+    \item En premier lieu,
+      \begin{align*}
+        \var{\omega\bar{X}_1 - (1 - \omega)\bar{X}_2} &=
+        \omega^2 \var{\bar{X}_1} + (1 - \omega)^2 \var{\bar{X}_2}\\
+        &= \frac{\omega^2 \sigma_1^2}{n} +
+        \frac{(1 - \omega)^2 \sigma_2^2}{n}
+      \end{align*}
+      Or, en résolvant l'équation
+      \begin{equation*}
+        \frac{d}{d\omega}\, \var{\omega \bar{X}_1 - (1 - \omega)\bar{X}_2} =
+        \frac{2 \omega \sigma_1^2}{n} -
+        \frac{2 (1 - \omega) \sigma_2^2}{n} = 0,
+      \end{equation*}
+      on trouve que $\omega = \sigma_2^2/(\sigma_1^2 + \sigma_2^2)$.
+      La vérification des conditions de deuxième ordre (laissée en
+      exercice) démontre qu'il s'agit bien d'un minimum.
+    \item Après quelques transformations algébriques, la variance de
+      l'estimateur à son point minimum est
+      \begin{displaymath}
+        \frac{\sigma_1^2 \sigma_2^2}{n(\sigma_1^2 + \sigma_2^2)}.
+      \end{displaymath}
+      Lorsque $\omega = 1/2$, la variance de l'estimateur est
+      \begin{equation*}
+        \Var{\frac{\bar{X}_1 - \bar{X}_2}{2}} =
+        \frac{\sigma_1^2 + \sigma_2^2}{4n}.
+      \end{equation*}
+      L'efficacité relative est donc
+      \begin{align*}
+        \frac{(\sigma_1^2 + \sigma_2^2)^2}{4 \sigma_1^2 \sigma_2^2}
+      \end{align*}
+      (ou l'inverse).
+    \end{enumerate}
+  
+\end{solution}
