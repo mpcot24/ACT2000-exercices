@@ -879,7 +879,7 @@ prop.test(351 + 41, 800, correct = FALSE)$conf.int
 Télécharger le fichier \texttt{contents.csv} sur le site de cours. Il contient les pertes de biens, dues à un incendie, de plus d'un million de couronnes danoises provenant de réclamations faites à la compagnie de réassurance Copenhagen Re entre 1980 et 1990. Les données peuvent être importées en \textsf{R} comme suit, après avoir changé l'environnement de travail de \textsf{R} au dossier dans lequel vous avez enregistré le fichier \texttt{contents.csv}:
 
 <<>>=
-ct <- read.csv("contents.csv",header=TRUE,row.names=1)
+ct <- read.csv("donnees/contents.csv",header=TRUE,row.names=1)
 attach(ct)
 data <- Contents
 @
