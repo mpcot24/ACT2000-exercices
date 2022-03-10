@@ -489,14 +489,14 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
         \frac{\partial l(\mu,\lambda)}{\partial \lambda} &=
         \frac{n}{\lambda} - \sum_{i=1}^n (x_i - \mu), \\
         \intertext{d'où}
-        \lambda &= \frac{n}{\sum_{i=1}^n (x_i - \mu)}.
+        \hat{\lambda} &= \frac{n}{\sum_{i=1}^n (x_i - \mu)}.
       \end{align*}
       On voit que la fonction $e^{-\lambda\sum_{i=1}^n(x_i -\mu)}$ est strictement
       croissante en fonction de $\mu$. Ainsi, il faut prendre la
       valeur de $\mu$ la plus grande possible telle que $\log(\mathbf{1}\{\min(x_1,\ldots,x_n)\geq \mu\})=0$. On a donc
       \begin{align*}
         \hat{\mu} &= X_{(1)} \\
-        \hat{\lambda} &= \frac{n}{\sum_{i=1}^n (x_i - x_{(1)})}.
+        \hat{\lambda} &= \frac{n}{\sum_{i=1}^n (X_i - X_{(1)})}.
       \end{align*}
     \item On a, par exemple, les résultats suivants pour une
       exponentielle translatée de paramètres $\mu = \lambda^{-1} =
