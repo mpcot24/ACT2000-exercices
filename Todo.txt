@@ -1,0 +1,8 @@
+Modifs à apporter aux exercices
+
+Ajouter l'annexe des distributions
+Tous les exercices avec solution imprécise (voir questions sur forum et à mes dispos)
+
+Revoir 4.1 d)
+4.9 : erreur de paramétrisation il faudrait donner l'espérance
+
