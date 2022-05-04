@@ -7,7 +7,7 @@
   \usepackage[autolanguage]{numprint}
 
   \usepackage{vgmath,vgsets,amsmath,icomma}
-  \usepackage{lucidabr,pslatex}
+ \usepackage{pslatex}
   \usepackage[sc]{mathpazo}
   \usepackage{graphicx,color}
   \usepackage[absolute]{textpos}
