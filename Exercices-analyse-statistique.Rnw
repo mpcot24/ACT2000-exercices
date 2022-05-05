@@ -114,7 +114,7 @@
   \renewcommand{\d}{\mbox{d}}
 
 
-  %%% Un petit peu d'aide pour la césure
+  %%% Un petit peu d'aide pour la césure.
   \hyphenation{con-fiance}
   \hyphenation{con-train-te}
 
