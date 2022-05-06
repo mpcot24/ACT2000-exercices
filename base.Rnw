@@ -477,8 +477,9 @@ Donc, la WLLN s'applique et $\bar X_n$ converge en probabilité vers 1/5.
     \begin{align*}
       F_{X_{(1)}}(x)
       &= 1 - (1 - F_X(x))^5 \\
-      &= 1 - \left( 1 - \frac{x}{6} \right)^5.
+      &= 1 - \left( 1 - \frac{x}{6} \right)^5
     \end{align*}
+    comme la taille d'échantillon est $n = 5$.
     Par conséquent, la fonction de masse de probabilité du minimum est
     \begin{align*}
       \prob{X_{(1)} = x}
