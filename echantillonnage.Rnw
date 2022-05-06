@@ -350,6 +350,25 @@ Par conséquent, $S_n^2$ suit une distribution gamma avec paramètres $\alpha=(n
       \begin{equation*}
         Y \sim \text{Gamma}\left(\frac{1}{2}, 2\sigma^2\right).
       \end{equation*}
+      
+		Plus directement, on peut aussi voir que $$ X = \pm \sqrt{y}.$$ 
+		Par la méthode du changement de variable, on développe
+	  \begin{align*}
+	        F_Y(y) &= \prob{Y\leq y}\\
+		           &= \prob{X^2 \leq y}\\
+		           &= \prob{-\sqrt{y} \leq X \leq \sqrt{y}}\\
+		           &= F_X(\sqrt{y}) - F_X(-\sqrt{y}).
+      \end{align*}
+
+       On dérive ensuite pour trouver la fonction de densité:
+      \begin{align*}
+           \frac{\text{d}}{\text{d}y} F_Y(y) &= \frac{1}{2\sqrt{y}} f_x(\sqrt{y})- \frac{-1}{2\sqrt{y}} f_x(\sqrt{y})\\
+	                           &= \frac{f_x(\sqrt{Y})}{\sqrt{y}}\\
+	                           &= \frac{1}{\sqrt{2 \pi \sigma^2 y}} e^{-y\frac{1}{2 \sigma^2}} \\
+	                           &= \frac{(2 \sigma^2)^{-1/2}}{\Gamma(\frac{1}{2})}\,
+        y^{1/2 - 1} e^{-y/(2 \sigma^2)}, \quad y > 0.
+      \end{align*}
+
     \item On sait que $Z = X_1 - X_2 \sim \mathcal{N}(0, 2)$ et que $Z/\sqrt{2}
       \sim \mathcal{N}(0, 1)$. En utilisant le résultat de la partie a), on a
       immédiatement que $Y = Z^2/2 \sim \chi^2(1)$.
