@@ -759,12 +759,30 @@ polygon(c(0, 1, 1), c(0, 0, 0.5), density = 10, angle = 135)
       &= 2^{n-1}n
       \left(
         \frac{0,5^{n+1}}{n+1} +
-        \frac{n+2}{n(n + 1)}
-        \left(
-          \frac{1}{2^{n+1}}
-        \right)
-      \right) \\
-      &= \frac{1}{2}.
+        \int_{1/2}^1 t (1 - t)^{n - 1}\, dt
+      \right)
+     \end{align*}
+     
+     Pour l'intégrale entre $t = \frac{1}{2}$ et $t = 1$, on utiliser l'intégration par parties en posant $u = t$ et $\text{d}v = (1 - t)^{n-1}\text{d}t$. Ainsi, on obtient
+     \begin{align*}
+      \esp{T} &= 2^{n-1}n
+      \left(
+        \frac{0,5^{n+1}}{n+1} +
+        \left[\frac{t(1-t)^n}{n}\right]_{\frac{1}{2}}^1 +
+        \int_{1/2}^1 \frac{(1-t)^n}{n}\, dt
+      \right)\\
+      &= 2^{n-1}n
+      \left(
+        \frac{0,5^{n+1}}{n+1} +
+        \frac{1}{2^{n+1}n} +
+        \frac{1}{n(n+1)2^{n+1}}
+      \right)\\
+      &= 2^{n-1}n
+      \left(
+        \frac{0,5^{n+1}}{n+1} +
+        \frac{n+2}{2^{n+1}n(n+1)}
+      \right)\\
+      &= \frac{1}{2}
     \end{align*}
   \end{sol}
 \end{exercice}
