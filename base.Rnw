@@ -277,9 +277,9 @@ Ainsi, l'espérance de revenu mensuel est de 21~000~\$.
   \end{rep}
   \begin{sol}
     On doit trouver le point où la fonction $f(c) = \esp{(X - c)^2}$
-    atteint son minimum. Or, $f^\prime(c) = -2 \esp{X - c} = 0$
+    atteint son minimum. Pour ce faire, il faut dériver par rapport à $c$. Or, $\frac{\text{d}}{\text{d}c} f(c) = -2 \esp{X - c} = 0$
     lorsque $\esp{X} - c = 0$, soit $c = \esp{X} = \mu$. De plus, il
-    s'agit bien d'un minimum puisque $f^{\prime\prime}(c) = 2 > 0$
+    s'agit bien d'un minimum puisque $\frac{\text{d}^2}{\text{d}^2c} f(c)= 2 > 0$
     pour tout $c$.
   \end{sol}
 \end{exercice}
