@@ -748,7 +748,15 @@ q <- format(pgamma(51, 2500, 50) - pgamma(49, 2500, 50),
       \end{equation*}
       Or, on sait que $Y = X_1 + \dots + X_{100} \sim \text{Gamma}(100
       (25), 2)$ et que $\bar{X}_{100} = Y/100 \sim
-      \text{Gamma}(\nombre{2500}, 2/100)$.
+      \text{Gamma}(\nombre{2500}, 2/100)$. 
+
+Ce résultat tient parce qu'une somme de $k$ observations d'un échantillon aléatoire tiré d'une loi gamma est telle que $ S = \sum_{i = 1}^{k} X_i \sim Gamma(\alpha k, \beta)$. La distribution de $\bar{X}_{100}$ suit directement de la transformation d'échelle d'une loi gamma, qu'on peut démontrer en utilisant la fonction génératrice de moments. Ainsi,
+      \begin{align*}
+      \mathcal{M}_{\bar{X}_{100}}(t) &= \esp{e^{t \frac{Y} {100}}} \\
+                            &= \esp{e^{Y \frac{t} {100}}} \\
+                            &= \mathcal{M}_Y(\frac{t}{100}).
+      \end{align*}
+      
     \item On peut, par exemple, obtenir la probabilité demandée avec
       \textsf{R} ainsi:
 <<echo=TRUE>>=
