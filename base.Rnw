@@ -735,7 +735,11 @@ polygon(c(0, 1, 1), c(0, 0, 0.5), density = 10, angle = 135)
     \end{displaymath}
     On doit calculer la densité marginale de $T$. Il faut voir que le
     domaine de $R$ (et donc le domaine d'intégration) dépend
-    indirectement de $T$. En effet, si $0 \leq t \leq 1/2$, on doit
+    indirectement de $T$. 
+    
+    Le domaine de $T$ est d'abord $0 \leq t \leq 1$ comme $X_{(1)}$ et    	    $X_{(n)}$ sont chacun au maximum 1. Leur somme donne au maximum 2. On    	     conclut que $T = \frac{X_{(1)} + X_{(n)}}{2} \in (0, 1) $.
+    
+    Alors, si $0 \leq t \leq 1/2$, on doit
     avoir $0 < r < 2t$. Par contre, si $1/2 < t < 1$, il faut que $0 <
     r < 2(1-t)$. On obtient
     \begin{align*}
