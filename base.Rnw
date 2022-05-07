@@ -624,7 +624,12 @@ f_{R, T}(r, t) &= n (n - 1)\{ F_X(t + r/2) - F_X(t - r/2)\}^{n - 2}
 &= n (n - 1)\{ (t + r/2) - (t - r/2)\}^{n - 2}\\
 &= n (n - 1) r^{n-2},
 \end{align*}
-pour $0 < r < 1$ et $t + r/2 \in(0,1)$ et $t - r/2\in(0,1)$, donc $\frac{r}{2} < t < 1 - \frac{r}{2}$. 
+pour $0 < r < 1$ et $t + r/2 \in(0,1)$ et $t - r/2\in(0,1)$.Ainsi,
+\begin{align*}
+t + \frac{r}{2} < 1 &\implies \; t < 1 - \frac{r}{2} \\
+t - \frac{r}{2} > 0 &\implies \; t > \frac{r}{2} \\
+&\implies \frac{r}{2} < t < 1 - \frac{r}{2}.
+\end{align*}
 Par conséquent,
 \begin{align*}
   f_R(r) &= n (n - 1) r^{n - 2} \int_{r/2}^{1 - r/2} dt \\
