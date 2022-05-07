@@ -291,7 +291,9 @@ $$
 $$
 En insérant le résultat dans la deuxième équation, on obtient
 $$
-0,8=\frac{4^{\hat{\tau}-1}}{1+4^{\hat{\tau}-1}}.
+0,8 = \frac{\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}{1+\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}
+=\frac{\frac{(4 \times 100)^{\hat{\tau}}}{(4 \times (100)^{\hat{\tau}})}}{1+\frac{(4 \times 100)^{\hat{\tau}}}{(4 \times (100)^{\hat{\tau}})}}
+= \frac{4^{\hat{\tau}-1}}{1+4^{\hat{\tau}-1}}.
 $$
 On résoud pour obtenir $\hat{\tau}=2$ et $\hat{\theta}=200$.
 \end{sol}

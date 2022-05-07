@@ -164,6 +164,76 @@ Ainsi, les estimateurs sont convergents.
 \end{sol}
 \end{exercice}
 
+\begin{exercice}
+  Considérer la distribution géométrique avec fonction de masse de
+  probabilité
+  \begin{displaymath}
+    \prob{X = x} = \theta (1 - \theta)^x, \quad x = 0, 1, \dots.
+  \end{displaymath}
+  On a obtenu l'échantillon aléatoire suivant de cette distribution:
+  \begin{center}
+    5\; 7\; 4\; 11\; 0\; 9\; 1\; 1\; 3\; 2\; 1\; 0\; 6\; 0\; 1\; 1\;
+    1\; 9\; 2\; 0.
+  \end{center}
+  Utiliser la méthode des moments pour obtenir une estimation
+  ponctuelle du paramètre $\theta$.
+  \begin{rep}
+    $0,2381$.
+  \end{rep}
+  \begin{sol}
+    Pour obtenir l'estimateur des moments de $\theta$, on pose
+    \begin{equation*}
+      \esp{X} = \frac{1 - \theta}{\theta} = \bar{X},
+    \end{equation*}
+    d'où
+    \begin{equation*}
+      \hat{\theta} = \frac{1}{\bar{X} + 1}.
+    \end{equation*}
+    La moyenne de l'échantillon est $\bar{x} = 64/20 = 3,2$. On a donc
+    \begin{equation*}
+      \hat{\theta} = \frac{1}{4,2} = 0,2381.
+    \end{equation*}
+  \end{sol}
+\end{exercice}
+
+\begin{exercice}
+  On a un dé régulier avec $\theta$ faces numérotées de $1$ à
+  $\theta$, où $\theta$ est un entier inconnu. Soit $X_1, \dots,
+  X_n$ un échantillon aléatoire composé de $n$ lancers de dés indépendants.
+  \begin{enumerate}
+  \item Déterminer l'estimateur des moments de $\theta$.
+  \item Calculer l'estimateur des moments de $\theta$ si $n = 4$ et
+    $x_1 = x_2 = x_3 = 3$ et $x_4 = 12$. Interpréter le résultat.
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+    \item $\hat{\theta} = 2 \bar{X} - 1$
+    \item $9,5$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+    \begin{enumerate}
+    \item Il s'agit ici de trouver l'estimateur des moments du
+      paramètre $\theta$ d'une distribution uniforme discrète sur $1,
+      2, \dots, \theta$, c'est-à-dire que $\prob{X = x} = 1/\theta$
+      pour $x = 1, \dots, \theta$. En posant
+      \begin{align*}
+        \esp{X} = \frac{\theta + 1}{2} = \bar{X},
+      \end{align*}
+      on trouve facilement que l'estimateur des moments de $\theta$
+      est $\hat{\theta} = 2 \bar{X} - 1$.
+    \item Avec $x_1 = x_2 = x_3 = 3$ et $x_4 = 12$, on a $\hat{\theta}
+      = 2 (3 + 3 + 3 + 12)/4 - 1 = 9,5$. Or, cet estimateur est
+      absurde puisque, en ayant roulé le résultat 12, on sait qu'il y a au
+      moins douze faces sur le dé! En d'autres termes, $9,5$ est
+      une valeur de $\theta$ impossible. On constate que l'estimateur
+      obtenu à l'aide de la méthode des moments n'est pas toujours un
+      estimateur possible.
+    \end{enumerate}
+  \end{sol}
+\end{exercice}
+
+
 % Méthode des quantiles
 
 \begin{exercice}
@@ -219,7 +289,9 @@ $$
 $$
 En insérant le résultat dans la deuxième équation, on obtient
 $$
-0,8=\frac{4^{\hat{\tau}-1}}{1+4^{\hat{\tau}-1}}.
+0,8 = \frac{\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}{1+\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}
+=\frac{\frac{(4 \times 100)^{\hat{\tau}}}{4(100)^{\hat{\tau}}^{\hat{\tau}}}}{1+\frac{(4 \times 100)^{\hat{\tau}}}{4(100)^{\hat{\tau}}^{\hat{\tau}}}}
+= \frac{4^{\hat{\tau}-1}}{1+4^{\hat{\tau}-1}}.
 $$
 On résoud pour obtenir $\hat{\tau}=2$ et $\hat{\theta}=200$.
 \end{sol}
@@ -314,20 +386,39 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
       La présence de la valeur absolue rend cette fonction non
       différentiable en $\theta$. On remarque que la fonction de
       vraisemblance sera maximisée lorsque l'expression $\sum_{i=1}^n
-      \abs{x_i - \theta}$ sera minimisée. Par analogie avec le
-      résultat de l'exercice~\ref{chap:rappels}.\ref{ex:rappels:mediane},
-      on établit que $\hat{\theta} = \text{med}(X_1, \dots, X_n)$.
+      \abs{x_i - \theta}$ sera minimisée. On établit donc que $\hat{\theta} = \text{med}(X_1, \dots, X_n)$, puisqu'on connaît le résultat suivant sur la médiane.
+      
+      En général, si $X$ est une variable aléatoire continue et $a$ est une constante, on peut trouver le minimum de
+    \begin{align*}
+      \esp{\abs{X - a}}
+      &= \int_{-\infty}^\infty \abs{x - a} f(x)\,dx \\
+      &= \int_{-\infty}^a (a - x)f(x)\, dx
+      + \int_a^\infty (x - a)f(x)\,dx.
+    \end{align*}
+    Or,
+    \begin{align*}
+      \frac{d}{da} \esp{\abs{X - a}}
+      &= \int_{-\infty}^a f(x)\, dx + \int_a^\infty f(x)\, dx \\
+      &= F_X(a) - (1 - F_X(a)) \\
+      &= 2F_X(a) - 1
+    \end{align*}
+    Par conséquent, le minimum est atteint au point $a$ tel que
+    $2F_X(a) - 1 = 0$, soit $F_X(a) = 1/2$. Par définition, cette
+    valeur est la médiane de $X$.
+
     \item On remarque que le support de la densité dépend du paramètre
-      $\theta$. Dans de tels cas, la technique usuelle de maximisation
-      de la fonction de vraisemblance n'est d'aucune utilité.
-      D'ailleurs, on a
+      $\theta$. La vraisemblance est
       \begin{equation*}
-        L(\theta) = e^{n\theta - \sum_{i=1}^n x_i}
+        L(\theta) = e^{n\theta - \sum_{i=1}^n x_i}\prod_{i=1}^n\mathbf{1}(x_i>\theta)
       \end{equation*}
-      et on voit que la fonction de vraisemblance est strictement
+      S'il y a une indicatrice qui est 0, alors la vraisemblance sera 0, elles doivent donc toutes être égales à 1 simultanément, ce qui est équivalent à
+      \begin{equation*}
+        L(\theta) = e^{n\theta - \sum_{i=1}^n x_i}\mathbf{1}(\min(x_1,\ldots,x_n)>\theta).
+      \end{equation*}
+      La fonction $e^{n\theta - \sum_{i=1}^n x_i}$ est strictement
       croissante en fonction de $\theta$, ce qui indique de choisir
       une valeur de $\theta$ la plus grande possible. Par contre, on a
-      la contrainte $x \geq \theta$, c'est-à-dire que $\theta$ doit
+      la contrainte $min(x_1,\ldots,x_n)>\theta$, c'est-à-dire que $\theta$ doit
       être plus inférieur ou égal à la plus petite valeur de
       l'échantillon. Par conséquent, $\hat{\theta} = \min(X_1, \dots,
       X_n) = X_{(1)}$.
@@ -391,22 +482,20 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
       \end{align*}
     \item On a
       \begin{align*}
-        L(\mu,\lambda) &= \lambda^n e^{-\lambda\sum_{i=1}^n(x_i -\mu)}\\
+        L(\mu,\lambda) &= \lambda^n e^{-\lambda\sum_{i=1}^n(x_i -\mu)}\prod_{i=1}^n\mathbf{1}(x_i\geq \mu)\\
         l(\mu,\lambda) &= n\ln(\lambda) -
-        \lambda\sum_{i=1}^n (x_i - \mu) \\
+        \lambda\sum_{i=1}^n (x_i - \mu) +\log(\mathbf{1}\{\min(x_1,\ldots,x_n)\geq \mu\}) \\
         \intertext{et}
         \frac{\partial l(\mu,\lambda)}{\partial \lambda} &=
         \frac{n}{\lambda} - \sum_{i=1}^n (x_i - \mu), \\
         \intertext{d'où}
-        \lambda &= \frac{n}{\sum_{i=1}^n (x_i - \mu)}.
+        \hat{\lambda} &= \frac{n}{\sum_{i=1}^n (x_i - \hat{\mu})}.
       \end{align*}
-      On voit que la fonction de vraisemblance est strictement
+      On voit dans la fonction de vraisemblance que la fonction $e^{-\lambda\sum_{i=1}^n(x_i -\mu)}$ est strictement
       croissante en fonction de $\mu$. Ainsi, il faut prendre la
-      valeur de $\mu$ la plus grande possible en respectant la
-      condition dictée par la densité de l'exponentielle translatée,
-      $x \geq \mu$. On a donc
+      valeur de $\hat{\mu}$ la plus grande possible telle que $\log(\mathbf{1}\{\min(x_1,\ldots,x_n)\geq \hat{\mu}\})=0$. On a donc
       \begin{align*}
-        \hat{\mu} &= X_{(1)} \\
+        \hat{\mu} &= x_{(1)} \\
         \hat{\lambda} &= \frac{n}{\sum_{i=1}^n (x_i - x_{(1)})}.
       \end{align*}
     \item On a, par exemple, les résultats suivants pour une
@@ -419,13 +508,13 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
 \hlkwd{min}\hlstd{(x)}
 \end{alltt}
 \begin{verbatim}
-## [1] 1029.39
+## [1] 1004.095
 \end{verbatim}
 \begin{alltt}
 \hlnum{100} \hlopt{/} \hlkwd{sum}\hlstd{(x} \hlopt{-} \hlkwd{min}\hlstd{(x))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.001112658
+## [1] 0.001056287
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -505,7 +594,7 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
     \begin{equation*}
       \frac{\partial}{\partial \mu}\,
       \sum_{i=1}^n \frac{(x_i - \mu)^2}{\mu^2 x_i} =
-      -\sum_{i=1}^n \frac{2}{\mu^2 x_i}
+      -\sum_{i=1}^n \frac{2}{\mu^2}
       \left( \frac{x_i}{\mu} - 1 \right).
     \end{equation*}
     En posant
@@ -533,75 +622,6 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
   \end{sol}
 \end{exercice}
 
-\begin{exercice}
-  Considérer la distribution géométrique avec fonction de masse de
-  probabilité
-  \begin{displaymath}
-    \prob{X = x} = \theta (1 - \theta)^x, \quad x = 0, 1, \dots.
-  \end{displaymath}
-  On a obtenu l'échantillon aléatoire suivant de cette distribution:
-  \begin{center}
-    5\; 7\; 4\; 11\; 0\; 9\; 1\; 1\; 3\; 2\; 1\; 0\; 6\; 0\; 1\; 1\;
-    1\; 9\; 2\; 0.
-  \end{center}
-  Utiliser la méthode des moments pour obtenir une estimation
-  ponctuelle du paramètre $\theta$.
-  \begin{rep}
-    $0,2381$.
-  \end{rep}
-  \begin{sol}
-    Pour obtenir l'estimateur des moments de $\theta$, on pose
-    \begin{equation*}
-      \esp{X} = \frac{1 - \theta}{\theta} = \bar{X},
-    \end{equation*}
-    d'où
-    \begin{equation*}
-      \hat{\theta} = \frac{1}{\bar{X} + 1}.
-    \end{equation*}
-    La moyenne de l'échantillon est $\bar{x} = 64/10 = 3,2$. On a donc
-    \begin{equation*}
-      \hat{\theta} = \frac{1}{4,2} = 0,2381.
-    \end{equation*}
-  \end{sol}
-\end{exercice}
-
-\begin{exercice}
-  On a une urne contenant $\theta$ boules numérotées de $1$ à
-  $\theta$, où $\theta$ est une quantité inconnue. Soit $X_1, \dots,
-  X_n$ un échantillon aléatoire composé de $n$ boules pigées au
-  hasard, avec remise, dans cette urne.
-  \begin{enumerate}
-  \item Déterminer l'estimateur des moments de $\theta$.
-  \item Calculer l'estimateur des moments de $\theta$ si $n = 4$ et
-    $x_1 = x_2 = x_3 = 3$ et $x_4 = 12$. Interpréter le résultat.
-  \end{enumerate}
-  \begin{rep}
-    \begin{inparaenum}
-    \item $\hat{\theta} = 2 \bar{X} - 1$
-    \item $9,5$
-    \end{inparaenum}
-  \end{rep}
-  \begin{sol}
-    \begin{enumerate}
-    \item Il s'agit ici de trouver l'estimateur des moments du
-      paramètre $\theta$ d'une distribution uniforme discrète sur $1,
-      2, \dots, \theta$, c'est-à-dire que $\prob{X = x} = 1/\theta$
-      pour $x = 1, \dots, \theta$. En posant
-      \begin{align*}
-        \esp{X} = \frac{\theta + 1}{2} = \bar{X},
-      \end{align*}
-      on trouve facilement que l'estimateur des moments de $\theta$
-      est $\hat{\theta} = 2 \bar{X} - 1$.
-    \item Avec $x_1 = x_2 = x_3 = 3$ et $x_4 = 12$, on a $\hat{\theta}
-      = 2 (3 + 3 + 3 + 12)/4 - 1 = 9,5$. Or, cet estimateur est
-      absurde puisque, en ayant pigé la boule 12, on sait qu'il y a au
-      moins douze boules dans l'urne! En d'autres termes, $9,5$ est
-      une valeur de $\theta$ impossible. On constate que l'estimateur
-      obtenu à l'aide de la méthode des moments n'est pas toujours un
-      estimateur possible.
-    \end{enumerate}
-  \end{sol}
-\end{exercice}
 
 \begin{exercice}
 \label{ex:moment:pareto}
@@ -711,12 +731,12 @@ Les estimateurs du maximum de vraisemblance sont tels que
   \begin{sol}
     La fonction de vraisemblance est
     \begin{equation*}
-      L(a, b) = \left( \frac{1}{b - a} \right)^n
+      L(a, b) = \left( \frac{1}{b - a} \right)^n\mathbf{1}(a < x_1, \dots, x_n < b).
     \end{equation*}
-    pour $a < x_1, \dots, x_n < b$. Pour maximiser cette fonction, il
+    Pour maximiser cette fonction, il
     faut minimiser la quantité $b - a$ en choisissant une valeur de
     $b$ la plus petite possible et une valeur de $a$ la plus grande
-    possible. Étant donné le support de la distribution, on a choisit
+    possible. Étant donné le support de la distribution, on choisit
     donc $\hat{a} = \min(X_1, \dots, X_n)$ et $\hat{b} = \max(X_1,
     \dots, X_n)$.
   \end{sol}
@@ -776,7 +796,6 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
 \end{exercice}
 
 \begin{exercice}
-  \label{ex:ponctuelle:uniforme}
   Soit $X_1, \dots, X_n$ un échantillon aléatoire issu d'une
   distribution dont la loi de probabilité est
   \begin{displaymath}
@@ -831,7 +850,6 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=0.6\textwidth]{figure/unnamed-chunk-3-1} 
-
 \end{knitrout}
         \caption{Graphique de la fonction de log-vraisemblance de
           l'exercice
@@ -841,7 +859,7 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
       \end{figure}
     \item Premièrement, on remarque que $Y = \sum_{i = 1}^n X_i = n
       \bar{X} \sim \text{Binomiale}(n, \theta)$ avec $0 \leq \theta
-      \leq 1/2$. Deuxièmement, on sait que $\MSE(\hat{\theta}) =
+      \leq 1/2$. Deuxièmement, on sait que $\mbox{EQM}(\hat{\theta}) =
       \var{\hat{\theta}} + b(\hat{\theta})^2$, où $\hat{\theta}$ est
       un estimateur quelconque d'un paramètre $\theta$ et
       $b(\hat{\theta}) = \esp{\hat{\theta}} - \theta$ est le biais de
@@ -849,7 +867,7 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
 
       Pour l'estimateur des moments $\tilde{\theta} = Y/n$, on a
       \begin{align*}
-        \MSE(\tilde{\theta}) &= \frac{\Var{Y}}{n^2} +
+        \mbox{EQM}(\tilde{\theta}) &= \frac{\Var{Y}}{n^2} +
         b(Y/n)^2 \\
         &= \frac{\theta (1 - \theta)}{n},
       \end{align*}
@@ -888,7 +906,7 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
       \end{displaymath}
       d'où
       \begin{align*}
-        \mbox{EQM}(\tilde{\theta}) - \MSE(\hat{\theta}) &=
+        \mbox{EQM}(\tilde{\theta}) - \mbox{EQM}(\hat{\theta}) &=
         \sum_{y=[n/2] + 1}^n
         \left(
           \frac{y}{n} + \frac{1}{2} - 2 \theta
@@ -901,7 +919,7 @@ est strictement croissante (et donc un-pour-un), la propriété d'invariance de 
       \end{align*}
       Étant donné que $y/n > 1/2$ et que $\theta \leq 1/2$, tous les
       termes dans la somme sont positifs. On a donc que
-      $\mbox{EQM}(\tilde{\theta}) - \MSE(\hat{\theta}) > 0$ ou, de manière
+      $\mbox{EQM}(\tilde{\theta}) - \mbox{EQM}(\hat{\theta}) > 0$ ou, de manière
       équivalente, $\mbox{EQM}(\hat{\theta}) < \mbox{EQM}(\tilde{\theta})$. En terme
       d'erreur quadratique moyenne, l'estimateur du maximum de
       vraisemblance est meilleur que l'estimateur des moments selon ce critère.
@@ -930,7 +948,6 @@ $$
 \end{verbatim}
 \end{kframe}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
-
 \end{knitrout}
 
 
@@ -953,7 +970,6 @@ Calculer l'AIC pour chacune des distributions. Quelle distribution semble être 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
-
 \end{knitrout}
 
 \item L'assureur s'intéresse à la queue à droite de la distribution et souhaite savoir les quantiles de niveau 99~\% et 99,5~\% pour les distributions des montants. Donner une estimation de ces quantiles sous les modèles log-normal et Pareto ajustés en d). [\emph{Astuce: Observer qu'il est possible d'inverser explicitement la fonction de répartition de la Pareto, et que les quantiles de la log-normale peuvent être exprimés en termes de quantiles de la loi normale.}]
@@ -1003,7 +1019,6 @@ Selon le critère AIC, le meilleur modèle est celui avec la valeur la plus peti
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-7-1} 
-
 \end{knitrout}
 
 \item Les quantiles de la loi Pareto sont l'inverse de sa fonction de répartition. Si $\omega_\kappa$ est le $(1-\kappa)$e quantile, c'est-à-dire qu'il est tel que $F(\omega_\kappa)=1-\kappa$, alors en utilisant la fonction de répartition fournie à l'exercice~\ref{chap:ajustement}.\ref{ex:moment:pareto}, on a
