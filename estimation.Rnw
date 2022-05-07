@@ -621,7 +621,7 @@ $$
 $$
 \lambda^\ast = \ex \left[ \tilde{\lambda} | T \right] = \ex \left[ X_1 | \sum_{i=1}^n X_i = t \right].
 $$
-Par contre, on remarque que
+Par contre, étant donné que la somme des espérances est équivalente à l'espérance de la somme, on remarque que la sommation des espérances conditionnelles sur toutes les observations résulte en un résultat trivial sachant que $\sum_{i = 1}^{n} X_i = t$:
 $$
 \sum_{i=1}^n \ex \left[ X_i | \sum_{i=1}^n X_i = t \right] = \ex \left[\sum_{i=1}^n X_i | \sum_{i=1}^n X_i = t \right] = t.
 $$
