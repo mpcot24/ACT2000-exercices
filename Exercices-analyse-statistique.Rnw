@@ -13,6 +13,7 @@
   \usepackage[absolute]{textpos}
   \usepackage{answers}
   \usepackage[alwaysadjust,defblank]{paralist}
+  \usepackage{amsmath}
 
   \usepackage{rotating,lscape} % table de loi F
 
