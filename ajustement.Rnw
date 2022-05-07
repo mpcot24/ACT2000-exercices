@@ -581,12 +581,14 @@ min(x)
     Il est plus simple de trouver d'abord l'estimateur du maximum de
     vraisemblance du paramètre $\mu$. On constate qu'il s'agit de la
     valeur qui minimise la somme dans l'exponentielle. Or,
-    \begin{equation*}
+    \begin{align*}
       \frac{\partial}{\partial \mu}\,
-      \sum_{i=1}^n \frac{(x_i - \mu)^2}{\mu^2 x_i} =
-      -\sum_{i=1}^n \frac{2}{\mu^2}
-      \left( \frac{x_i}{\mu} - 1 \right).
-    \end{equation*}
+      \sum_{i=1}^n \frac{(x_i - \mu)^2}{\mu^2 x_i} &= \sum_{i = 1}^{n} \left[ \frac{-2 (x_i - \mu)}{\mu^2 x_i} + \frac{(x_i - \mu)^2}{x_i} \frac{-2}{\mu^3} \right] \\
+      &= \sum_{i = 1}^{n} \left[ \frac{-2 \mu(x_i - \mu) - 2 (x_i - \mu)^2}{\mu^3 x_i} \right] \\
+      &= -2 \sum_{i = 1}^{n} \left[\frac{\mu x_i - \mu^2 + x_i^2 - 2 x_i \mu + \mu^2}{\mu^3 x_i} \right] \\ 
+      &= -2 \sum_{i = 1}^{n} \left[\frac{x_i^2 - x_i \mu}{\mu^3 x_i} \right] \\
+      &= - \sum_{i = 1}^{n} \frac{2}{\mu^2} \left[ \frac{x_i}{\mu} - 1 \right]
+    \end{align*}
     En posant
     \begin{equation*}
       \sum_{i=1}^n \left( \frac{x_i}{\mu} - 1 \right) = 0,
