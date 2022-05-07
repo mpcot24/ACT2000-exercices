@@ -431,9 +431,9 @@ $$
 \Pr[|\hat\beta-\beta|\leq \varepsilon]&=\Pr[\beta-\varepsilon<\hat\beta\leq \beta+\varepsilon] \\
 &=\Pr[\hat\beta\leq \beta+\varepsilon],
 \end{align*}
-puisque $\Pr[\hat\beta<\beta]=0$ par le fait que le domaine du minimum est le même que celui des observations, $[\beta,\infty)$. Ainsi,
+puisque $\Pr[\hat\beta<\beta]=0$ par le fait que le domaine du minimum est le même que celui des observations, $[\beta,\infty)$. Ainsi, on remplace dans la fonction de répartition développée en a):
 \begin{align*}
-\Pr[|\hat\beta-\beta|\leq \varepsilon]&=\Pr[\hat\beta\leq \beta+\varepsilon]=1-\left(\frac{\beta}{\beta+\varepsilon}\right)^{\alpha n}.
+\Pr[|\hat\beta-\beta|\leq \varepsilon]&=\Pr[\hat\beta\leq \beta+\varepsilon]= F_\text{min}(\beta + \varepsilon) = 1-\left(\frac{\beta}{\beta+\varepsilon}\right)^{\alpha n}.
 \end{align*}
 Puisque $\varepsilon$ est positif, le ratio $\frac{\beta}{\beta+\varepsilon}<1$ et donc $\left(\frac{\beta}{\beta+\varepsilon}\right)^{\alpha n}\to 0$ quand $n\to\infty$. Ainsi,
 $$
@@ -526,13 +526,19 @@ donc les statistiques $X_1 \times \cdots \times X_n$ et $\min(X_1,\dots, X_n)$ s
     \end{equation*}
     La fonction de vraisemblance est donc non nulle seulement si
     toutes les valeurs de l'échantillon se trouvent dans l'intervalle
-    $(-\theta, \theta)$ ou, de manière équivalente, si $\max_{i = 1,
-      \dots, n} (\abs{x_i}) < \theta$. On peut donc, par exemple,
+    $(-\theta, \theta)$ ou, de manière équivalente, si 
+    \begin{align*}
+    - \theta < x_i < \theta \; i \in {1, \dots, n} \\
+    - \theta < \min(x_1, \dots, x_n) \; \text{et} \; \max(x_1, \dots, x_n) < \theta \\
+    \theta > -\min(x_1, \dots, x_n) \; \text{et} \; \max(x_1, \dots, x_n) < \theta \\
+    \max_{i = 1, \dots, n}(\abs{x_i}) < \theta.
+    \end{align*}  
+  On peut donc, par exemple,
     réécrire la fonction de vraisemblance sous la forme
     \begin{align*}
       f(x_1, \dots, x_n; \theta)
       &= \left( \frac{1}{2\theta} \right)^n
-      I_{\{0 \leq \max_{i = 1, \dots, n}(\abs{x_i}) \leq \theta)\}} \\
+      \mathbf{1}_{\{0 \leq \max_{i = 1, \dots, n}(\abs{x_i}) \leq \theta)\}} \\
       &= g \left( \max_{i = 1, \dots, n}(\abs{x_i}); \theta \right)
       h(x_1, \dots, x_n), \\
       \intertext{avec}
