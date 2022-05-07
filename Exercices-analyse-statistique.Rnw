@@ -14,6 +14,7 @@
   \usepackage{answers}
   \usepackage[alwaysadjust,defblank]{paralist}
   \usepackage{amsmath}
+  \usepackage{bm}
 
   \usepackage{rotating,lscape} % table de loi F
 
