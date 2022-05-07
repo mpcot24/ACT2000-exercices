@@ -486,6 +486,8 @@ Donc, la WLLN s'applique et $\bar X_n$ converge en probabilité vers 1/5.
       \prob{X_{(1)} = x}
       &= \lim_{y \rightarrow x^+} F_{X_{(1)}}(y) -
       \lim_{y \rightarrow x^-} F_{X_{(1)}}(y) \\
+      &= \prob{X_{(1)} \leq x} - \prob{X_{(1)} < x} \\
+      &= \prob{X_{(1)} \leq x} - \prob{X_{(1)} \leq (x - 1)} \\
       &= F_{X_{(1)}}(x) - F_{X_{(1)}}(x - 1) \\
       &= \left(1 - \frac{x-1}{6} \right)^5 -
       \bigg( 1 - \frac{x}{6} \bigg)^5 \\
