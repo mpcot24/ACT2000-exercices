@@ -737,7 +737,7 @@ Les estimateurs du maximum de vraisemblance sont tels que
   \begin{sol}
     La fonction de vraisemblance est
     \begin{equation*}
-      L(a, b) = \left( \frac{1}{b - a} \right)^n\mathbf{1}(a < x_1, \dots, x_n < b).
+      L(a, b) = \left( \frac{1}{b - a} \right)^n\mathbf{1}\{a < x_1, \dots, x_n < b\} = \left( \frac{1}{b - a} \right)^n\mathbf{1}\{a < x_{(1)}\} \mathbf{1}\{b > x_{(n)}\}.
     \end{equation*}
     Pour maximiser cette fonction, il
     faut minimiser la quantité $b - a$ en choisissant une valeur de
