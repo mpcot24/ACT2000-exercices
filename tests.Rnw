@@ -523,7 +523,7 @@ Avec les données des deux numéros, on trouve que $w = -2,378$. À un seuil de 
   particules en suspension dans l'air. Soit $X$ et $Y$ les
   concentrations en $\mu g/m^3$ de particules en suspension dans l'air
   aux centres-villes de Melbourne (Australie) et Houston (Texas),
-  respectivement. À partir de $n = 13$ observations de la variable
+  respectivement. On suppose que $X$ et $Y$ sont normalement distribuées. À partir de $n = 13$ observations de la variable
   aléatoire $X$ et $m = 16$ observations de la variable aléatoire $Y$,
   on souhaite tester $ \mathcal{H}_0: \mu_X \ge \mu_Y$ versus $ \mathcal{H}_1: \mu_X < \mu_Y$.
   \begin{enumerate}
