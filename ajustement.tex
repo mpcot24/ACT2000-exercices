@@ -68,13 +68,27 @@
       paramètres $1$ et $\theta$. Ainsi, on sait que $\esp{X} =
       \theta$, d'où l'estimateur des moments est $\hat{\theta} =
       \bar{X}$.
-    \item Cette densité est celle de la loi de Laplace. On a
+    \item Cette densité est celle de la loi de Laplace. On remarque d'abord que 
+    \begin{align*}
+    -|x - \theta| &=
+    \begin{cases}
+    -x + \theta &\text{pour} \;  x \geq \theta \\
+    x - \theta &\text{pour} \; x \leq \theta \\
+    \end{cases}.
+    \end{align*}
+    Ainsi, on divise l'intégrale en deux selon les cas pour la valeur absolue:
       \begin{align*}
         \esp{X} &= \frac{1}{2}
         \left(
           \int_{-\infty}^\theta x e^{x-\theta}\, dx +
           \int_{\theta}^\infty xe^{-x + \theta}\, dx
-        \right) \\
+        \right).
+        \end{align*}
+        On intègre ensuite par parties pour obtenir
+        \begin{align*}
+        \esp{X} &= \frac{1}{2} \left( \left[x e^{x - \theta}   \right]_{-\infty}^{\theta} -  \int_{-\infty}^\theta e^{x-\theta}\, dx 
+        - \left[ x e^{-x + \theta} \right]_{\theta}^{\infty} +
+        \int_{\theta}^\infty e^{-x + \theta}\, dx \right) \\
         &= \frac{1}{2}(2\theta)\\
         &= \theta.
       \end{align*}
@@ -218,7 +232,7 @@ Ainsi, les estimateurs sont convergents.
       2, \dots, \theta$, c'est-à-dire que $\prob{X = x} = 1/\theta$
       pour $x = 1, \dots, \theta$. En posant
       \begin{align*}
-        \esp{X} = \frac{\theta + 1}{2} = \bar{X},
+        \esp{X} = \sum_{x=1}^{\theta} x \prob{X = x} = \frac{1}{\theta} \sum_{x = 1}^{\theta} x = \frac{\theta (\theta + 1)}{2 \theta} = \frac{\theta + 1}{2} = \bar{X}_n,
       \end{align*}
       on trouve facilement que l'estimateur des moments de $\theta$
       est $\hat{\theta} = 2 \bar{X} - 1$.
@@ -290,7 +304,7 @@ $$
 En insérant le résultat dans la deuxième équation, on obtient
 $$
 0,8 = \frac{\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}{1+\frac{400^{\hat{\tau}}}{\hat{\theta}^{\hat{\tau}}}}
-=\frac{\frac{(4 \times 100)^{\hat{\tau}}}{4(100)^{\hat{\tau}}^{\hat{\tau}}}}{1+\frac{(4 \times 100)^{\hat{\tau}}}{4(100)^{\hat{\tau}}^{\hat{\tau}}}}
+=\frac{\frac{(4 \times 100)^{\hat{\tau}}}{(4 \times (100)^{\hat{\tau}})}}{1+\frac{(4 \times 100)^{\hat{\tau}}}{(4 \times (100)^{\hat{\tau}})}}
 = \frac{4^{\hat{\tau}-1}}{1+4^{\hat{\tau}-1}}.
 $$
 On résoud pour obtenir $\hat{\tau}=2$ et $\hat{\theta}=200$.
@@ -508,13 +522,13 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
 \hlkwd{min}\hlstd{(x)}
 \end{alltt}
 \begin{verbatim}
-## [1] 1004.095
+## [1] 1002.622
 \end{verbatim}
 \begin{alltt}
 \hlnum{100} \hlopt{/} \hlkwd{sum}\hlstd{(x} \hlopt{-} \hlkwd{min}\hlstd{(x))}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.001056287
+## [1] 0.001231615
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -591,12 +605,14 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
     Il est plus simple de trouver d'abord l'estimateur du maximum de
     vraisemblance du paramètre $\mu$. On constate qu'il s'agit de la
     valeur qui minimise la somme dans l'exponentielle. Or,
-    \begin{equation*}
+    \begin{align*}
       \frac{\partial}{\partial \mu}\,
-      \sum_{i=1}^n \frac{(x_i - \mu)^2}{\mu^2 x_i} =
-      -\sum_{i=1}^n \frac{2}{\mu^2}
-      \left( \frac{x_i}{\mu} - 1 \right).
-    \end{equation*}
+      \sum_{i=1}^n \frac{(x_i - \mu)^2}{\mu^2 x_i} &= \sum_{i = 1}^{n} \left[ \frac{-2 (x_i - \mu)}{\mu^2 x_i} + \frac{(x_i - \mu)^2}{x_i} \frac{-2}{\mu^3} \right] \\
+      &= \sum_{i = 1}^{n} \left[ \frac{-2 \mu(x_i - \mu) - 2 (x_i - \mu)^2}{\mu^3 x_i} \right] \\
+      &= -2 \sum_{i = 1}^{n} \left[\frac{\mu x_i - \mu^2 + x_i^2 - 2 x_i \mu + \mu^2}{\mu^3 x_i} \right] \\ 
+      &= -2 \sum_{i = 1}^{n} \left[\frac{x_i^2 - x_i \mu}{\mu^3 x_i} \right] \\
+      &= - \sum_{i = 1}^{n} \frac{2}{\mu^2} \left[ \frac{x_i}{\mu} - 1 \right]
+    \end{align*}
     En posant
     \begin{equation*}
       \sum_{i=1}^n \left( \frac{x_i}{\mu} - 1 \right) = 0,
@@ -731,7 +747,7 @@ Les estimateurs du maximum de vraisemblance sont tels que
   \begin{sol}
     La fonction de vraisemblance est
     \begin{equation*}
-      L(a, b) = \left( \frac{1}{b - a} \right)^n\mathbf{1}(a < x_1, \dots, x_n < b).
+      L(a, b) = \left( \frac{1}{b - a} \right)^n\mathbf{1}\{a < x_1, \dots, x_n < b\} = \left( \frac{1}{b - a} \right)^n\mathbf{1}\{a < x_{(1)}\} \mathbf{1}\{b > x_{(n)}\}.
     \end{equation*}
     Pour maximiser cette fonction, il
     faut minimiser la quantité $b - a$ en choisissant une valeur de
