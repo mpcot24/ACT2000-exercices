@@ -234,7 +234,7 @@ Ainsi, les estimateurs sont convergents.
       2, \dots, \theta$, c'est-à-dire que $\prob{X = x} = 1/\theta$
       pour $x = 1, \dots, \theta$. En posant
       \begin{align*}
-        \esp{X} = \frac{\theta + 1}{2} = \bar{X},
+        \esp{X} = \sum_{x=1}^{\theta} x \prob{X = x} = \frac{1}{\theta} \sum_{x = 1}^{\theta} x = \frac{\theta (\theta + 1)}{2 \theta} = \frac{\theta + 1}{2} = \bar{X}_n,
       \end{align*}
       on trouve facilement que l'estimateur des moments de $\theta$
       est $\hat{\theta} = 2 \bar{X} - 1$.
