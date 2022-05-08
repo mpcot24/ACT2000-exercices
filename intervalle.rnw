@@ -47,13 +47,14 @@ $$
 \Pr( \chi^2_{0,975, \, 4n} \le T \le \chi^2_{0,025, \, 4n}) = 0,95.
 $$
 On résout les inégalités
-$$
- \chi^2_{0,975, \, 4n} \le T \le \chi^2_{0,025, \, 4n} 
- $$
-ou encore 
- $$
- \chi^2_{0,975, \, 4n} \le \frac{2}{\beta} \sum_{i=1}^n X_i \le \chi^2_{0,025, \, 4n},
-$$
+\begin{align*}
+ \chi^2_{0,975, \, 4n} \le T \le \chi^2_{0,025, \, 4n} \\
+ \chi^2_{0,975, \, 4n} \le \frac{2}{\beta} \sum_{i=1}^n X_i \le \chi^2_{0,025, \, 4n} \\
+  \frac{\chi^2_{0,975, \, 4n} }{2\sum_{i=1}^n X_i}  \le \frac{1}{\beta}  \le \frac{\chi^2_{0,025, \, 4n}}{2\sum_{i=1}^n X_i} \\
+  \frac{2n \bar{X}_n}{\chi^2_{0,025, \, 4n} }  \le \beta  \le \frac{2n \bar{X}_n}{\chi^2_{0,975, \, 4n}},
+\end{align*}
+
+ 
 ce qui donne un l'intervalle de confiance bilatéral de niveau $95$~\% pour $\beta$~:
 \begin{align*}
 \left[ \frac{2n \bar X_n}{ \chi^2_{0,025, \, 4n}} \, , \frac{2n \bar X_n}{ \chi^2_{0,975, \, 4n}}\right].
