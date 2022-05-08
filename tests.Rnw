@@ -509,10 +509,11 @@ $$
       \end{align*}
 en supposant les variances égales. La statistique utilisée pour ce test est
 \begin{align*}
-W = \frac{(\bar{X} - \bar{Y}) - (\mu_X - \mu_Y)}{\sqrt{S_X^2/n+S_Y^2/m}} \sim t_{n+m-2}.
+W &= \frac{(\bar{X} - \bar{Y}) - (\mu_X - \mu_Y)}{S_p} \sim t_{n+m-2}, \\
+\text{où} \, S_p^2 &= \frac{S_X^2 (n-1) + S_Y^2 (m - 1)}{n + m - 2}.
 \end{align*}
 
-Avec les données des deux numéros, on trouve que $w = -2,378$. À un seuil de signification de $\alpha = 5$\%, on trouve $t_{20, \, 0,025} = -2,086$ et $t_{20, \, 0,975} = 2,086$. On rejette donc $\mathcal{H}_0$ au seuil de $5$\%. On établit donc que les fillettes et les garçons nés au Québec ont un poids moyen différent les uns des autres.
+Avec les données des deux numéros, on trouve que $w = -1,0139$. À un seuil de signification de $\alpha = 5$\%, on trouve $t_{20, \, 0,025} = -2,086$ et $t_{20, \, 0,975} = 2,086$. On ne rejette donc pas $\mathcal{H}_0$ au seuil de $5$\%. On n'a donc pas assez d'information pour conclure que les fillettes et les garçons nés au Québec ont un poids moyen différent les uns des autres au seuil $\alpha = 5\%$.
     \end{enumerate}
   \end{sol}
 \end{exercice}
