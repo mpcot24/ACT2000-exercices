@@ -684,7 +684,16 @@ Un estimateur avec variance égale à la borne inférieure est dit être \emph{e
 $$
 \Pr[X_1=x_1,\ldots,X_n=x_n]=\prod_{i=1}^n \frac{\lambda^{x_i} e^{-\lambda}}{x_i!}=\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n} \frac{1}{\prod_{i=1}^n x_i!}
 $$
-se factorise en $g(\sum_{i=1}^n x_i,\lambda)=\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n}$ et $h(x_1,\ldots,x_n)=\frac{1}{\prod_{i=1}^n x_i!}$, le théorème de factorisation de Fisher--Neyman implique que $\sum_{i=1}^n X_i$ est une statistique exhaustive pour $\lambda$. On voit facilement avec le critère de Lehman-Scheffé que cette statistique est exhaustive minimale.
+se factorise en $g(\sum_{i=1}^n x_i,\lambda)=\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n}$ et $h(x_1,\ldots,x_n)=\frac{1}{\prod_{i=1}^n x_i!}$, le théorème de factorisation de Fisher--Neyman implique que $\sum_{i=1}^n X_i$ est une statistique exhaustive pour $\lambda$. On voit facilement avec le critère de Lehmann-Scheffé que cette statistique est exhaustive minimale.
+
+Effectivement, en utilisant un autre échantillon aléatoire $y_1 \dots y_n$ indépendant et identiquement distribué à l'échantillon $x_1 \dots x_n$, obtient que le rapport des vraisemblances devient
+\begin{align*}
+\frac{L(x_1 \dots x_n; \lambda)}{L(y_1 \dots y_n; \lambda)} &= \displaystyle{\frac{\lambda^{\sum_{i=1}^n x_i}e^{-\lambda n} \frac{1}{\prod_{i=1}^n x_i!}}{\lambda^{\sum_{i=1}^n y_i}e^{-\lambda n} \frac{1}{\prod_{i=1}^n y_i!}}} \\
+&= \frac{\prod_{i=1}^n y_i!}{\prod_{i=1}^n x_i!} \lambda^{\sum_{i=1}^n x_i - \sum_{i=1}^n y_i}.
+\end{align*}
+Comme cette expression est indépendante de $\lambda$ si et seulement si $\sum_{i=1}^n x_i = \sum_{i=1}^n y_i$ (pour que l'exposant sur $\lambda$ soit 0 et que cette portion donne 1). Ainsi, par le critère de Lehmann-Scheffé, nous venons de démontrer que $T = \sum_{i=1}^n X_i$ est une statistique exhaustive minimale pour $\lambda$. 
+
+Note: On pourrait aussi dire que $\bar{X}_n$ est exhaustive minimale pour $\lambda$.
 
 \item La règle du pouce pour trouver un MVUE est de trouver un estimateur qui est sans biais et qui est basé sur une statistique exhaustive obtenue par le théorème de factorisation de Fisher--Neyman. On a 
 $$
