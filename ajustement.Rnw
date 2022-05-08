@@ -457,7 +457,7 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
   \begin{enumerate}
   \item Démontrer que la distribution exponentielle translatée est
     obtenue par la transformation $X = Z + \mu$, où $Z \sim
-    \text{Exponentielle}(\lambda)$.
+    \text{Exponentielle}(\lambda)$  et $\esp{Z} = \frac{1}{\lambda}$.
   \item Calculer l'espérance et la variance de cette distribution.
   \item Calculer les estimateurs du maximum de vraisemblance des
     paramètres $\mu$ et $\lambda$.
