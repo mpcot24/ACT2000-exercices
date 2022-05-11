@@ -16,7 +16,7 @@
   \usepackage{amsmath}
   \usepackage{yhmath}
   \usepackage{bm}
-
+  \usepackage{pdfpages}
   \usepackage{rotating,lscape} % table de loi F
 
   %%% Hyperliens
@@ -163,6 +163,9 @@
 
 \appendix
 \include{tables}
+
+\includepdf[pages=1]{Distributions.pdf}
+\includepdf[pages=2]{Distributions.pdf}
 
 \include{solutions}
 
