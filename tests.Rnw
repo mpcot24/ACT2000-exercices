@@ -1025,14 +1025,16 @@ ce qui donne la statistique du rapport de vraisemblance
 $$
 w= 2\{\ell(\hat \alpha,\hat \beta)-\ell(\hat \beta)\} = 2 (\Sexpr{round(m3$loglik,4)} + \Sexpr{round(-m2$loglik,4)}) = \Sexpr{round(2*(m3$loglik-m2$loglik),4)}.
 $$
-Clairement, l'hypothèse que $\alpha=1$ est rejetée parce que la valeur de la statistique du rapport de vraisemblance est beaucoup plus grande que le quantile $97,5$\% de la distribution khi-carrée avec $1$ degré de liberté.
+Clairement, l'hypothèse que $\alpha=1$ est rejetée parce que la valeur de la statistique du rapport de vraisemblance est beaucoup plus grande que le quantile $95$\% de la distribution khi-carrée avec $1$ degré de liberté.
 $$
-\chi^2_{1,0.025} = \Sexpr{round(qchisq(0.975,df=1),3)}.
+\chi^2_{1,0.05} = \Sexpr{round(qchisq(0.95,df=1),3)}.
 $$
 La conclusion est donc la même qu'en b): le modèle exponentiel n'est pas une simplification adéquate du modèle Gamma pour l'ajustement des données.
 \end{enumerate}
 \end{sol}
 \end{exercice}
+
+
 
 \begin{exercice}
 \label{ex:test:titanic}
