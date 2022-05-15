@@ -872,7 +872,89 @@ prop.test(351 + 41, 800, correct = FALSE)$conf.int
   \end{sol}
 \end{exercice}
 
+\begin{exercice}
+ <<echo=FALSE>>=
+set.seed(20011219)
+obs <- rexp(10, 5)
+@
 
+Un arpenteur a recueilli des données et souhaite déterminer si les données s'ajustent le mieux à un modèle Weibull ou à un modèle exponentiel. Il a donc ajusté ces deux distributions aux données recueillis sur l'Avenue de l'agriculture tout juste devant la Pavillon Paul-Comtois. Il vous offre ses résultats, mais ne sait pas comment les utiliser pour conclure.
+
+Voici deux statistiques exhaustives concernant ces données:
+<<echo=TRUE>>=
+obs
+sum(obs)
+@ 
+
+On fournit également les valeurs des fonctions de log-vraisemblance de même que les estimations des estimateurs du maximum de vraisemblance ajustées avec \verb|fitdistr|:
+<<echo=TRUE>>=
+library(MASS)
+fexp <- fitdistr(obs, densfun = "exponential", lower = 0)
+fweib <- fitdistr(obs, densfun = "weibull", lower = c(0, 0))
+fexp
+fexp$loglik
+fweib
+fweib$loglik
+@
+
+  \begin{enumerate}
+\item Démontrer pourquoi les deux statistiques identifiées dans l'énoncé sont exhaustives pour $\beta$ dans le cas de la loi exponentielle. Quelle est la statistique exhaustive pour $\beta$ dans le cas d'une loi Weibull. 
+\item Démontrer que si $X \sim We(1, \beta)$, alors $X \sim \mathcal{E}xp(\beta)$.
+\item Identifier les hypothèses si on utilise un test du rapport de vraisemblance pour test si la loi exponentielle est une bonne simplificaion de la Weibull au seuil 1\%.
+\item Les hypothèses sont-elles simples ou composites?
+\item Calculer la valeur de la statistique.
+\item Quelle est la valeur critique du test.
+\item Conclure dans le contexte.
+\item En regard du résultat en a), pourquoi serait-ce avantageux pour l'arpenteur de pouvoir simplifier le modèle Weibull en un modèle exponentiel?
+
+  \end{enumerate}
+  \begin{rep}
+    \begin{inparaenum}
+    \item $T = \sum_{i = 1}^n x_i^{\alpha}$
+    \item Démo
+    \item $\mathcal{H}_0: \alpha = 1$ et $\mathcal{H}_1: \alpha \neq 1$
+    \item Composites
+    \item 4,704894
+    \item 6,635
+    \item Ne peut pas rejeter $\mathcal{H}_0$
+    \item Utiliser $\bar{X}_n$
+    \end{inparaenum}
+  \end{rep}
+  \begin{sol}
+\begin{enumerate}
+\item La première statistique donnée est le vecteur $(X_{(1)}, \dots, X_{(10)})$, qui contient évidemment l'ensemble de l'information sur l'échantillon. On procède avec le théorème de factorisation de Fisher-Neymann. Pour l'exponentielle,
+\begin{align*}
+L(x; \beta) &= \prod_{i=1}^n \beta^{-1} e^{-\beta^{-1}x_i} \\
+&= \beta^{-n} e^{-\beta^{-1} \sum_{i = 1}^n x_i} \times 1
+\end{align*}
+Donc $T = \sum_{i = 1}^n x_i$ est exhaustive pour $\beta$ dans une loi exponentielle.
+
+Pour la loi Weibull,
+\begin{align*}
+L(x; \alpha, \beta) &= \prod_{i=1}^n \alpha \beta x_i^{\alpha - 1} \text{exp}(-\beta x_i^{\alpha}) \\
+&= \alpha^n \beta^n \left(\prod_{i=1}^n x_i \right)^{\alpha - 1}  \text{exp} (-\beta \sum_{i = 1}^n x_i^{\alpha})
+\end{align*}
+
+Donc $T = \sum_{i = 1}^n x_i^{\alpha}$ est exhaustive pour $\beta$ dans une loi Weibull.
+\item En substituant $\alpha = 1$ dans la fonction de densité de la loi Weibull, on a $f(x; 1, \beta) = 1 \beta x^0 \text{exp}(-\beta x^{\alpha})$, ce qui est exactement la densité d'une loi exponentielle. Par le théorème de l'unicité des fonctions de densité, on peut conclure le résultat voulu.
+
+\item $\mathcal{H}_0: \alpha = 1$ et $\mathcal{H}_1: \alpha \neq 1$
+
+\item Dans tous les cas, elles sont composites. Pour $\mathcal{H}_0$, même si on connaît $\alpha$, la distribution n'est pas connue en entier comme on ne connaît rien de $\beta$.
+
+\item Notre test du rapport de vraisemblance a $p = 2$ et $r = 1$. Ainsi, on utilise les valeurs données dans l'énoncé pour les valeurs maximisées des fonctions log-vraisemblance pour obtenir.
+$$
+W_{10} = 2(5,505213 - 3,152766) = 4,704894.
+$$
+
+\item La statistique de test suit donc une loi $\chi^2$ avec $p - r$ degrés de liberté. Ainsi, on a que $W_{10} \sim \chi^2_{(1)}$. Le quantile supérieur au seuil 1\% est 6,635. C'est notre valeur critique.
+
+\item Comme 4.704894 < 6.635, on ne peut pas rejeter $\mathcal{H}_0$ au seuil 1\%. Ainsi, le modèle exponentiel est une bonne simplification du modèle Weibull pour ces données.
+
+\item En simplifiant ainsi le modèle, l'arpenteur pourrait tout simplement utiliser $\bar{X}_n$ pour poursuivre son analyse au lieu de devoir ajuster pour trouver une valeur de $\alpha$ également.
+\end{enumerate}
+  \end{sol}
+\end{exercice}
 
 
 
