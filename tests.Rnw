@@ -878,15 +878,15 @@ set.seed(20011219)
 obs <- rexp(10, 5)
 @
 
-Un arpenteur a recueilli des données et souhaite déterminer si les données s'ajustent le mieux à un modèle Weibull ou à un modèle exponentiel. Il a donc ajusté ces deux distributions aux données recueillis sur l'Avenue de l'agriculture tout juste devant la Pavillon Paul-Comtois. Il vous offre ses résultats, mais ne sait pas comment les utiliser pour conclure.
+Un arpenteur a recueilli des données. Il souhaite déterminer lequel des modèles Weibull ou exponentiel s'ajuste le mieux aux données. Il a donc ajusté ces deux distributions aux données recueillies sur l'avenue de l'Agriculture tout juste devant la Pavillon Paul-Comtois. Il vous offre ses résultats, mais ne sait pas comment les utiliser pour conclure.
 
-Voici deux statistiques exhaustives concernant ces données:
+Voici les données brutes et la somme des observations:
 <<echo=TRUE>>=
 obs
 sum(obs)
 @ 
 
-On fournit également les valeurs des fonctions de log-vraisemblance de même que les estimations des estimateurs du maximum de vraisemblance ajustées avec \verb|fitdistr|:
+On fournit également les valeurs des fonctions de log-vraisemblance maximisées de même que les estimations des estimateurs du maximum de vraisemblance ajustées avec \verb|fitdistr|:
 <<echo=TRUE>>=
 library(MASS)
 fexp <- fitdistr(obs, densfun = "exponential", lower = 0)
@@ -898,13 +898,22 @@ fweib$loglik
 @
 
   \begin{enumerate}
-\item Démontrer pourquoi les deux statistiques identifiées dans l'énoncé sont exhaustives pour $\beta$ dans le cas de la loi exponentielle. Quelle est la statistique exhaustive pour $\beta$ dans le cas d'une loi Weibull. 
+\item Démontrer que la somme des observations est une statistique exhaustive pour $\beta$ dans le cas de la loi exponentielle. 
+
+\item Quelle est la statistique exhaustive pour $\beta$ dans le cas d'une loi Weibull?
+ 
 \item Démontrer que si $X \sim We(1, \beta)$, alors $X \sim \mathcal{E}xp(\beta)$.
-\item Identifier les hypothèses si on utilise un test du rapport de vraisemblance pour test si la loi exponentielle est une bonne simplificaion de la Weibull au seuil 1\%.
+
+\item Identifier les hypothèses permettant de répondre à la question de l'arpenteur à l'aide d'un test du rapport de vraisemblance pour tester si la loi exponentielle est une bonne simplificaion de la Weibull au seuil 1\%.
+
 \item Les hypothèses sont-elles simples ou composites?
-\item Calculer la valeur de la statistique.
-\item Quelle est la valeur critique du test.
+
+\item Calculer la valeur observée de la statistique du test.
+
+\item Quelle est la valeur critique du test?
+
 \item Conclure dans le contexte.
+
 \item En regard du résultat en a), pourquoi serait-ce avantageux pour l'arpenteur de pouvoir simplifier le modèle Weibull en un modèle exponentiel?
 
   \end{enumerate}
