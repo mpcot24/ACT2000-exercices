@@ -942,23 +942,23 @@ Un assureur de dommages pour entreprises, \emph{AÉACT}, se demande s'il devrait
 
 Après une analyse détaillée des projections des dommages de chaque entreprise, l'assureur a déterminé que 
 $$
-\sigma^2_{TaPaCt} = 32,9 \, \text{pour un échantillon} \, n = 10
+\sigma^2_{TaPaCt} = 32,9 \, \text{pour un échantillon de taille} \, n = 10
 $$
 
-Les analyses de dossiers de nouveaux clients chez \emph{AÉACT} font l'objet d'une politique interne selon laquelle on pose trois hypothèses:
+Les analyses de dossiers de nouveaux clients chez \emph{AÉACT} font l'objet d'une politique interne selon laquelle on pose trois postulats:
 \begin{itemize}
 \item Les sinistres sont normalement distribués.
 \item La variance des dommages des entreprises avec beaucoup de moyens de production est le double de la variance des dommages des entreprises dont la majorité des membres sont en télétravail.
-\item Comme AÉACT a peu de liquidités, elle choisira l'entreprise avec la variance échantillonnale obtenue dans l'analyse qui est la plus basse.
+\item Comme \emph{AÉACT} a peu de liquidités, elle choisira l'entreprise avec la variance échantillonnale obtenue dans l'analyse qui est la plus basse.
 \end{itemize}
 
-Avant de récolter un échantillon pour Markétact de taille $m = 11$, AÉACT a besoin de votre aide.
+Avant de récolter un échantillon pour Markétact de taille $m = 11$, \emph{AÉACT} a besoin de votre aide.
 \begin{enumerate}
 \item La prochaine étape de l'analyse implique d'utiliser la loi F. Quelle hypothèse est manquante dans l'énoncé pour utiliser cette loi?
 
 \item Supposons que l'hypothèse manquante en a) est également posée, de quelle façon la loi F peut-elle être utile?
 
-\item Calculer $\prob{\frac{S^2_{TaPaCt}}{S^2_{Markétact}} < 1}$.
+\item Calculer $\prob{S^2_{TaPaCt}/S^2_{Markétact} < 1}$.
 \item En amont de l'analyse des projections et en regard du résultat précédent, quelle décision est la plus probable pour AÉACT?
 \end{enumerate}
 \begin{rep}
@@ -966,7 +966,7 @@ a) Indépendance \,\, b) Comparer les $S^2$ \,\, c)   0,1558435  \,\, d) Markét
 \end{rep}
 \begin{sol}
 \begin{enumerate}
-\item Il faut également assumer que tous les risques de deux entreprises sont indépendants pour utiliser la loi F. C'est réaliste dans le contexte comme leur domaine de pratique est différent et comme elles sont basées dans des villes différentes.
+\item Il faut également supposer que tous les risques de deux entreprises sont indépendants pour utiliser la loi F. C'est réaliste dans le contexte comme leur domaine de pratique est différent et comme elles sont basées dans des villes différentes.
 
 \item La loi F peut être utile afin de comparer les variances échantillonnales des deux entreprises pour les échantillons analysés lors du processus de sélection (les projections). L'assureur pourra faire un choix selon ce résultat pour choisir l'entreprise la moins risquée.
 
@@ -980,11 +980,11 @@ a) Indépendance \,\, b) Comparer les $S^2$ \,\, c)   0,1558435  \,\, d) Markét
 Ainsi,
 
 \begin{align*}
-\prob{\frac{S^2_{TaPaCt}}{S^2_{Markétact}} < 1} &= \prob{\frac{S^2_{TaPaCt}}{2 S^2_{Markétact}} < 0,5} \\
+\text{Pr}\left[\frac{S^2_{TaPaCt}}{S^2_{Markétact}} < 1\right] &= \text{Pr}\left[\frac{S^2_{TaPaCt}}{2 S^2_{Markétact}}\right] < 0,5 \\
 &= 0,1558435 
 \end{align*}
 
-\item Comme il est plus probable que $\frac{S^2_{TaPaCt}}{S^2_{Markétact}} \geq 1$, il est plus probable que $S^2_{TaPaCt} \geq S^2_{Markétact}$. Ainsi, il est plus probable que Markétact soit retenue.
+\item Comme il est plus probable que $S^2_{TaPaCt}/S^2_{Markétact} \geq 1$ que $S^2_{TaPaCt}/S^2_{Markétact} < 1$, il est plus probable que $S^2_{TaPaCt} \geq S^2_{Markétact}$. Ainsi, il est plus probable que Markétact soit retenue que TaPaCt soit retenue à la fin du processus de sélection.
 \end{enumerate}
 \end{sol}
 \end{exercice}
