@@ -646,7 +646,7 @@ Soit $X_i$ le montant de réclamation pour l'assuré $i$, pour $i=1,\ldots,n$. O
 \item Trouver une statistique exhaustive $T$ pour $\lambda$.
 \item Montrer que $\hat{\lambda} = X_1$ est un estimateur sans biais de $\theta = \esp{X}$.
 \item Sans effectuer de calculs, expliquer qualitativement pourquoi $\hat{\lambda}$ ne semble pas être un bon estimateur de $\lambda$.
-\item Appliquer le théorème de Rao-Blackwell sur $\hat{\lambda}$ pour trouver un meilleur estimateur $\tilde{\lambda}$.
+\item Appliquer le théorème de Rao--Blackwell sur $\hat{\lambda}$ pour trouver un meilleur estimateur $\tilde{\lambda}$.
 \item Est-ce le MVUE? Justifier.
 \end{enumerate}
 \begin{sol} 
