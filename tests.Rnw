@@ -1088,15 +1088,15 @@ Malgré votre soif de "concept", vous êtes une personne occupée, donc vous uti
     \begin{inparaenum}
     \item $\mathcal{H}_0: X \sim \mathcal{P}\text{oisson}$ et $\mathcal{H}_1$: $X$ ne suit pas une loi de Poisson.
     \item $\bar{x}_n = 2,38$
-    \item Rejeter $mathcal{H}_0$
+    \item Rejeter $\mathcal{H}_0$
     \end{inparaenum}
   \end{rep}
 \begin{sol}
 \begin{enumerate}
-\item $\mathcal{H}_0: X \sim \mathcal{P}\text{oisson}$ et $\mathcal{H}_1$: $X$ ne suit pas une loi de Poisson. Notons que le sens des hypothèses est habituellement inversé dans le cadre d'un test d'adéquation.
+\item $\mathcal{H}_0: X \sim \mathcal{P}\text{oisson}$ et $\mathcal{H}_1$: $X$ ne suit pas une loi de Poisson. Notons que le sens des hypothèses est inversé dans le cadre d'un test d'adéquation.
 
 \item $\bar{x}_n = 2,38$. Remarque: il y a 100 observations.
-\item En regard du fait que $\bar{x}_n = 2,38$, on pose que $\hat{\lambda} = 2,38$. On calcule ensuite les probabilités des cellules selon la loi de Poisson ajustée:
+\item En regard du fait que $\bar{x}_n = 2,38$, on obtient que $\hat{\lambda} = 2,38$. On calcule ensuite les probabilités des cellules selon la loi de Poisson ajustée:
 \begin{align*}
 \hat{\pi}_0 &= \frac{\hat{\lambda}^0 e^{-\hat{\lambda}}}{0!} &= \frac{2,38^0 e^{-2,38}}{0!} &= 0,0926 \\
 \hat{\pi}_1 &= \frac{\hat{\lambda}^1 e^{-\hat{\lambda}}}{1!} &= \frac{2,38^1 e^{-2,38}}{1!} &= 0,2203 \\
@@ -1111,29 +1111,27 @@ On trouve donc les fréquences espérées en mutiliant par le nombre d'observati
 
 \begin{align*}
 \widehat{\esp{n_0}} &= 100 \times 0,0926 &= 9,26 \\
-\widehat{\esp{n_0}} &= 100 \times 0,2203 &= 22,03 \\
-\widehat{\esp{n_0}} &= 100 \times 0,2621 &= 26,21 \\
-\widehat{\esp{n_0}} &= 100 \times 0,2079 &= 20,79 \\
-\widehat{\esp{n_0}} &= 100 \times 0,1237 &= 12,37 \\
-\widehat{\esp{n_0}} &= 100 \times 0,0589 &= 5,89 \\
-\widehat{\esp{n_0}} &= 100 \times 0,0345 &= 3,45
+\widehat{\esp{n_1}} &= 100 \times 0,2203 &= 22,03 \\
+\widehat{\esp{n_2}} &= 100 \times 0,2621 &= 26,21 \\
+\widehat{\esp{n_3}} &= 100 \times 0,2079 &= 20,79 \\
+\widehat{\esp{n_4}} &= 100 \times 0,1237 &= 12,37 \\
+\widehat{\esp{n_5}} &= 100 \times 0,0589 &= 5,89 \\
+\widehat{\esp{n_6}} &= 100 \times 0,0345 &= 3,45
 \end{align*}
 
 On trouve ensuite la statistique de test:
 
 \begin{align*}
-X^2 &=  \sum_{i = 0}^6 \frac{(n_i - \widehat{\esp{n_i}})^2}{\widehat{\esp{n_i}}} \\
-&= \frac{(21 - 9,26)^2}{9,26} \\
-&+ \frac{(18 - 22,03)^2}{22,03} \\
-&+ \frac{(27 - 26,21)^2}{26,21} \\
-&+ \frac{(10 - 20,79)^2}{20,79} \\
-&+ \frac{(8 - 12,37)^2}{12,37} \\
-&+ \frac{(5 - 5,89)^2}{5,89} \\
+X_{\text{obs}}^2 &=  \sum_{i = 0}^6 \frac{(n_i - \widehat{\esp{n_i}})^2}{\widehat{\esp{n_i}}} \\
+&= \frac{(21 - 9,26)^2}{9,26} + \frac{(18 - 22,03)^2}{22,03} + \frac{(27 - 26,21)^2}{26,21} \\
+&+ \frac{(10 - 20,79)^2}{20,79} 
++ \frac{(8 - 12,37)^2}{12,37} 
++ \frac{(5 - 5,89)^2}{5,89} \\
 &+ \frac{(11 - 3,45)^2}{11} \\
 &= 39,48769
 \end{align*}
 
-Comme nous avons posé 2 conditions, $X^2$ suit une $\mathcal{X}^2$ avec $7 - 2 = 5$ degrés de liberté. Puisque, $\mathcal{X}^2_{5, 5\%} = 11,0705 \leq 39,48769$, on rejette $\mathcal{H}_0$. Dommage, la loi de Poisson n'est pas adéquate pour ces données qui concernent pourtant des poissons.
+Comme nous avons posé 2 conditions, $X_{\text{obs}}^2$ suit une $\mathcal{X}^2$ avec $7 - 2 = 5$ degrés de liberté. Puisque, $\mathcal{X}^2_{5, 5\%} = 11,0705 \leq 39,48769$, on rejette $\mathcal{H}_0$. Dommage, la loi de Poisson n'est pas adéquate pour ces données qui concernent pourtant des poissons.
 \end{enumerate}
 \end{sol}
 \end{exercice}
