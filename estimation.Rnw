@@ -623,7 +623,7 @@ $$
 \ex[\tilde{\lambda}] = \ex[X_1] = \lambda.
 $$
 
-\item Par le théorème de Rao-Blackwell, on trouve
+\item Par le théorème de Rao--Blackwell, on trouve
 $$
 \lambda^\ast = \ex \left[ \tilde{\lambda} | T \right] = \ex \left[ X_1 | \sum_{i=1}^n X_i = t \right].
 $$
