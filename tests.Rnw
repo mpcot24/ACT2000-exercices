@@ -886,21 +886,24 @@ obs
 sum(obs)
 @ 
 
-On fournit également les valeurs des fonctions de log-vraisemblance maximisées de même que les estimations des estimateurs du maximum de vraisemblance ajustées avec \verb|fitdistr|:
+On fournit également les valeurs des fonctions de log-vraisemblance maximisées de même que les estimations des estimateurs du maximum de vraisemblance ajustées avec \verb|fitdistr| pour la loi Weibull:
 <<echo=TRUE>>=
 library(MASS)
-fexp <- fitdistr(obs, densfun = "exponential", lower = 0)
 fweib <- fitdistr(obs, densfun = "weibull", lower = c(0, 0))
-fexp
-fexp$loglik
 fweib
 fweib$loglik
 @
-
+Notons que la fonction \verb|fitdistr| ajuste la loi Weibull avec la pramétrisation telle que sa fonction de densité est
+$$
+f(x; \alpha, \beta) = \frac{\alpha}{\beta} x^{\alpha - 1} e^{-\left(\frac{x}{\beta}\right)^{\alpha}} \, \beta,\alpha, x > 0
+$$
+où \verb|shape| est $\alpha$ et \verb|scale| est $\beta$.
   \begin{enumerate}
 \item Démontrer que la somme des observations est une statistique exhaustive pour $\beta$ dans le cas de la loi exponentielle. 
 
-\item Quelle est la statistique exhaustive pour $\beta$ dans le cas d'une loi Weibull?
+\item Quelle est la statistique exhaustive pour $\beta$ dans le cas d'une loi Weibull de cette paramétrisation?
+
+\item Trouver l'EMV du paramètre $\beta$ de la loi exponentielle et calculer à partir des données fournies dans l'énoncé la valeur maximisée de la log-vraisemblance.
  
 \item Démontrer que si $X \sim We(1, \beta)$, alors $X \sim \mathcal{E}xp(\beta)$.
 
@@ -919,7 +922,9 @@ fweib$loglik
   \end{enumerate}
   \begin{rep}
     \begin{inparaenum}
+    \item Démo
     \item $T = \sum_{i = 1}^n x_i^{\alpha}$
+    \item $\hat{beta}_{mv} = \bar{X}_n$ et $l(\hat{beta}_{mv}   = $
     \item Démo
     \item $\mathcal{H}_0: \alpha = 1$ et $\mathcal{H}_1: \alpha \neq 1$
     \item Composites
@@ -931,7 +936,7 @@ fweib$loglik
   \end{rep}
   \begin{sol}
 \begin{enumerate}
-\item La première statistique donnée est le vecteur $(X_{(1)}, \dots, X_{(10)})$, qui contient évidemment l'ensemble de l'information sur l'échantillon. On procède avec le théorème de factorisation de Fisher-Neymann. Pour l'exponentielle,
+\item La première statistique donnée est un vecteur contenant toutes les observations $(X_1, \dots, X_{10})$, qui contient évidemment l'ensemble de l'information sur l'échantillon. On procède avec le théorème de factorisation de Fisher-Neymann. Pour l'exponentielle,
 \begin{align*}
 L(x; \beta) &= \prod_{i=1}^n \beta^{-1} e^{-\beta^{-1}x_i} \\
 &= \beta^{-n} e^{-\beta^{-1} \sum_{i = 1}^n x_i} \times 1
@@ -940,12 +945,29 @@ Donc $T = \sum_{i = 1}^n x_i$ est exhaustive pour $\beta$ dans une loi exponenti
 
 Pour la loi Weibull,
 \begin{align*}
-L(x; \alpha, \beta) &= \prod_{i=1}^n \alpha \beta x_i^{\alpha - 1} \text{exp}(-\beta x_i^{\alpha}) \\
-&= \alpha^n \beta^n \left(\prod_{i=1}^n x_i \right)^{\alpha - 1}  \text{exp} (-\beta \sum_{i = 1}^n x_i^{\alpha})
+L(x; \alpha, \beta) &= \prod_{i=1}^n \frac{\alpha}{\beta} x_i^{\alpha - 1} \text{exp}(-\left(\frac{x_i}{\beta}\right)^{\alpha}) \\
+&= \frac{\alpha^n}{\beta^n} \left(\prod_{i=1}^n x_i \right)^{\alpha - 1}  \text{exp} (-\frac{1}{\beta} \sum_{i = 1}^n x_i^{\alpha})
 \end{align*}
 
 Donc $T = \sum_{i = 1}^n x_i^{\alpha}$ est exhaustive pour $\beta$ dans une loi Weibull.
-\item En substituant $\alpha = 1$ dans la fonction de densité de la loi Weibull, on a $f(x; 1, \beta) = 1 \beta x^0 \text{exp}(-\beta x^{\alpha})$, ce qui est exactement la densité d'une loi exponentielle. Par le théorème de l'unicité des fonctions de densité, on peut conclure le résultat voulu.
+
+\item On dérive la log-vraisemblance de la loi exponentielle pour obtenir l'estimateur du maximum de vraisemblance. Ainsi, on obtient
+\begin{align*}
+l(x; \beta) &= \log{\frac{1}{\beta^n}} e^{-\frac{1}{\beta} \sum_{i = 1}^n x_i} \\
+\frac{\text{d}}{\text{d}\beta} l(x; \beta) &= \frac{-n}{\beta} + \frac{1}{\beta^2} \sum_{i = 1}^n x_i
+\end{align*}
+
+et on pose le tout égal à 0 pour maximiser de telle sorte que 
+
+\begin{align*}
+-n \hat{\beta}_{mv} &= \sum_{i = 1}^n x_i \\
+\hat{\beta}_{mv} &= \bar{X}_n.
+\end{align*}
+
+Dans ce problème, on trouve que $\bar{x}_{10} = 2,684001 / 10 = 0,2684001$ et la log-vraisemblance maximisée est $l(\hat{\beta}_{mv}   = -10 \times \log{0.2684001} - 1 / 0.268
+4001 \times 2.684001 = 3,15277.$
+
+\item En substituant $\alpha = 1$ dans la fonction de densité de la loi Weibull, on a $f(x; 1, \beta) = 1 \beta x^0 \text{exp}(-\beta x^{1})$, ce qui est exactement la densité d'une loi exponentielle. Par le théorème de l'unicité des fonctions de densité, on peut conclure le résultat voulu.
 
 \item $\mathcal{H}_0: \alpha = 1$ et $\mathcal{H}_1: \alpha \neq 1$
 
@@ -953,14 +975,14 @@ Donc $T = \sum_{i = 1}^n x_i^{\alpha}$ est exhaustive pour $\beta$ dans une loi 
 
 \item Notre test du rapport de vraisemblance a $p = 2$ et $r = 1$. Ainsi, on utilise les valeurs données dans l'énoncé pour les valeurs maximisées des fonctions log-vraisemblance pour obtenir.
 $$
-W_{10} = 2(5,505213 - 3,152766) = 4,704894.
+w_{10} = 2(5,505213 - 3,152766) = 4,704894.
 $$
 
 \item La statistique de test suit donc une loi $\chi^2$ avec $p - r$ degrés de liberté. Ainsi, on a que $W_{10} \sim \chi^2_{(1)}$. Le quantile supérieur au seuil 1\% est 6,635. C'est notre valeur critique.
 
 \item Comme 4.704894 < 6.635, on ne peut pas rejeter $\mathcal{H}_0$ au seuil 1\%. Ainsi, le modèle exponentiel est une bonne simplification du modèle Weibull pour ces données.
 
-\item En simplifiant ainsi le modèle, l'arpenteur pourrait tout simplement utiliser $\bar{X}_n$ pour poursuivre son analyse au lieu de devoir ajuster pour trouver une valeur de $\alpha$ également.
+\item Selon le principe du rasoir d'Okham, on recommande toujours d'utiliser le modèle le plus simple possible. En particulier ici, l'arpenteur pourrait tout simplement utiliser $\bar{X}_n$ pour poursuivre son analyse au lieu de devoir ajuster pour trouver une valeur de $\alpha$ également s'il utilisait le modèle Weibull.
 \end{enumerate}
   \end{sol}
 \end{exercice}
