@@ -718,7 +718,7 @@ $$
 \end{exercice}
 
 \begin{exercice}
-Soit $X_1,\ldots,X_n$ un échantillon aléatoire d'une distribution Bernouilli avec paramètre inconnu $\theta$.
+Soit $X_1,\ldots,X_n$ un échantillon aléatoire d'une distribution Bernoulli avec paramètre inconnu $\theta$.
 
 \begin{enumerate}
 \item Écrire la vraisemblance, la log-vraisemblance et l'EMV de $\theta$.

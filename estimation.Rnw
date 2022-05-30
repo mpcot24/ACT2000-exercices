@@ -685,12 +685,12 @@ Soit $X_i$ le montant de réclamation pour l'assuré $i$, pour $i=1,\ldots,n$. O
 \end{rep}
 \begin{sol} 
 \begin{enumerate}
-\item  On applique le théorème de factorisation de Fisher-Neymann en trouvant d'abord la fonction de vraisemblance et en la factorisant ensuite:
+\item  On applique le théorème de factorisation de Fisher--Neyman en trouvant d'abord la fonction de vraisemblance et en la factorisant ensuite:
 \begin{align*}
 L(x, \beta) &= \prod_{i = 1}^{n} \frac{1}{\beta} e^{-\frac{1}{\beta} x_i} \\
               &= \beta^{-n} e^{-\beta^{-1} \sum_{i=1}^n x_i} \times 1
 \end{align*}
-Ainsi, $\hat{\beta} = \sum_{i = 1}^n X_i$ ou $\hat{\beta} = \bar{X}_n$ sont des statistiques exhaustives pour $\beta$ par le théorème de factorisation de Fisher-Neymann.
+Ainsi, $\hat{\beta} = \sum_{i = 1}^n X_i$ ou $\hat{\beta} = \bar{X}_n$ sont des statistiques exhaustives pour $\beta$ par le théorème de factorisation de Fisher--Neyman.
 \item Dans le contexte, $X_1 \sim \mathcal{E}xp(\beta)$. Ainsi,  $\ex[X_1] = \beta$, donc $\hat{\beta}$ est un estimateur sans biais pour $\beta$.
 \item La valeur de $X_1$ sera la seule observation pour déterminer le seul paramètre du modèle à utiliser. Par exemple, la prime pure d'un groupe d'assurance collective serait uniquement déterminée par un de ses utilisateurs, ce qui peut ne pas représenter adéquatement le comportement du groupe au complet. Un enjeu de compétivité sur le marché pourrait survenir.
 
