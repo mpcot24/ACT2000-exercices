@@ -44,13 +44,13 @@ options(width = 55)
     0$.
   \end{enumerate}
   \begin{rep}
-    \begin{inparaenum}
+    \begin{enumerate}
     \item $\bar{X}$
     \item $\bar{X}/(1 - \bar{X})$
     \item $\bar{X}$
     \item $\bar{X}$
     \item $\bar{X} - 1$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   \begin{sol}
     \begin{enumerate}
@@ -340,13 +340,13 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
   $\theta$ de chacune des distributions de
   l'exercice~\ref{chap:ajustement}.\ref{ex:ponctuelle:emm}.
   \begin{rep}
-    \begin{inparaenum}
+    \begin{enumerate}
     \item $\bar{X}$
     \item $-n/\ln(X_1 \cdots X_n)$
     \item $\bar{X}$
     \item $\text{med}(X_1, \dots, X_n)$
     \item $X_{(1)}$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   \begin{sol}
     Dans tous les cas, la fonction de vraisemblance est $L(\theta) =
@@ -471,6 +471,7 @@ On a besoin de la $0,75(21)=15,75$e plus petite observation. On obtient $0,25(13
   \end{enumerate}
   \begin{rep}
     \begin{enumerate}
+    \item Démo
     \item $\esp{X} = \mu + \lambda^{-1}$, $\var{X} = \lambda^{-2}$
     \item $\hat{\mu} = X_{(1)}$, $\hat{\lambda} = n/\sum_{i = 1}^n (X_i -
         X_{(1)})$
@@ -542,6 +543,9 @@ min(x)
   est un estimateur du maximum de vraisemblance de $\theta$. Ceci est
   un exemple où l'estimateur du maximum de
   vraisemblance n'est pas unique.
+ \begin{rep}
+ 	Démo
+ \end{rep}
   \begin{sol}
     Il est clair ici que, comme $f(x;\theta) = 1$, on ne pourra pas
     utiliser la technique habituelle pour calculer l'estimateur du
@@ -644,10 +648,15 @@ avec paramètres inconnus $\alpha>0$ et $\theta>0$.
 \item Écrire la vraisemblance, la log-vraisemblance et les deux équations qui doivent être résolues pour trouver les estimateurs du maximum de vraisemblance pour $\alpha$ et $\theta$.
 \end{enumerate}
 \begin{rep}
-a) $\ex[X_1]= \theta/(\alpha-1)$ et $
-\vr(X_1)=\alpha\theta^2/\{(\alpha-1)^2(\alpha-2)\}$ 
+	a) $\ex[X_1]= \theta/(\alpha-1)$ et $
+	\vr(X_1)=\alpha\theta^2/\{(\alpha-1)^2(\alpha-2)\}$ 
 
-b) $\hat\alpha = 2S_n^2/(S_n^2-\bar X_n^2)$ et $\hat\theta=\bar X_n (S_n^2+\bar X_n^2)/(S_n^2-\bar X_n^2)$
+	b) $\hat\alpha = 2S_n^2/(S_n^2-\bar X_n^2)$ et $			  \hat\theta=\bar X_n (S_n^2+\bar X_n^2)/(S_n^2-\bar X_n^2)$1
+
+\begin{align*}
+\frac{n}{\hat\alpha}+n\ln \hat\theta-\sum_{i=1}^n\ln(x_i+\hat\theta)&=0\\
+\frac{n\hat\alpha}{ \hat\theta}-(\hat\alpha+1)\sum_{i=1}^n\frac{1}{x_i+\hat\theta}&=0.
+\end{align*}
 \end{rep}
 \begin{sol}
 \begin{enumerate}
@@ -1001,6 +1010,7 @@ abline(0,1)
 
 \end{enumerate}
 \begin{rep}
+a) Gamma, log-normale ou Pareto
 b) $\hat \mu =\Sexpr{round(log(1853^2/sqrt(10438832)),3)}$ et $\hat\sigma^2 =\Sexpr{round(log(10438832/1853^2),3)}$ 
 c) $\hat\alpha =\Sexpr{round(2*7006257/(7006257-1853^2),3)}$ et 
 $\hat\theta=\Sexpr{round(1853*(2*7006257/(7006257-1853^2)-1),2)}$

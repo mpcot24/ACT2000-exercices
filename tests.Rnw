@@ -44,7 +44,16 @@ et tracer la fonction de puissance en utilisant R ou Excel. Quel est le lien ent
 \item Refaire (d) avec une taille d'échantillon de $n=50$ et $n=100$. Est-ce que le test semble bon?
 \item Suggérer une modification au test pour qu'il demeure significatif avec une taille d'échantillon différente de $20$.
 \end{enumerate}
-
+\begin{rep}
+\begin{enumerate}
+\item $\mathcal{H}_0$ est simple et $\mathcal{H}_1$ est composite.
+\item $\mathcal{C} = \left\{ (x_1,\dots, x_{20}) \in \{0,1\}^n  :  x_1 + \dots + x_n \in \{ 0,1\} \cup \{7,\dots,20 \}\right \}$
+\item 0,1558678
+\item $1 - \Pi(p)$
+\item Non
+\item Région critique devrait dépendre de $n$.
+\end{enumerate}
+\end{rep}
 \begin{sol}
 \begin{enumerate}
 \item L'hypothèse nulle est simple étant donné que $\Theta_0 = \{ 0,2\}$ ne contient qu'une seule valeur. La contre-hypothèse est composite étant donné que $\Theta_1 = [0,\, 0,2) \cup (0,2,\, 1]$ contient plus d'une valeur de $\theta$.
@@ -84,6 +93,7 @@ La courbe de la fonction de puissance peut être tracée avec les points $(\Pi(p
 plot(p,power,type="b")
 points(p,power,pch=16)
 @
+
 La puissance à $p=0,2$ est égale à la probabilité d'erreur de type I $\alpha$, alors que pour $ p \ne 0,2$, la probabilité d'erreur de type II $\beta$ est donnée par $1 - \Pi(p)$.
 
 \item La seule différence avec (d) est que maintenant $Y$ est une distribution binomiale de taille $n \in \{50,100\}$. La fonction de puissance à $$
@@ -238,7 +248,14 @@ Soit $X_1, \dots, X_n$ un échantillon aléatoire tiré d'une distribution Poiss
 
 \item On suppose que $n=20$, $\lambda_0 = 1/20$ et $\lambda_1=1/10$. Calculer la valeur de $c^\star$ en b) et déterminer la valeur minimale que peut atteindre $\alpha(\delta) + \beta(\delta)$. Quelles sont les probabilités d'erreur de type I et II?
 \end{enumerate}
-
+\begin{rep}
+\begin{enumerate}
+\item Démo
+\item Démo. $C^* = \frac{\lambda_1 - \lambda_0}{\ln{\lambda_1} - \ln{\lambda_0}}$.
+\item $c = 0,1$
+\item $\alpha = 0,264$ et $\beta = 0,6766764$.
+\end{enumerate}
+\end{rep}
 \begin{sol}
 \begin{enumerate}
 \item Ici, la fonction de distribution de l'échantillon est donnée par
@@ -410,12 +427,12 @@ $$
  \end{enumerate}
 
   \begin{rep}
-    \begin{inparaenum}
-      \stepcounter{enumi}
+    \begin{enumerate}
+    \item $T = \frac{\bar{X} - \nombre{3315}}{\sqrt{S^2/11}}$
     \item $t = 0,699 < t_{10, \, 0,01}$
-      \stepcounter{enumi}
+    \item $\frac{(10) S^2}{525^2}$
     \item $y = 4,104 > \chi_{10, \,0,05}^2$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   
  \begin{sol}
@@ -616,11 +633,11 @@ qf(0.05,12,15)
   \item Quel est le seuil observé du test?
   \end{enumerate}
   \begin{rep}
-    \begin{inparaenum}
+    \begin{enumerate}
     \item $z = -2,28$
-      \stepcounter{enumi}
+    \item On ne rejette pas.
     \item $0,0226$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   \begin{sol}
     \begin{enumerate}

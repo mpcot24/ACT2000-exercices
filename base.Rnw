@@ -55,6 +55,9 @@ Dans chacun des cas suivants, identifiez la loi de probabilité qui serait la pl
 \item La vitesse réelle d'un véhicule à un endroit spécifique sur l'autoroute.
 \item La véritable résistance d'un câble utilisé dans un ordinateur.
 \end{enumerate}
+\begin{rep}
+a) Gamma, lognormale, pareto \, \, b) Binomiale négative \, \, c) Binomiale \, \, d) Normale \, \, e) Normale
+\end{rep}
 \begin{sol}
 \begin{enumerate}
 \item Il faudrait utiliser une distribution continue non négative sur l'intervalle $[0,\infty)$ étant donné que la perte financière est nécessairement positive et qu'il n'y a pas de borne supérieure naturelle. Des bons exemples de lois pourraient être : gamma, lognormale, Pareto.
@@ -226,8 +229,16 @@ $$
 \item Quel est le revenu mensuel espéré si la station service vend son essence au prix de 2,10~\$ le litre~?
 \end{enumerate}
  \begin{rep}
-     b) 0.2775 \, \, c) 21~000
-   \end{rep}
+     a) $$
+F(y)= \begin{cases}
+0, & y<0\\
+y^2/2, & 0\leq y<1\\
+1- (2-y)^2/2, & 1\leq y <2\\
+1, & y>2.
+\end{cases}
+$$
+\,\, b) 0.2775 \, \, c) 21~000
+ \end{rep}
 \begin{sol}
 \begin{enumerate}
 \item Le support de $Y$ est $[0,2]$, donc $F(y)=0$ pour $y<0$ et $F(y)=1$ pour $y>2$. Pour $0\leq y <1$,
@@ -300,6 +311,9 @@ Ainsi, l'espérance de revenu mensuel est de 21~000~\$.
       M_Y(t) = \prod_{j=1}^n M_{X_j}(t).
     \end{displaymath}
   \end{enumerate}
+  \begin{rep}
+  a) Par les propriétés de l'exponentielle. \, \, b) Par indépendance des espérances.
+  \end{rep}
   \begin{sol}
     \begin{enumerate}
     \item On a
@@ -470,6 +484,9 @@ Donc, la WLLN s'applique et $\bar X_n$ converge en probabilité vers 1/5.
       \frac{6 - x}{6}
     \right)^5, \quad x = 1, 2, 3, 4, 5, 6.
   \end{displaymath}
+  \begin{rep}
+  Utiliser la discontinuité de la variable aléatoire discrète.
+  \end{rep}
   \begin{sol}
     On a que $X$ est distribuée uniformément sur $\{1, \dots, 6\}$,
     d'où $F_X(x) = x/6$, $x = 1, \dots, 6$. De
@@ -615,7 +632,9 @@ On a donc que la densité conjointe de l'étendue $R$ et de la mi-étendue $T$ e
 Si $X \sim \mathcal{U}(0, 1)$, montrer que la densité de l'étendue est
 $ f_R(r) = n (n - 1) r^{n - 2} (1 - r),$ 
 pour $0 < r < 1$.
-
+\begin{rep}
+Démo
+\end{rep}
 \begin{sol}
 Ici, $f_X(x)=1$ pour $x\in(0,1)$ et $F_X(x)=x$, pour $x\in(0,1)$. Selon l'exercice \ref{chap:base}.\ref{ex:etendue}, on trouve que
 \begin{align*}

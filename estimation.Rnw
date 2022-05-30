@@ -27,6 +27,9 @@
   distribution avec moyenne $\mu$ et variance $\sigma^2$. Démontrer que
   $n^{-1} \sum_{i=1}^n (X_i - \mu)^2$ est un estimateur sans biais de
   $\sigma^2$.
+  \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     On a
     \begin{align*}
@@ -303,6 +306,9 @@
   Soit $X_1, \dots, X_n$ un échantillon aléatoire d'une loi
   exponentielle de moyenne $\theta$. Démontrer que $\bar{X}$ est un
   estimateur convergent de $\theta$.
+   \begin{rep}
+  Démo: méthode de la limite de la variance.
+  \end{rep}
   \begin{sol}
     Puisque $\bar{X}$ est un estimateur sans biais de la moyenne d'une
     distribution, quelqu'elle fut, et que $\lim_{n \rightarrow \infty}
@@ -411,6 +417,17 @@ $$
 
 \item Trouver une paire de statistiques conjointement exhaustives dans le cas où $\alpha$ et $\beta$ sont inconnus.
 \end{enumerate}
+ \begin{rep}
+  \begin{enumerate}  
+   \item $f_{min}(x) = \alpha n \beta^{\alpha n} x^{-(n \alpha + 1}$
+   \item Démo: Définition d'un estimateur convergent.
+   \item $B(\hat{\beta}) = \frac{\beta}{\beta n - 1}$ converge vers 0.
+   \item Démo par le théorème de factorisation de Fisher-Neyman.
+   \item Idem
+   \item $\prod_{i = 1}^n X_i$ et $\min(X_1, \dots, X_n)$.
+   
+   \end{enumerate}
+  \end{rep}
 \begin{sol}
 \begin{enumerate}
 \item La fonction de répartition de $\hat \beta=\min(X_1,\ldots,X_n)$, pour $x\geq \beta$, est
@@ -491,6 +508,9 @@ donc les statistiques $X_1 \times \cdots \times X_n$ et $\min(X_1,\dots, X_n)$ s
   Soit $X_1$ une observation d'une loi normale avec moyenne $0$ et
   variance $\sigma^2$, $\sigma > 0$. Démontrer que $\abs{X_1}$ est une
   statistique exhaustive pour $\sigma^2$.
+   \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     On a un échantillon aléatoire de taille 1. Or,
     \begin{align*}
@@ -565,6 +585,9 @@ donc les statistiques $X_1 \times \cdots \times X_n$ et $\min(X_1,\dots, X_n)$ s
   Démontrer que la somme des éléments d'un échantillon aléatoire issu
   d'une loi de Poisson est une statistique exhaustive pour le
   paramètre de cette loi.
+   \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     Nous allons démontrer un résultat général applicable à plusieurs
     distributions, dont la Poisson. Il existe une famille de
@@ -615,7 +638,9 @@ Soit $X_1, \dots, X_n$ un échantillon aléatoire tiré d'une loi de Poisson ave
 \item Montrer que $\tilde{\lambda}$ est un estimateur sans biais de $\lambda$.
 \item Utiliser le théorème de Rao--Blackwell pour trouver un estimateur $\lambda^\ast$ à partir de~$\tilde{\lambda}$.
 \end{enumerate}
-
+ \begin{rep}
+  b) $\lambda^* = \bar{X}$
+  \end{rep}
 \begin{sol}
 \begin{enumerate}
 \item On trouve que $\tilde{\lambda}$ est sans biais pour $\lambda$ par le fait que
@@ -649,6 +674,15 @@ Soit $X_i$ le montant de réclamation pour l'assuré $i$, pour $i=1,\ldots,n$. O
 \item Appliquer le théorème de Rao--Blackwell sur $\hat{\beta}$ pour trouver un meilleur estimateur $\tilde{\beta}$.
 \item Est-ce le MVUE? Justifier.
 \end{enumerate}
+\begin{rep}
+\begin{enumerate}
+\item $T = \bar{X}_n$
+\item Démo
+\item Une seule observation pour déterminer le paramètre
+\item Démo
+\item Oui
+\end{enumerate}
+\end{rep}
 \begin{sol} 
 \begin{enumerate}
 \item  On applique le théorème de factorisation de Fisher-Neymann en trouvant d'abord la fonction de vraisemblance et en la factorisant ensuite:
@@ -702,6 +736,9 @@ Ainsi, par le théorème de Rao-Blackwell, on obtient qu'un meilleur estimateur 
   \end{displaymath}
   Démontrer que $T(X_1, \dots, X_n) = \sum_{i=1}^n X_i$ est une
   statistique exhaustive pour $\theta$.
+   \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     On peut réécrire la fonction de masse de probabilité de la loi
     géométrique comme suit:
@@ -732,6 +769,13 @@ $$
 $$
 Un estimateur avec variance égale à la borne inférieure est dit être \emph{efficace}. Montrer que $\bar X_n$ est en effet un estimateur efficace pour $\lambda$.
 \end{enumerate}
+\begin{rep}
+ \begin{enumerate}
+  \item Démo
+  \item Oui
+  \item Démo
+  \end{enumerate}
+\end{rep}
 \begin{sol}
 \begin{enumerate}
 \item Puisque
@@ -797,6 +841,9 @@ ce qui montre que $\bar X_n$ est un estimateur efficace pour $\lambda$.
     \right) f(x; \theta)\, dx = 0,
   \end{displaymath}
   puis dériver de nouveau par rapport à $\theta$.
+   \begin{rep}
+     Démo
+  \end{rep}
   \begin{sol}
     Pour commencer, on a l'identité suivante:
     \begin{align*}
@@ -855,6 +902,9 @@ ce qui montre que $\bar X_n$ est un estimateur efficace pour $\lambda$.
 \begin{exercice}
   Démontrer que la moyenne arithmétique est un estimateur sans biais
   à variance minimale du paramètre $\lambda$ d'une loi de Poisson.
+   \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     On sait que $\esp{\bar{X}_n} = \esp{X}$ pour toute distribution et
     donc que $\bar{X}$ est toujours un estimateur sans biais de la
@@ -906,6 +956,9 @@ ce qui montre que $\bar X_n$ est un estimateur efficace pour $\lambda$.
   biais à variance minimale de la probabilité de succès $\theta$ d'une
   distribution Binomiale. (\emph{Astuce}: considérer $X/n$ comme la
   moyenne d'un échantillon aléatoire d'une distribution de Bernoulli.)
+   \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     Si $X$ a une distribution binomiale de paramètres $n \in \N$ et $0
     \leq \theta \leq 1$, alors on peut représenter la variable

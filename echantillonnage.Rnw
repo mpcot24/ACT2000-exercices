@@ -124,6 +124,16 @@ Quelle est la distribution des statistiques suivantes? Justifiez vos réponses.
 \item $\sqrt{6}Y_8/\sqrt{U}$
 \item $3(7\bar Y^2+Y_8^2)/U$
 \end{enumerate}
+\begin{rep}
+    \begin{enumerate}
+    \item $\chi^2(7)$
+    \item $\chi^2(6)$
+    \item $\chi^2(7)$
+    \item $t(7)$
+    \item $t(6)$
+    \item $F(2, 6)$
+    \end{enumerate}
+\end{rep}
 \begin{sol}
 \begin{enumerate}
 \item La statistique $W = Y_1^2 + \cdots + Y^2_7$ suit une loi khi carré avec $7$ degrés de liberté, $\chi^2_{(7)}$, puisque $W$ est une somme de sept variables \textbf{indépendantes}, chacune d'entre elle étant le carré d'une variable aléatoire normale centrée réduite.
@@ -167,7 +177,6 @@ $$
   \begin{displaymath}
     S^2_n = \frac{1}{(n-1)}\sum_{i=1}^n (X_i - \bar{X})^2.
   \end{displaymath}
-
   \begin{rep}
     $\esp{S^2_n} = \sigma^2$, $\var{S^2_n} = 2 \sigma^4/(n-1)$
   \end{rep}
@@ -215,6 +224,11 @@ $$
 
 \begin{exercice} 
 Trouvez la fonction de densité de probabilité de $S_n^2$, la variance échantillonale d'un échantillon de taille $n$ d'une distribution $\mathcal{N}(0,\sigma^2)$. Est-ce que la distribution échantillonale de $S_n^2$ fait partie d'une famille de distributions connues~? Utilisez ce résultat pour trouver la moyenne et la variance de $S_n^2$. [\emph{Truc: Considérez $(n-1)S_n^2/\sigma^2\sim \chi^2_{(n-1)}$ et utilisez la méthode de la fonction de répartition pour obtenir la densité de la variable aléatoire transformée.}]
+\begin{rep}
+    \begin{enumerate}
+		\item Oui. $S^2_n \sim Ga(n-1/2, 2\sigma^2 / (n-1))$ donc $\esp{S^2_n} = \sigma^2$ et $\var{S^2_n} = \frac{2\sigma^4}{n-1}$.
+    \end{enumerate}
+\end{rep}
 \begin{sol}
 On sait que $W=(n-1)S_n^2/\sigma^2\sim \chi^2_{(n-1)}$, et on cherche à trouver la fonction de densité de $S_n^2=\sigma^2 W /(n-1)$. Puisque c'est une transformation d'échelle, on peut utiliser la méthode de la fonction de répartition. D'abord, on exprime la fonction de répartition de $S_n^2$ en termes de la fonction de répartition de $W$:
 \begin{align*}
@@ -276,6 +290,9 @@ Par conséquent, $S_n^2$ suit une distribution gamma avec paramètres $\alpha=(n
   \chi^2(1)$ avec la technique de la fonction génératrice des moments.
   (\emph{Note}: il faut intégrer pour trouver la fonction génératrice
   des moments de $Z^2$.)
+   \begin{rep}
+	Démo
+    \end{rep}
   \begin{sol}
     Soit $Z \sim \mathcal{N}(0, 1)$. La fonction génératrice des moments de la
     variable aléatoire $Z^2$ est
@@ -316,10 +333,10 @@ Par conséquent, $S_n^2$ suit une distribution gamma avec paramètres $\alpha=(n
     \end{displaymath}
   \end{enumerate}
   \begin{rep}
-    \begin{inparaenum}
+    \begin{enumerate}
     \item Gamma$(1/2, 2\sigma^2)$
     \item $\chi^2(1)$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   \begin{sol}
     \begin{enumerate}
@@ -478,6 +495,7 @@ qt(0.95, 14)
   \begin{rep}
    \begin{enumerate}
      \stepcounter{enumi}
+    \item Démo
     \item $r_2/(r_2 - 2)$
     \item $2 [r_2^2 (r_2 + r_1 - 2)]/[r_1 (r_2 - 2)^2 (r_2 - 4)]$
     \end{enumerate}
@@ -604,6 +622,11 @@ qt(0.95, 14)
   avec $\nu_1$ et $\nu_2$ degrés de liberté (dans l'ordre). Démontrer que
   $1/F$ est aussi distribuée selon une loi \emph{F}, mais avec $\nu_2$
   et $\nu_1$ degrés de liberté.
+  \begin{rep}
+  	\begin{enumerate}
+   	 \item Démo: réutiliser la définition de la loi F
+    \end{enumerate}
+  \end{rep}
   \begin{sol}
     On a
     \begin{align*}
@@ -656,6 +679,9 @@ qf(c(0.05, 0.95), 5, 10)
   indépendantes avec une distribution, respectivement, normale centrée
   réduite et khi carré avec $r$ degrés de liberté. Démontrer que la
   distribution de $T^2$ est $F$ avec $1$ et $r$ degrés de liberté.
+  \begin{rep}
+  Démo
+  \end{rep}
   \begin{sol}
     On sait que $W^2 \sim \chi^2(1)$. Ainsi,
     \begin{displaymath}
@@ -677,6 +703,10 @@ qf(c(0.05, 0.95), 5, 10)
   tend vers l'infini. (\emph{Astuce}: définir $Y = X_1 + \dots +
   X_\alpha$ où $X_i \sim \text{Exponentielle}(\beta)$ et trouver la
   distribution asymptotique de $Y$.)
+  \begin{rep}
+     $\lim_{\alpha \rightarrow \infty} Y \sim
+      N\left(\alpha\beta, \alpha\beta^2\right)$
+  \end{rep}
   \begin{sol}
     Soit
     \begin{equation*}
@@ -732,11 +762,11 @@ legend("topright", c(expression(paste(alpha, " = 10")),
 q <- format(pgamma(51, 2500, 50) - pgamma(49, 2500, 50),
             digits = options()$digits, dec = ",")
 @
-    \begin{inparaenum}
+    \begin{enumerate}
     \item Gamma$(\nombre{2500}, 1/50)$
     \item $\Sexpr{q}$
     \item $0,682$
-    \end{inparaenum}
+    \end{enumerate}
   \end{rep}
   \begin{sol}
     \begin{enumerate}
@@ -845,6 +875,9 @@ $$
 U_n = \frac{(\bar X_n-\bar Y_n)-(\mu_1-\mu_2)}{\sqrt{(\sigma_1^2+\sigma_2^2)/n}}
 $$
 est asymptotiquement $\mathcal{N}(0,1)$.
+\begin{rep}
+    Démo
+\end{rep}
 \begin{sol}
 Pour chaque $i \in \{1,\dots, n \}$, on pose $D_i = X_i - Y_i$. $D_1, \ldots, D_n$ sont mutuellement indépendants et identiquement distribués avec moyenne
 $$
